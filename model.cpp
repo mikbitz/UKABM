@@ -1,0 +1,97 @@
+#include "model.h"
+#include "parameters.h"
+#include "timing.h"
+#include "config.h"
+
+/**
+\file model.cpp
+
+\brief This is the model implementation
+
+*/
+
+//-----------------------------------------------------------------------------------------------------------------
+model* model::instance=NULL;
+//-----------------------------------------------------------------------------------------------------------------
+void model::clean(){if (instance!=NULL) {delete instance;instance=NULL;}}
+//-----------------------------------------------------------------------------------------------------------------
+model::~model(){clean();}
+//-----------------------------------------------------------------------------------------------------------------
+model* model::getInstance(){
+ if (instance==NULL){
+   cout<<"A new model was set up"<<endl;
+   instance=new model();
+ }
+ return instance;
+}
+//-----------------------------------------------------------------------------------------------------------------
+model::model(){
+
+    tick=0;
+    parameters* p=parameters::getInstance();
+    dt=p->timeStep;
+    g.init();
+
+}
+//-----------------------------------------------------------------------------------------------------------------
+void model::init(){
+   //clean up any old copies of files that might be storing infection data from a previous run
+  //remove(parameters::getInstance()->diseaseLocationFileName.c_str());
+  //remove(parameters::getInstance()->recoveryLocationFileName.c_str());
+
+  //searchGrid::test();
+  //disease::test();
+  //exit(0);
+  places* p=places::getInstance();
+  p->init();
+
+  c=new configuration();
+
+}
+//-----------------------------------------------------------------------------------------------------------------
+string model::getText(){
+    return text;
+}
+//-----------------------------------------------------------------------------------------------------------------
+void model::add(layer *l){
+   layers.push_back(l);
+}
+//-----------------------------------------------------------------------------------------------------------------
+layer* model::getLayer(unsigned i){
+   if (i<layers.size())return layers[i];
+   return NULL;
+}
+//-----------------------------------------------------------------------------------------------------------------
+bool model::update(){
+    //cout<<"------------------- step "<<tick<<" ---------------------"<<endl;
+    bool b=false;
+    //cout<<"boink "<<tick<<" "<<timing::getInstance().now()<<endl;
+    for (unsigned i=0;i<layers.size();i++){
+      bool u=layers[i]->update();
+      b=b || u;
+    }
+    if (tick%10==0){cout<<timing::getInstance().now()<<endl;}//text=to_simple_string(timing::getInstance().now().time_of_day());cout<<timing::getInstance().today()<<" "<<text<<endl;}
+
+    if (b){
+        tick++;
+        timing::getInstance().update();
+    }
+    //make sure agents are properly in the search grid.
+    //g.check();
+    //care with this  - if the sub-second field is zero it is omitted 
+    //- otherwise it is included
+    //with accuracy down to nanoseconds(!) - can lead to "flicker"
+    return b;
+}
+//-----------------------------------------------------------------------------------------------------------------
+double model::getSize(){
+    double sz=0;
+    for (unsigned i=0;i<layers.size();i++){
+      if (layers[i]->getSize()>sz)sz=layers[i]->getSize();
+    }
+    return sz;
+}
+//-----------------------------------------------------------------------------------------------------------------
+void model::finish(){
+  
+}

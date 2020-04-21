@@ -21,6 +21,8 @@ double timeStep;
 bool visible;
 int randomSeed,nsteps;
 string initialDate,finalDate;
+string populationGridFile;
+string agentFactoryType;
 string parameterFile,outputFileName,diseaseLocationFileName,recoveryLocationFileName,inputFileName,restartFileName;
 int NxCells,NyCells,restartInterval,outputInterval;
 double xSize,ySize,x0,y0;

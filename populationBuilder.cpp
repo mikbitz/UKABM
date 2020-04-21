@@ -10,7 +10,7 @@
 #include <point2D.h>
 
     populationBuilder::populationBuilder(){
-        a.readFile("worldpop/gbr_ppp_2020UKnatgrid10km.asc");
+        a.readFile(parameters::getInstance().populationGridFile);
 
         _iter=0;
         _remainingHere=0;

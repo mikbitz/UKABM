@@ -30,7 +30,7 @@ agents(){
     f<<"step"<<" susceptible"<<" infected"<<" recovered"<<" totalPop."<<endl;
     model::getInstance().agents=&ags;
     cout<<"Building agents...";
-    agentFactory& F=agentFactorySelector::select("simple");
+    agentFactory& F=agentFactorySelector::select(parameters::getInstance().agentFactoryType);
     F.createAgents(ags);
 
     ags[5]->addProcess(new disease(ags[5]));ags[5]->infected=true;

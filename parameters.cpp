@@ -41,7 +41,6 @@ getParameters();
 }
 //--------------------------------------------------------------------------------------------
 void parameters::printParameters(){
-    //                 if( readLine[ 0 ] != Constants::cTextFileCommentCharacter ) {
 std::cout<< "Input Parameter File "<<parameterFile     <<std::endl;
 std::cout<< "----------------------------- "           <<std::endl;
 std::cout<< "Successfully found parameters "           <<std::endl;
@@ -68,6 +67,8 @@ std::cout<< "grid xSize            "<< xSize           <<std::endl;
 std::cout<< "grid ySize            "<< ySize           <<std::endl;
 std::cout<< "xOrigin               "<< x0               <<std::endl;
 std::cout<< "yOrigin               "<< y0               <<std::endl;
+std::cout<< "populationGridFile:   "<<populationGridFile<<std::endl;
+std::cout<< "agentFactoryType:     "<<agentFactoryType<<std::endl;
 std::cout<< "----------------------------- "           <<std::endl;
 }
 //--------------------------------------------------------------------------------------------
@@ -109,7 +110,9 @@ void parameters::getParameters(){
             if (label=="xSize:")               {f>> xSize;                   success=true;}           
             if (label=="ySize:")               {f>> ySize;                   success=true;}           
             if (label=="xOrigin:")             {f>> x0;                      success=true;}              
-            if (label=="yOrigin:")             {f>> y0;                      success=true;}              
+            if (label=="yOrigin:")             {f>> y0;                      success=true;}
+            if (label=="populationGridFile:")  {f>>populationGridFile;       success=true;}
+            if (label=="agentFactoryType:")    {f>>agentFactoryType;         success=true;}
             if (!f.eof() && !success){
                 std::cout<<"Unrecognised label "<<label<<" in file "<<parameterFile<<" exiting..."<<std::endl;
                 exit(1); 

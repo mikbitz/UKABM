@@ -69,6 +69,7 @@ struct timeTable{
       { 
           //assume the timetabel rolls back to the start after the last event.
           if ((unsigned)current<events.size()-1)current++;else current = 0;
+          //cout<<"current "<<current<<endl;
           return true;
     }
     return false;    

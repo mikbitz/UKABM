@@ -24,8 +24,15 @@ outputFile: diseaseSummary
 #Methods for creating agents
 #------------------------------
 #valid values currently are simple and worldpop
-agentFactoryType: simple
+agentFactoryType: worldpop
 #
+#
+#simple creator allows for variable number of agents
+numberOfAgents: 100000
+#
+#
+#worldpop allows for a variable fraction of agents from a population grid
+agentFraction: 0.0005
 #data file specifying the total population in a regular grid for the worldpop case
 populationGridFile: worldpop/gbr_ppp_2020UKnatgrid10km.asc
 #------------------------------
@@ -44,8 +51,12 @@ randomSeed: 250
 xBins: 1000
 yBins: 1000
 #actual size of the grid in metres
-xSize: 100000
-ySize: 100000
+xSize: 1000000
+ySize: 1000000
 #grid origin in metres
-xOrigin: -50000
-yOrigin: -50000
+xOrigin: -78200.4
+yOrigin: -11456.8
+
+
+#xOrigin: -50000
+#yOrigin: -50000

@@ -10,7 +10,8 @@
     void agent::init(){
 
         size=1.;
-        places::getInstance()->getLocations(knownLocations);
+        //places::getInstance()->getLocations(knownLocations);
+ 
         loc =knownLocations[places::home];oldPlace=places::home;
         dest=knownLocations[places::home];newPlace=places::home;
 

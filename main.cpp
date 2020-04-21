@@ -21,6 +21,6 @@
     m.init();
       
      int smax=parameters::getInstance().nsteps;
-     for (int i=0;i<smax;i++){m.update();if (i%10==0)cout<<i<<endl;}
+     for (int i=0;i<smax;i++){m.update();if (i%10==0)cout<<"models step:"<<i<<endl;}
 
  }

@@ -27,7 +27,6 @@ void disease::update(){
 
             if (owner->infected ){
             vector<agent*>neighbours=model::getInstance().g.inRadius(owner,infectionDistance);
-
             for (unsigned i=0;i<neighbours.size();i++){
              agent* b=neighbours[i];
              if (b!=owner){

@@ -67,9 +67,9 @@ std::cout<< "grid xSize            "<< xSize            <<std::endl;
 std::cout<< "grid ySize            "<< ySize            <<std::endl;
 std::cout<< "xOrigin               "<< x0               <<std::endl;
 std::cout<< "yOrigin               "<< y0               <<std::endl;
-std::cout<< "populationGridFile:   "<<populationGridFile<<std::endl;
 std::cout<< "agentFactoryType:     "<<agentFactoryType  <<std::endl;
 std::cout<< "numberOfAgents:       "<<numberOfAgents    <<std::endl;
+std::cout<< "populationGridFile:   "<<populationGridFile<<std::endl;
 std::cout<< "agentFraction:        "<<agentFraction     <<std::endl;
 std::cout<< "----------------------------- "            <<std::endl;
 }

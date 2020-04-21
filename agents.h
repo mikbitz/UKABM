@@ -43,23 +43,22 @@ agents(){
 //-----------------------------------------------------------------------------------------------------------------
 bool update(){
 
-    #pragma omp parallel num_threads(omp_get_max_threads()) 
-    {
-
-//        #pragma omp for schedule(dynamic)
         for (unsigned i=0;i<ags.size();i++){
             ags[i]->preUpdate();
         }
-        #pragma omp for schedule(dynamic)
+        //currently doesn't really seem to scale here in parallel...
+        //#pragma omp parallel num_threads(omp_get_max_threads())
+        //{
+        //#pragma omp for schedule(dynamic)
         for (unsigned i=0;i<ags.size();i+=1){
             ags[i]->update();
         }
+        //}
 
-//        #pragma omp for schedule(dynamic)
         for (unsigned i=0;i<ags.size();i+=1){
             ags[i]->applyUpdate();
         }
-    }//END PARALLEL REGION
+
    if(model::getInstance().tick % parameters::getInstance().outputInterval ==0){
     int inf=0,rec=0;
     for (unsigned i=0;i<ags.size();i+=1){
@@ -70,6 +69,7 @@ bool update(){
    }
    //make sure agents are properly in the search grid.
    model::getInstance().g.check(ags);
+
  return true;
 }
 };

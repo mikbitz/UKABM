@@ -3,6 +3,7 @@
 //These classes allow for the creation of agent popuations using a variety of different methods
 #include "agent.h"
 #include "populationBuilder.h"
+#include "places.h"
 
 
 class agentFactory{
@@ -23,7 +24,9 @@ class worldpopFactory:public agentFactory{
         while (newAgentExists> -1){
             if (newAgentExists==1){
                 agent* a=new agent();
-                p.getNextLocation();
+                a->knownLocations[places::home]=p.getNextLocation();
+                a->knownLocations[places::work]=model::getInstance().g.getRandomPoint();
+                a->init();
                 model::getInstance().g.add(a);
                 agents.push_back(a);
                 k++;
@@ -43,6 +46,8 @@ class simpleRandomFactory:public agentFactory{
         cout<<"Starting simple random agent generator..."<<endl;
         for (int i=0;i<parameters::getInstance().numberOfAgents;i++){
             agent* a=new agent();
+            a->knownLocations[places::home]=model::getInstance().g.getRandomPoint();
+            a->knownLocations[places::work]=model::getInstance().g.getRandomPoint();
             a->init();
             model::getInstance().g.add(a);
             agents.push_back(a);

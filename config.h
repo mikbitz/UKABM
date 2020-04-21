@@ -9,8 +9,6 @@ class configuration{
 public:
   configuration(){
     //add layers to the model
-      asciiGrid a("worldpop/gbr_ppp_2020UKnatgrid100m.asc");
-      exit(0);
     model* thisModel=model::getInstance();
     thisModel->add(new agents());
     

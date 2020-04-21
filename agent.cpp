@@ -4,10 +4,11 @@
     agent::agent(){
         ID=idnum;idnum++;
         infected=false;exposed=false;recovered=false;
+        cellIndex=-1;
     }
 //-----------------------------------------------------------------------------------------------------------------
     void agent::init(){
-        cellIndex=-1;
+
         size=1.;
         places::getInstance()->getLocations(knownLocations);
         loc =knownLocations[places::home];oldPlace=places::home;

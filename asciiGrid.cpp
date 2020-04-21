@@ -3,8 +3,10 @@
 //The data is stored with the first line being the top (Northernmost) row of the raster grid, listed west-to-east along the rows
 //Data is assumed regularly gridded (i.e. same grid cell size in x and y directions)
 #include "asciiGrid.h"
+#include "model.h"
 #include <iostream>
 #include <sstream>
+
 
     asciiGrid::asciiGrid(std::string s){
         readFile(s);
@@ -20,16 +22,40 @@
             readHeader(fileStream);
 
             readData(fileStream);
-            std::cout<<_data.size()<<" "<<_data[0].size()<<std::endl;
-            
+           
             fileStream.close( );
-            
+            for (unsigned y=0;y<_data.size();y++){
+                for (unsigned x=0;x<_data[y].size();x++){
+                    if (_data[y][x]>_NODATA_value) _index.push_back(x+_ncols*y);
+                }
+            }
         } else {
             std::cout << "File path \"" << filePath << "\" is invalid." << std::endl;
             exit(0);
         }
-        
     }
+    //---------------------------------------------------------------------------------------------- 
+    point2D asciiGrid::getValidPoint(unsigned i){
+         //find a valid location
+
+         unsigned x=_index[i] % _ncols;
+         unsigned y=_index[i] / _ncols;
+         double xr=model::getInstance()->random.number();
+         double yr=model::getInstance()->random.number();
+         return point2D(_xllcorner+(x+xr)*_cellSize,_yllcorner+(_nrows-1-y+yr)*_cellSize);
+     }
+     //---------------------------------------------------------------------------------------------- 
+     double asciiGrid::getDataAt(unsigned i){
+         //find a valid location
+         unsigned x=_index[i] % _ncols;
+         unsigned y=_index[i] / _ncols;
+
+         return _data[y][x];
+     }
+     //---------------------------------------------------------------------------------------------- 
+     bool asciiGrid::isValid(unsigned i){
+         return i<_index.size();
+     }
     //----------------------------------------------------------------------------------------------
     void asciiGrid::readData(std::ifstream& fileStream){
         //NB because this is read row by row the data order is data[y][x] where x is West to East and y is North to South

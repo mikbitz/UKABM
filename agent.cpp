@@ -23,14 +23,14 @@
     }
     //-----------------------------------------------------------------------------------------------------------------
     void agent::update(){
-        for (auto d:diseases)d->update();
+        for (auto d:diseases)d.second->update();
         for (unsigned i=0;i<processes.size();i++)processes[i]->update();
 
     }
 //-----------------------------------------------------------------------------------------------------------------
     void agent::applyUpdate(){
-        if (exposed && !infected && !recovered){diseases.push_back(new disease(this));}
-        for (auto d:diseases)d->applyUpdate();
+        if (exposed && !infected && !recovered){diseases["covid"]=new disease(this);}
+        for (auto d:diseases)d.second->applyUpdate();
         //check in the agent's schedule to see whether it is time for the next activity.
         if (tTable.update()){setDest(tTable.getCurrent().place);}
         for (unsigned i=0;i<processes.size();i++)processes[i]->applyUpdate();

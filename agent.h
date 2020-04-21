@@ -23,7 +23,7 @@ public:
     unsigned ID,classNum;
     int cellIndex;
     vector<process*> processes;
-    vector<disease*> diseases;
+    map<string,disease*> diseases;
     agent();
     void init();
     void preUpdate();

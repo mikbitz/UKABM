@@ -30,17 +30,11 @@ agents(){
     f<<"step"<<" susceptible"<<" infected"<<" recovered"<<" totalPop."<<endl;
     model::getInstance()->agents=&ags;
     cout<<"Building agents...";
-    agentFactory* F=new worldpopFactory();
-    F->createAgents(ags);
+    agentFactory& F=agentFactorySelector::select("simple");
+    F.createAgents(ags);
 
     exit(0);
-    //simple random
-    for (int i=0;i<10000000;i++){
-     agent* a=new agent();
-     a->init();
-     model::getInstance()->g.add(a);
-     ags.push_back(a);
-    }
+
     ags[5]->addProcess(new disease(ags[5]));ags[5]->infected=true;
     for (auto a:ags)a->addProcess(new movement(a));
 }

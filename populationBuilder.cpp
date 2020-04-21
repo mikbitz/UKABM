@@ -1,13 +1,14 @@
 //Read gridded data from and ESRI ascii raster grid 
-//Provide function to allow agents to be built at each location with the frequency given in a
+//Provide function to allow agents to be built at each location with the frequency given in a file
+//and selecting only a fraction.
+//Note, if the resolution of the file is very fine the fraction selected may not be very accurate... 
 #include "populationBuilder.h"
 #include "asciiGrid.h"
 #include "model.h"
 #include <iostream>
 #include <sstream>
 #include <point2D.h>
-   // need code like
-   // while (next valid) get next location
+
     populationBuilder::populationBuilder(){
         a.readFile("worldpop/gbr_ppp_2020UKnatgrid10km.asc");
 

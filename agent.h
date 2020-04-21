@@ -5,6 +5,7 @@
 #include "process.h"
 #include "places.h"
 #include "model.h"
+#include "disease.h"
 class agent{
 public:
     map<places::place,point2D> knownLocations;
@@ -22,6 +23,7 @@ public:
     unsigned ID,classNum;
     int cellIndex;
     vector<process*> processes;
+    vector<disease*> diseases;
     agent();
     void init();
     void preUpdate();

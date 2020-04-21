@@ -58,8 +58,6 @@ void disease::update(){
 void disease::applyUpdate(){
     //going to be infected allows for latency to be included...if necessary.
           if(owner->exposed && !owner->recovered)owner->infected=true;
-
-
 }
 //------------------------------------------------------------------
 //Testing section

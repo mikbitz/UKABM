@@ -33,7 +33,7 @@ agents(){
     agentFactory& F=agentFactorySelector::select(parameters::getInstance().agentFactoryType);
     F.createAgents(ags);
 
-    ags[5]->addProcess(new disease(ags[5]));ags[5]->infected=true;
+    ags[5]->diseases.push_back(new disease(ags[5]));ags[5]->infected=true;
     for (auto a:ags)a->addProcess(new movement(a));
 }
 //-----------------------------------------------------------------------------------------------------------------

@@ -31,12 +31,13 @@ agentFactoryType: worldpop
 numberOfAgents: 100000
 #
 #
-#worldpop allows for a variable fraction of agents from a population grid
-agentFraction: 0.0005
+#worldpop allows for an approximate variable fraction of agents to be taken from a population grid
+agentFraction: 0.01
 #data file specifying the total population in a regular grid for the worldpop case
-populationGridFile: worldpop/gbr_ppp_2020UKnatgrid10km.asc
+#currently expected to be in ARC ascii format
+populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
 #------------------------------
-#paramters for a simple disease
+#parameters for a simple disease
 #------------------------------
 recoveryTime: 21.
 infectionRate: 3.
@@ -48,15 +49,13 @@ randomSeed: 250
 #Grid parameters
 #--------------------------------
 #size of the model search grid
+#more cells may lead to shorter run times...depending on things like infection distance...
 xBins: 1000
 yBins: 1000
+#defaults: may get over-ridden by model setup
 #actual size of the grid in metres
-xSize: 1000000
-ySize: 1000000
+xSize: 10000
+ySize: 10000
 #grid origin in metres
-xOrigin: -78200.4
-yOrigin: -11456.8
-
-
-#xOrigin: -50000
-#yOrigin: -50000
+xOrigin: -5000
+yOrigin: -5000

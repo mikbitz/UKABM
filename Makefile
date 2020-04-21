@@ -52,6 +52,8 @@ first: all
 
 model.o: model.cpp model.h config.h agents.h agentFactory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o "$@" "$<"
+agent.o: agent.cpp timetable.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o "$@" "$<"
 ####### Build rules
 
 all: Makefile $(TARGET)

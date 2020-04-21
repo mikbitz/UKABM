@@ -18,13 +18,7 @@
                    a.ySize(),
                    parameters::getInstance().NxCells,
                    parameters::getInstance().NyCells);
-        cout<<a.xOrigin()<<" "<<
-                   a.yOrigin()<<" "<<
-                   a.xSize()<<" "<<
-                   a.ySize()<<" "<<
-                   parameters::getInstance().NxCells<<" "<<
-                   parameters::getInstance().NyCells;
-        cout<<" doom"<<endl;
+
         _iter=0;
         _remainingHere=0;
         _frac=parameters::getInstance().agentFraction;

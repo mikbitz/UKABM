@@ -22,6 +22,6 @@ places * places::instance;
 //------------------------------------------------------------------------------------------------------------------------
 
     void places::getLocations(std::map<place, point2D>& locations){
-        locations[home]=model::getInstance()->g.getRandomPoint();
-        locations[work]=model::getInstance()->g.getRandomPoint();
+        locations[home]=model::getInstance().g.getRandomPoint();
+        locations[work]=model::getInstance().g.getRandomPoint();
     }

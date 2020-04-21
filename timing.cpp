@@ -11,11 +11,11 @@ double timing::timeStep=0;
 //-----------------------------------------------------------------------------------------------------------------
 void timing::initSingleton(){
 instance= new timing;
-parameters* p=parameters::getInstance();
+parameters& p=parameters::getInstance();
 
-timeStep=p->timeStep;
+timeStep=p.timeStep;
 //set the initial time to the initial day at hour zero
-currentTime=ptime(time_from_string(p->initialDate+string(" 08:50")));
+currentTime=ptime(time_from_string(p.initialDate+string(" 08:50")));
 //cout<<"Starting from "<<currentTime<<endl;
 startTime=currentTime;
 startDate=startTime.date();

@@ -40,8 +40,8 @@
 
          unsigned x=_index[i] % _ncols;
          unsigned y=_index[i] / _ncols;
-         double xr=model::getInstance()->random.number();
-         double yr=model::getInstance()->random.number();
+         double xr=model::getInstance().random.number();
+         double yr=model::getInstance().random.number();
          return point2D(_xllcorner+(x+xr)*_cellSize,_yllcorner+(_nrows-1-y+yr)*_cellSize);
      }
      //---------------------------------------------------------------------------------------------- 

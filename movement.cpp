@@ -6,7 +6,7 @@
     }
 //-----------------------------------------------------------------------------------------------------------------
     void movement::preUpdate(){
-        double dt=parameters::getInstance()->timeStep;
+        double dt=parameters::getInstance().timeStep;
         randomWobble=.05;trelax=0.6;
         xdel=owner->dest.x-owner->loc.x;
         ydel=owner->dest.y-owner->loc.y;
@@ -27,13 +27,13 @@
     }
     //-----------------------------------------------------------------------------------------------------------------
     void movement::update(){
-        double dt=parameters::getInstance()->timeStep;
-        dvx=(vdesired*xdel-owner->vel.x)/trelax+randomWobble*(0.5-model::getInstance()->random.number());
-        dvy=(vdesired*ydel-owner->vel.y)/trelax+randomWobble*(0.5-model::getInstance()->random.number());
+        double dt=parameters::getInstance().timeStep;
+        dvx=(vdesired*xdel-owner->vel.x)/trelax+randomWobble*(0.5-model::getInstance().random.number());
+        dvy=(vdesired*ydel-owner->vel.y)/trelax+randomWobble*(0.5-model::getInstance().random.number());
     }
     //-----------------------------------------------------------------------------------------------------------------
     void movement::applyUpdate(){
-        double dt=parameters::getInstance()->timeStep;
+        double dt=parameters::getInstance().timeStep;
         owner->vel.x+=dvx*dt;
         owner->vel.y+=dvy*dt;
         float sz=sqrt(owner->vel.x*owner->vel.x+owner->vel.y*owner->vel.y);

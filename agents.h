@@ -25,15 +25,13 @@ public:
 //-----------------------------------------------------------------------------------------------------------------
 agents(){
 
-    f.open(parameters::getInstance()->outputFileName.c_str());
+    f.open(parameters::getInstance().outputFileName.c_str());
     setName("diseaseSummary");
     f<<"step"<<" susceptible"<<" infected"<<" recovered"<<" totalPop."<<endl;
-    model::getInstance()->agents=&ags;
+    model::getInstance().agents=&ags;
     cout<<"Building agents...";
     agentFactory& F=agentFactorySelector::select("simple");
     F.createAgents(ags);
-
-    exit(0);
 
     ags[5]->addProcess(new disease(ags[5]));ags[5]->infected=true;
     for (auto a:ags)a->addProcess(new movement(a));
@@ -62,16 +60,16 @@ bool update(){
             ags[i]->applyUpdate();
         }
     }//END PARALLEL REGION
-   if(model::getInstance()->tick % parameters::getInstance()->outputInterval ==0){
+   if(model::getInstance().tick % parameters::getInstance().outputInterval ==0){
     int inf=0,rec=0;
     for (unsigned i=0;i<ags.size();i+=1){
         if (ags[i]->infected )inf++;
         if (ags[i]->recovered )rec++;
     }
-    f<<model::getInstance()->tick<<" "<<ags.size()-inf-rec<<" "<<inf<<" "<<rec<<" "<<ags.size()<<endl;
+    f<<model::getInstance().tick<<" "<<ags.size()-inf-rec<<" "<<inf<<" "<<rec<<" "<<ags.size()<<endl;
    }
    //make sure agents are properly in the search grid.
-   model::getInstance()->g.check(ags);
+   model::getInstance().g.check(ags);
  return true;
 }
 };

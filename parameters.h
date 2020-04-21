@@ -1,6 +1,7 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 #include <string>
+#include <vector>
 using namespace std;
 
 /**
@@ -11,8 +12,8 @@ This class stores a set of model parameters. It is a singleton.
 */ 
 class parameters{
 public:
-static parameters* getInstance();
-static parameters* getInstance(string);
+static parameters& getInstance();
+static parameters& getInstance(string);
 ~parameters();
 void printParameters();
 void getParameters();
@@ -29,6 +30,5 @@ protected:
 parameters();
 parameters(string);
 static parameters* instance;
-
 };
 #endif

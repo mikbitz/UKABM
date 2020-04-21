@@ -8,12 +8,12 @@ disease::disease(agent* a):process(a){
         a->infected=false;
         a->recovered=false;
         a->exposed=true;
-        parameters* p=parameters::getInstance();
+        parameters& p=parameters::getInstance();
         //chances per day...timestep in seconds
-        infectionLikelihood = p->infectionRate/24./3600.*p->timeStep;
-        infectionDistance   = p->infectionDist;
+        infectionLikelihood = p.infectionRate/24./3600.*p.timeStep;
+        infectionDistance   = p.infectionDist;
         //timestep in seconds, recoveryLikelihood is rate per day, converted to seconds,  times timestep. 
-        recoveryLikelihood=1./p->recoveryTime/24./3600.*p->timeStep;
+        recoveryLikelihood=1./p.recoveryTime/24./3600.*p.timeStep;
         duration=0;
 
 }
@@ -26,7 +26,7 @@ void disease::preUpdate(){
 void disease::update(){
 
             if (owner->infected ){
-            vector<agent*>neighbours=model::getInstance()->g.inRadius(owner,infectionDistance);
+            vector<agent*>neighbours=model::getInstance().g.inRadius(owner,infectionDistance);
 
             for (unsigned i=0;i<neighbours.size();i++){
              agent* b=neighbours[i];
@@ -39,7 +39,7 @@ void disease::update(){
                 // infected when r*dt>1
 
                 if(!b->exposed){
-                     double zit=-log(model::getInstance()->random.number());
+                     double zit=-log(model::getInstance().random.number());
                      if(zit< infectionLikelihood){b->exposed=true;}
                 }
              }
@@ -48,7 +48,7 @@ void disease::update(){
               //constant chance of recovery per day
               //exposed remains true once disease is acquired, 
               //but infected becomes false once recovered
-             if(-log(model::getInstance()->random.number())< recoveryLikelihood)//  && duration>=1) //duration allows for latency...  )
+             if(-log(model::getInstance().random.number())< recoveryLikelihood)//  && duration>=1) //duration allows for latency...  )
               {owner->infected=false;owner->recovered=true;}
              duration++;
             }
@@ -68,12 +68,12 @@ void disease::test(){
     cout<<"---Disease process testing---"<<endl;
     //bool success=true;
     agent* a=new agent();
-    model::getInstance()->g.add(a);
-    parameters* p=parameters::getInstance();
+    model::getInstance().g.add(a);
+    parameters& p=parameters::getInstance();
     //manipulate the rates for the disease to as to set them to constant test values 
-    p->infectionRate=24.*3600./p->timeStep * 0.001;//so likelihood is 0.001
-    p->infectionDist=0.75; 
-    p->recoveryTime=1./24./3600.*p->timeStep * 100;//so likelihood is 1./100 
+    p.infectionRate=24.*3600./p.timeStep * 0.001;//so likelihood is 0.001
+    p.infectionDist=0.75; 
+    p.recoveryTime=1./24./3600.*p.timeStep * 100;//so likelihood is 1./100 
     testDisease=new disease(a);
     a->addProcess(testDisease);
 
@@ -82,7 +82,7 @@ void disease::test(){
     agent* b;
     vector<agent*> v;
     int pop=100;
-    for (int i=0;i<pop;i++){b=new agent();v.push_back(b);model::getInstance()->g.add(b);}
+    for (int i=0;i<pop;i++){b=new agent();v.push_back(b);model::getInstance().g.add(b);}
     //now a can infect b - at first, though, don't let b spread the infection
 
 
@@ -91,14 +91,14 @@ void disease::test(){
     /*for (int i=0;i<50;i++){
        a->preUpdate();a->update();//don't call a->applyUpdate so that it does not recover
        oldt=total;total=0;
-       for (auto p:v)if (p->exposed)total++;
+       for (auto p:v)if (p.exposed)total++;
        //fraction of uninfected pop. that are infected per unit time should be about constant
        //if (pop-oldt>0)cout<<pop-total<<" "<<double(total-oldt)/(pop-oldt)<<endl;
     }
-    for (auto p:v){p->infected=true;}
+    for (auto p:v){p.infected=true;}
     for (int i=0;i<5000;i++){
        total=0;
-       for (auto p:v){p->applyUpdate();if (p->recovered)total++;}
+       for (auto p:v){p.applyUpdate();if (p.recovered)total++;}
        //recovery should be exponential with 1/e life of 1000 steps
        //cout<<pop-total<<endl;
     }*/
@@ -112,11 +112,11 @@ void disease::fullMixTest(){
     //This tests whether the disease model is able to reproduce a standard well-mixed SIR model
     //compare with output of diffEQ.py
     //bool success=true;
-    parameters* p=parameters::getInstance();
+    parameters& p=parameters::getInstance();
     //manipulate the rates for the disease to as to set them to constant test values
     //here just look at one value of recovery rate.
     double r=0.03;
-    p->recoveryTime=1./24./3600.*p->timeStep * 1./r; 
+    p.recoveryTime=1./24./3600.*p.timeStep * 1./r; 
     agent* a;
     vector<agent*> v;
     //strings for use in constructing filenames
@@ -135,7 +135,7 @@ void disease::fullMixTest(){
         //loop over a set of infection rates, crossing the boundary of R0=b/r=1
         for (double bn=0.01;bn<0.2;bn+=0.01){
           //manipluate infection rate to get the right value
-          p->infectionRate=24.*3600./p->timeStep * bn/pop;
+          p.infectionRate=24.*3600./p.timeStep * bn/pop;
           //string for filename
           stringstream sb; sb<<bn;sb>>bs;
           //run 200 replicates with different random seeds
@@ -145,29 +145,29 @@ void disease::fullMixTest(){
                stringstream s; s<<rn;s>>num;
                ofstream f("testMix_Init_I_"+dir+"_withGoing/testMix_num_200_run_"+num+"_r_"+rs+"_b_"+bs);
                //initialize random sequence
-               model::getInstance()->random.setSeed(rn);
+               model::getInstance().random.setSeed(rn);
                //delete any pre-existing agents from previous run
-               for (auto p:v){delete p;}
-               v.clear();model::getInstance()->g.eraseAll();
+               for (auto a:v){delete a;}
+               v.clear();model::getInstance().g.eraseAll();
                //create new agents and add to model grid - all agents at position 0,0, so all can infect each other
-               for (int i=0;i<pop;i++){a=new agent();v.push_back(a);model::getInstance()->g.add(a);}
+               for (int i=0;i<pop;i++){a=new agent();v.push_back(a);model::getInstance().g.add(a);}
                //infect the initial population and make sure that the disease is fully active
                for (int i=0;i<initInf0;i++){v[i]->addProcess(new disease(v[i]));v[i]->preUpdate();v[i]->update();v[i]->applyUpdate();}
                //run the model for 1500 timesteps, accumulating totals
                for (int i=0;i<1500;i++){
                   int S=0,I=0,R=0;
                   //coutn up totals at the current step
-                  for (auto p:v){
-                      if(!p->infected && !p->recovered)S++;
-                      if(p->infected )I++;
-                      if(p->recovered)R++;
+                  for (auto a:v){
+                      if(!a->infected && !a->recovered)S++;
+                      if(a->infected )I++;
+                      if(a->recovered)R++;
                   }
                   //write current totals to output
                   f<<S<<" "<<I<<" "<<R<<endl;
                   //update agents
-                  for (auto p:v)p->preUpdate();
-                  for (auto p:v)p->update();
-                  for (auto p:v)p->applyUpdate();
+                  for (auto a:v)a->preUpdate();
+                  for (auto a:v)a->update();
+                  for (auto a:v)a->applyUpdate();
                }
                //close output file
                f.close();
@@ -181,11 +181,11 @@ void disease::fixedSpatialTest(){
     cout<<"--- test on a grid---"<<endl;
     //This tests whether the disease model is able to produce a diffusing epidemic on a spatially ditributed but fixed agent set
     //bool success=true;
-    parameters* p=parameters::getInstance();
+    parameters& p=parameters::getInstance();
     //manipulate the rates for the disease to as to set them to constant test values
     //here just look at one value of recovery rate.
     double r=0.01;
-    p->recoveryTime=1./24./3600.*p->timeStep * 1./r; 
+    p.recoveryTime=1./24./3600.*p.timeStep * 1./r; 
     agent* a;
     vector<agent*> v;
     //strings for use in constructing filenames
@@ -193,8 +193,8 @@ void disease::fixedSpatialTest(){
     //a fairly small population size
     int Ng=100;
     float spacing=0.5;
-    p->infectionDist=1.;//0.75; 
-    float pop=p->infectionDist/spacing;
+    p.infectionDist=1.;//0.75; 
+    float pop=p.infectionDist/spacing;
     pop=pop*pop*acos(-1.);
 
     //do two initial infection sizes, 1 and 10 representing initial fractions of 0.01 and 0.1
@@ -208,7 +208,7 @@ void disease::fixedSpatialTest(){
         for (double bn=0.1;bn<0.2;bn+=0.1){
           //manipluate infection rate to get the right value: use the mean population within an infection distance
           //as a scaling on the base bn - this can lead to rather small infection rates though...
-          p->infectionRate=24.*3600./p->timeStep*bn/pop;
+          p.infectionRate=24.*3600./p.timeStep*bn/pop;
           //string for filename
           stringstream sb; sb<<bn;sb>>bs;
           //run 100 replicates with different random seeds
@@ -218,16 +218,16 @@ void disease::fixedSpatialTest(){
                stringstream s; s<<rn;s>>num;
                ofstream f("testSpatial_Init_I_"+dir+"/testSpatial_num_100_run_"+num+"_r_"+rs+"_b_"+bs);
                //initialize random sequence
-               model::getInstance()->random.setSeed(72);
+               model::getInstance().random.setSeed(72);
                //delete any pre-existing agents from previous run
-               for (auto p:v){delete p;}
-               v.clear();model::getInstance()->g.eraseAll();
+               for (auto a:v){delete a;}
+               v.clear();model::getInstance().g.eraseAll();
                //create new agents and add to model grid 
                //all agents distributed uniformly at spacing
                for (float i=0;i<Ng;i++){
                   for (float j=0;j<Ng;j++){
                       float x=i*spacing,y=j*spacing;
-                      a=new agent();v.push_back(a);a->loc.x=x;a->loc.y=y;model::getInstance()->g.add(a);
+                      a=new agent();v.push_back(a);a->loc.x=x;a->loc.y=y;model::getInstance().g.add(a);
                       if (i<=5 ){
                         //infect the initial population and make sure that the disease is fully active
                         a->addProcess(new disease(a));a->preUpdate();a->update();a->applyUpdate();
@@ -239,19 +239,19 @@ void disease::fixedSpatialTest(){
                   // random_shuffle(v.begin(),v.end());
 
                   int S=0,I=0,R=0;
-                  model::getInstance()->tick=i+1;
+                  model::getInstance().tick=i+1;
                   //coutn up totals at the current step
-                  for (auto p:v){
-                      if(!p->infected && !p->recovered)S++;
-                      if(p->infected )I++;
-                      if(p->recovered)R++;
+                  for (auto a:v){
+                      if(!a->infected && !a->recovered)S++;
+                      if(a->infected )I++;
+                      if(a->recovered)R++;
                   }
                   //write current totals to output
                   f<<S<<" "<<I<<" "<<R<<endl;
                   //update agents
-                  for (auto p:v)p->preUpdate();
-                  for (auto p:v)p->update();
-                  for (auto p:v)p->applyUpdate();
+                  for (auto a:v)a->preUpdate();
+                  for (auto a:v)a->update();
+                  for (auto a:v)a->applyUpdate();
                }
                //close output file
                f.close();

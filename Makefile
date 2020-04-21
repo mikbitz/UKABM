@@ -34,6 +34,8 @@ SOURCES       = main.cpp \
 		places.cpp \
 		disease.cpp \
 		asciiGrid.cpp \
+		movement.cpp \
+		populationBuilder.cpp \
 		agent.cpp 
  
 OBJECTS       = $(SOURCES:.cpp=.o)
@@ -48,7 +50,8 @@ first: all
 .cpp.o:
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o "$@" "$<"
 
-
+model.o: model.cpp model.h config.h agents.h agentFactory.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o "$@" "$<"
 ####### Build rules
 
 all: Makefile $(TARGET)

@@ -1,6 +1,8 @@
 #include "parameters.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <algorithm>
 //-----------------------------------------------------------------------------------------------------------------
 parameters* parameters::instance;
 //-----------------------------------------------------------------------------------------------------------------
@@ -8,18 +10,18 @@ parameters::~parameters(){
 if (instance!=NULL)delete instance;
 }
 //-----------------------------------------------------------------------------------------------------------------
-parameters* parameters::getInstance(){
+parameters& parameters::getInstance(){
  if (instance==NULL){
    instance=new parameters();
  }
- return instance;
+ return *instance;
 }
 //-----------------------------------------------------------------------------------------------------------------
-parameters* parameters::getInstance(string f){
+parameters& parameters::getInstance(string f){
  if (instance==NULL){
    instance=new parameters(f);
  }
- return instance;
+ return *instance;
 }
 //-----------------------------------------------------------------------------------------------------------------
 parameters::parameters(){
@@ -70,47 +72,58 @@ std::cout<< "----------------------------- "           <<std::endl;
 }
 //--------------------------------------------------------------------------------------------
 void parameters::getParameters(){
+    
+    std::cout<<"Hoping to use values from parameter file "<<parameterFile<<std::endl;
+    try{
+    std::fstream f;
+    //f.exceptions ( ifstream::failbit | ifstream::badbit );
+    f.open(parameterFile.c_str(),ios::in);
+    std::string label;
+    
+    while (!f.eof()){
+         std::string label;
+        f>>label;
+        //set # as comment character
+        if (label[ 0 ] != '#'){
+            bool success=false;
 
-  std::cout<<"Hoping to use values from parameter file "<<parameterFile<<std::endl;
-  try{
-   std::fstream f;
-   f.exceptions ( ifstream::failbit | ifstream::badbit );
-   f.open(parameterFile.c_str(),ios::in);
-   std::string label;
-   for (int i=0;i<23;i++){
-    f>>label;
-    if (label=="timeStep:")       f>> timeStep;        else {
-    if (label=="nsteps:")         f>> nsteps;          else {
-    if (label=="outputInterval:") f>> outputInterval;  else {
-    if (label=="outputFile:")     f>> outputFileName;  else {
-    if (label=="diseaseLocationFile:")     f>> diseaseLocationFileName;  else {
-    if (label=="recoveryLocationFile:")     f>> recoveryLocationFileName;  else {
-    if (label=="isRestart:")      f>> isRestart;       else {
-    if (label=="restartInterval:")f>> restartInterval; else {
-    if (label=="restartFile:")    f>> restartFileName; else {
-    if (label=="inputFile:")      f>> inputFileName;   else {
-    if (label=="initialDate:")    f>> initialDate;     else {
-    if (label=="finalDate:")      f>> finalDate;       else {
-    if (label=="recoveryTime:")   f>> recoveryTime;    else {
-    if (label=="infectionRate:")  f>> infectionRate;   else {
-    if (label=="infectionDist:")  f>> infectionDist;   else {
-    if (label=="randomSeed:")     f>> randomSeed;      else {
-    if (label=="showGUI:")        f>> visible;         else {
-    if (label=="xBins:")          f>> NxCells;         else {
-    if (label=="yBins:")          f>> NyCells;         else {
-    if (label=="xSize:")          f>> xSize;           else {
-    if (label=="ySize:")          f>> ySize;           else {
-    if (label=="xOrigin:")        f>> x0;              else {
-    if (label=="yOrigin:")        f>> y0;              else {
-    std::cout<<"Unrecognised label "<<label<<" in file "<<parameterFile<<" exiting..."<<std::endl;exit(1); }}}}}}}}}}}}}}}}}}}}}}}
-   }
-   f.close();
-   printParameters();
-
-  } catch (fstream::failure err){
-   std::cout<<"IO error while reading data file "<<parameterFile<<std::endl;
-   exit(1);
-  }
+            if (label=="timeStep:")            {f>> timeStep;                success=true;}
+            if (label=="nsteps:")              {f>> nsteps;                  success=true;}          
+            if (label=="outputInterval:")      {f>> outputInterval;          success=true;}  
+            if (label=="outputFile:")          {f>> outputFileName;          success=true;}  
+            if (label=="diseaseLocationFile:") {f>> diseaseLocationFileName; success=true;}  
+            if (label=="recoveryLocationFile:"){f>> recoveryLocationFileName;success=true;}  
+            if (label=="isRestart:")           {f>> isRestart;               success=true;}       
+            if (label=="restartInterval:")     {f>> restartInterval;         success=true;} 
+            if (label=="restartFile:")         {f>> restartFileName;         success=true;} 
+            if (label=="inputFile:")           {f>> inputFileName;           success=true;}   
+            if (label=="initialDate:")         {f>> initialDate;             success=true;}     
+            if (label=="finalDate:")           {f>> finalDate;               success=true;}       
+            if (label=="recoveryTime:")        {f>> recoveryTime;            success=true;}    
+            if (label=="infectionRate:")       {f>> infectionRate;           success=true;}   
+            if (label=="infectionDist:")       {f>> infectionDist;           success=true;}   
+            if (label=="randomSeed:")          {f>> randomSeed;              success=true;}      
+            if (label=="showGUI:")             {f>> visible;                 success=true;}         
+            if (label=="xBins:")               {f>> NxCells;                 success=true;}         
+            if (label=="yBins:")               {f>> NyCells;                 success=true;}         
+            if (label=="xSize:")               {f>> xSize;                   success=true;}           
+            if (label=="ySize:")               {f>> ySize;                   success=true;}           
+            if (label=="xOrigin:")             {f>> x0;                      success=true;}              
+            if (label=="yOrigin:")             {f>> y0;                      success=true;}              
+            if (!f.eof() && !success){
+                std::cout<<"Unrecognised label "<<label<<" in file "<<parameterFile<<" exiting..."<<std::endl;
+                exit(1); 
+            }
+        }else{
+            //ignore all text on lines beginning with #
+            f.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+    f.close();
+    printParameters();
+    
+    } catch (fstream::failure err){
+      std::cout<<"IO error while reading data file "<<parameterFile<<std::endl;
+      exit(1);
+    }
 }
-
-

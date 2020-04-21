@@ -2,6 +2,7 @@
 #include "parameters.h"
 #include "timing.h"
 #include "config.h"
+#include "movement.h"
 
 /**
 \file model.cpp
@@ -17,19 +18,19 @@ void model::clean(){if (instance!=NULL) {delete instance;instance=NULL;}}
 //-----------------------------------------------------------------------------------------------------------------
 model::~model(){clean();}
 //-----------------------------------------------------------------------------------------------------------------
-model* model::getInstance(){
+model& model::getInstance(){
  if (instance==NULL){
    cout<<"A new model was set up"<<endl;
    instance=new model();
  }
- return instance;
+ return *instance;
 }
 //-----------------------------------------------------------------------------------------------------------------
 model::model(){
 
     tick=0;
-    parameters* p=parameters::getInstance();
-    dt=p->timeStep;
+    parameters& p=parameters::getInstance();
+    dt=p.timeStep;
     g.init();
 
 }

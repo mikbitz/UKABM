@@ -55,8 +55,8 @@ void searchGrid::init(double x0_,
 //------------------------------------------------------------------
 void searchGrid::init()
 {
-    parameters* p=parameters::getInstance();
-    init(p->x0,p->y0,p->xSize,p->ySize,p->NxCells,p->NyCells);
+    parameters& p=parameters::getInstance();
+    init(p.x0,p.y0,p.xSize,p.ySize,p.NxCells,p.NyCells);
     wrapDefaults();
 }
 //------------------------------------------------------------------
@@ -364,8 +364,8 @@ void   searchGrid::inDist(int q,float d,agent* a,vector<agent*>& L){
 }
 //------------------------------------------------------------------
 point2D   searchGrid::getRandomPoint(){
-float x=x0+xSize*model::getInstance()->random.number();
-float y=y0+ySize*model::getInstance()->random.number();
+float x=x0+xSize*model::getInstance().random.number();
+float y=y0+ySize*model::getInstance().random.number();
 return point2D(x,y);
 }
 //put in spherical distance?

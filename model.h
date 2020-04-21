@@ -23,8 +23,8 @@ class randomizer {
 public:
     randomizer(){
       uniform_dist=std::uniform_real_distribution<> (0,1);
-      cout<<"A randomizer was set up with seed " <<parameters::getInstance()->randomSeed<<endl;
-      twister.seed(parameters::getInstance()->randomSeed);
+      cout<<"A randomizer was set up with seed " <<parameters::getInstance().randomSeed<<endl;
+      twister.seed(parameters::getInstance().randomSeed);
     }
     double number(){
      return uniform_dist(twister);
@@ -57,7 +57,7 @@ m->update();
 
 class model{
 public:
-     static model* getInstance();
+     static model& getInstance();
      void init();
      bool update();
      void runOneStep(){

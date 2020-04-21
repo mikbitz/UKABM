@@ -9,8 +9,8 @@ class configuration{
 public:
   configuration(){
     //add layers to the model
-    model* thisModel=model::getInstance();
-    thisModel->add(new agents());
+    model& thisModel=model::getInstance();
+    thisModel.add(new agents());
     
   }
 

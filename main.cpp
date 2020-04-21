@@ -15,12 +15,12 @@
         parameters::getInstance(argv[1]);
     }
 
-    model* m=model::getInstance();
+    model& m=model::getInstance();
     //Initialize the model singleton after first creation so that setup that depends on
     //the model being fully created has something to work with.
-    m->init();
+    m.init();
       
-     int smax=parameters::getInstance()->nsteps;
-     for (int i=0;i<smax;i++){m->update();if (i%10==0)cout<<i<<endl;}
+     int smax=parameters::getInstance().nsteps;
+     for (int i=0;i<smax;i++){m.update();if (i%10==0)cout<<i<<endl;}
 
  }

@@ -9,8 +9,8 @@ struct event{
   string initialDate;
   places::place place;
   event(string s,places::place p){
-        parameters* pu=parameters::getInstance();
-        place=p;initialDate=pu->initialDate;setEndTime(s);
+        parameters& pu=parameters::getInstance();
+        place=p;initialDate=pu.initialDate;setEndTime(s);
   }
   event(ptime t,places::place p){
         endTime=t;place=p;

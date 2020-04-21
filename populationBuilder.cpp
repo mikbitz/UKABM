@@ -37,8 +37,7 @@
           success=1;
         }else{
           //allow for fractional values in population data (regarding the grid values as a kind of average frequency in a cell)
-            double ahhh=model::getInstance()->random.number();
-          if (ahhh> _remainingHere){
+          if (model::getInstance().random.number()> _remainingHere){
             _iter++;
             success=0;
             if (a.isValid(_iter)) _remainingHere=a.getDataAt(_iter)*_frac;

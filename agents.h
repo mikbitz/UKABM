@@ -7,7 +7,7 @@
 #include "movement.h"
 #include <fstream>
 #include <omp.h>
-#include "populationBuilder.h"
+#include "agentFactory.h"
 /**
 \file agents.cpp
 
@@ -28,36 +28,21 @@ agents(){
     f.open(parameters::getInstance()->outputFileName.c_str());
     setName("diseaseSummary");
     f<<"step"<<" susceptible"<<" infected"<<" recovered"<<" totalPop."<<endl;
-    model::getInstance()->ugs=&ags;
-    populationBuilder p;
-    p.startCount();
-    int k=0;
-    int newAgent=p.personAtNextLocation();
+    model::getInstance()->agents=&ags;
     cout<<"Building agents...";
-    while (newAgent> -1){
-        if (newAgent==1){
-        agent* a=new agent();
-        p.getNextLocation();
-        model::getInstance()->g.add(a);
-        ags.push_back(a);
-        k++;
-        if (k%100000==0)cout<<k<<"...";
-        }
-
-        newAgent=p.personAtNextLocation();
-    }
-    cout<<endl;
+    agentFactory* F=new worldpopFactory();
+    F->createAgents(ags);
 
     exit(0);
+    //simple random
     for (int i=0;i<10000000;i++){
      agent* a=new agent();
      a->init();
      model::getInstance()->g.add(a);
      ags.push_back(a);
-     if (i==5) {a->addProcess(new disease(a));a->infected=true;}
-     a->addProcess(new movement(a));
     }
-
+    ags[5]->addProcess(new disease(ags[5]));ags[5]->infected=true;
+    for (auto a:ags)a->addProcess(new movement(a));
 }
 //-----------------------------------------------------------------------------------------------------------------
 ~agents(){
@@ -91,6 +76,7 @@ bool update(){
     }
     f<<model::getInstance()->tick<<" "<<ags.size()-inf-rec<<" "<<inf<<" "<<rec<<" "<<ags.size()<<endl;
    }
+   //make sure agents are properly in the search grid.
    model::getInstance()->g.check(ags);
  return true;
 }

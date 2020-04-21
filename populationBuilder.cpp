@@ -10,6 +10,7 @@
    // while (next valid) get next location
     populationBuilder::populationBuilder(){
         a.readFile("worldpop/gbr_ppp_2020UKnatgrid10km.asc");
+
         _iter=0;
         _remainingHere=0;
         _frac=0.01;

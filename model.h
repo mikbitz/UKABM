@@ -82,7 +82,7 @@ public:
      double getSize();
      string getText();
      searchGrid g;
-     vector<agent*>* ugs;
+     vector<agent*>* agents;
      randomizer random;
 private:
 

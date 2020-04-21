@@ -65,22 +65,17 @@ layer* model::getLayer(unsigned i){
 bool model::update(){
     //cout<<"------------------- step "<<tick<<" ---------------------"<<endl;
     bool b=false;
-    //cout<<"boink "<<tick<<" "<<timing::getInstance().now()<<endl;
     for (unsigned i=0;i<layers.size();i++){
       bool u=layers[i]->update();
       b=b || u;
     }
-    if (tick%10==0){cout<<timing::getInstance().now()<<endl;}//text=to_simple_string(timing::getInstance().now().time_of_day());cout<<timing::getInstance().today()<<" "<<text<<endl;}
+    if (tick%10==0){cout<<timing::getInstance().now()<<endl;}
 
     if (b){
         tick++;
         timing::getInstance().update();
     }
-    //make sure agents are properly in the search grid.
-    //g.check();
-    //care with this  - if the sub-second field is zero it is omitted 
-    //- otherwise it is included
-    //with accuracy down to nanoseconds(!) - can lead to "flicker"
+
     return b;
 }
 //-----------------------------------------------------------------------------------------------------------------

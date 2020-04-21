@@ -15,6 +15,7 @@ public:
 class worldpopFactory:public agentFactory{
     void createAgents(vector<agent*>& agents){
         //use a file with gridded population data to create agents in given locations
+        //population builder will resize the model grid to fit.
         cout<<"Creating agents ...";
         populationBuilder p;
         p.startCount();

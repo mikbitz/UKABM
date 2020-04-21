@@ -30,6 +30,10 @@ public:
     point2D getValidPoint(unsigned);
     double getDataAt(unsigned);
     bool isValid(unsigned);
+    double xOrigin();
+    double yOrigin();
+    double xSize();
+    double ySize();
 };
 
 #endif

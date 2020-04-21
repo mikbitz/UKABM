@@ -96,6 +96,14 @@
         std::cout<<"Nodata:"<<_NODATA_value<<std::endl;
     }
     //----------------------------------------------------------------------------------------------
+    double asciiGrid::xOrigin(){return _xllcorner;}
+    //----------------------------------------------------------------------------------------------
+    double asciiGrid::yOrigin(){return _yllcorner;}
+    //----------------------------------------------------------------------------------------------
+    double asciiGrid::xSize(){return _ncols*_cellSize;}
+    //----------------------------------------------------------------------------------------------
+    double asciiGrid::ySize(){return _nrows*_cellSize;}
+    //----------------------------------------------------------------------------------------------
     const std::vector<std::string> asciiGrid::StringToWords( const std::string& inputString, const char wordTerminationCharacter ) const {
         // convert a line read from the file into a set of individual strings using a given separator
         std::stringstream stringStream( inputString );

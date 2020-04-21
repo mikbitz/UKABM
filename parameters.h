@@ -24,6 +24,8 @@ string initialDate,finalDate;
 string populationGridFile;
 string agentFactoryType;
 string parameterFile,outputFileName,diseaseLocationFileName,recoveryLocationFileName,inputFileName,restartFileName;
+int numberOfAgents;
+double agentFraction;
 int NxCells,NyCells,restartInterval,outputInterval;
 double xSize,ySize,x0,y0;
 bool isRestart;

@@ -41,7 +41,7 @@ class simpleRandomFactory:public agentFactory{
         //simple random allocation anywhere in the model search grid
         int k=0;
         cout<<"Starting simple random agent generator..."<<endl;
-        for (int i=0;i<100000;i++){
+        for (int i=0;i<parameters::getInstance().numberOfAgents;i++){
             agent* a=new agent();
             a->init();
             model::getInstance().g.add(a);

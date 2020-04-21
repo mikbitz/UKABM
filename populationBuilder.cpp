@@ -14,7 +14,7 @@
 
         _iter=0;
         _remainingHere=0;
-        _frac=0.01;
+        _frac=parameters::getInstance().agentFraction;
     }
     //----------------------------------------------------------------------------------------------
     point2D populationBuilder::getNextLocation(){

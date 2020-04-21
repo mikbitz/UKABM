@@ -41,35 +41,37 @@ getParameters();
 }
 //--------------------------------------------------------------------------------------------
 void parameters::printParameters(){
-std::cout<< "Input Parameter File "<<parameterFile     <<std::endl;
-std::cout<< "----------------------------- "           <<std::endl;
-std::cout<< "Successfully found parameters "           <<std::endl;
-std::cout<< "timeStep              "<< timeStep        <<std::endl;
-std::cout<< "number of timesteps   "<< nsteps          <<std::endl;
-std::cout<< "outputInterval        "<< outputInterval  <<std::endl;
-std::cout<< "outputFileName        "<< outputFileName  <<std::endl;
+std::cout<< "Input Parameter File "<<parameterFile      <<std::endl;
+std::cout<< "----------------------------- "            <<std::endl;
+std::cout<< "Successfully found parameters "            <<std::endl;
+std::cout<< "timeStep              "<< timeStep         <<std::endl;
+std::cout<< "number of timesteps   "<< nsteps           <<std::endl;
+std::cout<< "outputInterval        "<< outputInterval   <<std::endl;
+std::cout<< "outputFileName        "<< outputFileName   <<std::endl;
 std::cout<< "diseaseLocationFileName        "<< diseaseLocationFileName  <<std::endl;
 std::cout<< "recoveryLocationFileName        "<< recoveryLocationFileName  <<std::endl;
-std::cout<< "isRestart             "<< isRestart       <<std::endl;
-std::cout<< "restartInterval       "<< restartInterval <<std::endl;
-std::cout<< "restartFileName       "<< restartFileName <<std::endl;
-std::cout<< "inputFileName         "<< inputFileName   <<std::endl;
-std::cout<< "initialDate           "<< initialDate     <<std::endl;
-std::cout<< "finalDate             "<< finalDate       <<std::endl;
-std::cout<< "recoveryTime          "<< recoveryTime    <<std::endl;
-std::cout<< "infectionRate         "<< infectionRate   <<std::endl;
-std::cout<< "infectionDist         "<< infectionDist   <<std::endl;
-std::cout<< "randomSeed            "<< randomSeed      <<std::endl;
-std::cout<< "show GUI              "<< visible         <<std::endl;
-std::cout<< "grid number of x bins "<< NxCells         <<std::endl;
-std::cout<< "grid number of y bins "<< NyCells         <<std::endl;
-std::cout<< "grid xSize            "<< xSize           <<std::endl;
-std::cout<< "grid ySize            "<< ySize           <<std::endl;
+std::cout<< "isRestart             "<< isRestart        <<std::endl;
+std::cout<< "restartInterval       "<< restartInterval  <<std::endl;
+std::cout<< "restartFileName       "<< restartFileName  <<std::endl;
+std::cout<< "inputFileName         "<< inputFileName    <<std::endl;
+std::cout<< "initialDate           "<< initialDate      <<std::endl;
+std::cout<< "finalDate             "<< finalDate        <<std::endl;
+std::cout<< "recoveryTime          "<< recoveryTime     <<std::endl;
+std::cout<< "infectionRate         "<< infectionRate    <<std::endl;
+std::cout<< "infectionDist         "<< infectionDist    <<std::endl;
+std::cout<< "randomSeed            "<< randomSeed       <<std::endl;
+std::cout<< "show GUI              "<< visible          <<std::endl;
+std::cout<< "grid number of x bins "<< NxCells          <<std::endl;
+std::cout<< "grid number of y bins "<< NyCells          <<std::endl;
+std::cout<< "grid xSize            "<< xSize            <<std::endl;
+std::cout<< "grid ySize            "<< ySize            <<std::endl;
 std::cout<< "xOrigin               "<< x0               <<std::endl;
 std::cout<< "yOrigin               "<< y0               <<std::endl;
 std::cout<< "populationGridFile:   "<<populationGridFile<<std::endl;
-std::cout<< "agentFactoryType:     "<<agentFactoryType<<std::endl;
-std::cout<< "----------------------------- "           <<std::endl;
+std::cout<< "agentFactoryType:     "<<agentFactoryType  <<std::endl;
+std::cout<< "numberOfAgents:       "<<numberOfAgents    <<std::endl;
+std::cout<< "agentFraction:        "<<agentFraction     <<std::endl;
+std::cout<< "----------------------------- "            <<std::endl;
 }
 //--------------------------------------------------------------------------------------------
 void parameters::getParameters(){
@@ -113,6 +115,9 @@ void parameters::getParameters(){
             if (label=="yOrigin:")             {f>> y0;                      success=true;}
             if (label=="populationGridFile:")  {f>>populationGridFile;       success=true;}
             if (label=="agentFactoryType:")    {f>>agentFactoryType;         success=true;}
+            if (label=="numberOfAgents:")      {f>>numberOfAgents;           success=true;}
+            if (label=="agentFraction:")       {f>>agentFraction;            success=true;}
+
             if (!f.eof() && !success){
                 std::cout<<"Unrecognised label "<<label<<" in file "<<parameterFile<<" exiting..."<<std::endl;
                 exit(1); 

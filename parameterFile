@@ -1,46 +1,47 @@
-timeStep:
-14400
-nsteps:
-300
-isRestart:
-0
-restartInterval:
-0
-restartFile:
-none
-outputInterval:
-1
-outputFile:
-diseaseSummary
-diseaseLocationFile:
-placesOfInfection_testRun
-recoveryLocationFile:
-placesOfRecovery_testRun
-inputFile:
-rooms.xml
-initialDate:
-2020-Mar-10
-finalDate:
-2020-Apr-11
-recoveryTime:
-21.
-infectionRate:
-3.
-infectionDist:
-10
-randomSeed:
-250
-showGUI:
-1
-xBins:
-1000
-yBins:
-1000
-xSize:
-100000
-ySize:
-100000
-xOrigin:
--50000
-yOrigin:
--50000
+#Model parameters
+#lines starting with # are comments
+#format is label <any amount of white-space> value on each line
+#
+#-------------------------------
+#Timing parameters
+#-------------------------------
+#Time step in seconds
+timeStep:     14400
+#how many timesteps of the above length will teh model run for
+nsteps: 300
+#date for the start of the run
+initialDate: 2020-Mar-10
+#nominal end data - at the moment run uration is actually controlled by nsteps above
+finalDate: 2020-Apr-11
+#-------------------------------
+#output
+#-------------------------------
+#how often will output be made in units of teh timestep
+outputInterval: 1
+#simple csv file of summary data for the disease
+outputFile: diseaseSummary
+#------------------------------
+#Methods for creating agents
+agentFactoryType: worldpop
+#data file specifying the total population in a regular grid
+populationGridFile: worldpop/gbr_ppp_2020UKnatgrid10km.asc
+#------------------------------
+#paramters for a simple disease
+recoveryTime: 21.
+infectionRate: 3.
+infectionDist: 10
+#--------------------------------
+#random number seed for this run
+randomSeed: 250
+#--------------------------------
+#Grid parameters
+#--------------------------------
+#size of the model search grid
+xBins: 1000
+yBins: 1000
+#actual size of the grid in metres
+xSize: 100000
+ySize: 100000
+#grid origin in metres
+xOrigin: -50000
+yOrigin: -50000

@@ -31,8 +31,8 @@
         //data is assumed stored South to North, but is written by convention North to South
         //i.e. top-left corner first
         if( _fileStream.is_open( ) ) {
-            for (unsigned j=_nrows-1;j>0;j--){
-                for (unsigned i=0;i<_ncols;i++){
+            for (int j=_nrows-1;j>= 0;j--){
+                for (int i=0;i<(int)_ncols;i++){
                     _fileStream<<regularGrid[i][j]<<" ";    
                 }
                 _fileStream<<std::endl;

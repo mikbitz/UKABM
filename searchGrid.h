@@ -5,6 +5,8 @@
 #include <vector>
 #include<string>
 #include "point2D.h"
+#include "asciiGridFileWriter.h"
+#include <functional>
 class agent;
 class parameters;
 using namespace std;
@@ -47,9 +49,10 @@ public:
     void setHardX();
     void setHardY();
     void setSphere();
-    void setxChunk(int);
-    void setyChunk(int);
-
+    vector<vector<double>> count();
+    vector<vector<double>> count(std::function<bool(agent&)>);
+    asciiGridFileWriter* getAsciiFileWriter(const std::string&);
+    asciiGridFileWriter* getAsciiFileWriter(const std::string&,const double);
     static void test();
 private:
     static searchGrid* testGrid;

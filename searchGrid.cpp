@@ -281,14 +281,14 @@ vector <agent*> searchGrid::neighbours4(agent* a){
         //wrapping
         int inx=lx+i; if (cylX){while (inx<0)inx+=NxCells; while (inx>=NxCells)inx-=NxCells;}
         int ind=inx+ly*NxCells;
-        if (ind>=0 && ind< cells.size()) inCell(ind,temp);
+        if (ind>=0 && ind< (int)cells.size()) inCell(ind,temp);
     }
 
     for (int j=jl;j<ju+1;j+=2) {
         //wrapping
         int iny=ly+j; if (cylY) {while (iny<0)iny+=NyCells; while (iny>=NyCells)iny-=NyCells;}
         int ind=lx+iny*NxCells;
-        if (ind>=0 && ind< cells.size()) inCell(ind,temp);
+        if (ind>=0 && ind< (int)cells.size()) inCell(ind,temp);
       }
 
     return temp;
@@ -310,7 +310,7 @@ vector <agent*> searchGrid::neighbours(agent* a){
         int inx=lx+i; if (cylX) {while (inx<0)inx+=NxCells; while (inx>=NxCells)inx-=NxCells;}
         int iny=ly+j; if (cylY) {while (iny<0)iny+=NyCells; while (iny>=NyCells)iny-=NyCells;}
         int ind=inx+iny*NxCells;
-        if (ind>=0 && ind< cells.size()) inCell(ind,temp);
+        if (ind>=0 && ind< (int)cells.size()) inCell(ind,temp);
       }
     }
     return temp;
@@ -344,7 +344,7 @@ vector <agent*> searchGrid::inRadius(agent* a, double d){
         int inx=lx+i; if (cylX) {while (inx<0)inx+=NxCells; while (inx>=NxCells)inx-=NxCells;}
         int iny=ly+j; if (cylY) {while (iny<0)iny+=NyCells; while (iny>=NyCells)iny-=NyCells;}
         int ind=inx+iny*NxCells;
-        if(ind>=0 && ind< cells.size()) inDist(ind,d,a,temp);
+        if(ind>=0 && ind< (int)cells.size()) inDist(ind,d,a,temp);
       }
     }
   return temp;
@@ -367,6 +367,34 @@ point2D   searchGrid::getRandomPoint(){
 float x=x0+xSize*model::getInstance().random.number();
 float y=y0+ySize*model::getInstance().random.number();
 return point2D(x,y);
+}
+//------------------------------------------------------------------
+//count total agents in each cell and return as a 2D vector
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath){
+    //this function only works for a regular grid (i.e. x and y spacing equal)
+    cout<<xSize/NxCells<<" "<<ySize/NyCells<<endl;
+    assert(xSize/NxCells==ySize/NyCells);
+    return new asciiGridFileWriter(filePath,NxCells,NyCells,x0,y0,xSize/NxCells,-9999);
+}
+//------------------------------------------------------------------
+//count total agents in each cell and return as a 2D vector
+vector<vector<double>> searchGrid::count(){
+    std::vector<std::vector<double>>c(NxCells,std::vector<double>(NyCells,0));
+    for (int ix=0;ix<NxCells;ix++)
+        for (int iy=0;iy<NyCells;iy++)
+            c[ix][iy]= cells[iy * NxCells + ix].size(); 
+    return c;
+}
+//------------------------------------------------------------------
+//count total agents with some true/false property in each cell
+vector<vector<double>> searchGrid::count(std::function<bool(agent&)> f){
+    std::vector<std::vector<double>>c(NxCells,std::vector<double>(NyCells,0));
+    for (int ix=0;ix<NxCells;ix++)
+        for (int iy=0;iy<NyCells;iy++)
+            for (auto a:cells[iy * NxCells + ix]){
+            if (f(*a)) c[ix][iy]++; 
+            }
+    return c;
 }
 //put in spherical distance?
 //------------------------------------------------------------------

@@ -25,7 +25,7 @@
     }
     //----------------------------------------------------------------------------------------------
     point2D populationBuilder::getNextLocation(){
-        return a.getValidPoint(_iter);
+        return a.getValidRandomisedPoint(_iter);
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::startCount(){

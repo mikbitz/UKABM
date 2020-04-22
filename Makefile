@@ -36,6 +36,8 @@ SOURCES       = main.cpp \
 		asciiGrid.cpp \
 		movement.cpp \
 		populationBuilder.cpp \
+		outputs.cpp \
+		asciiGridFileWriter.cpp \
 		agent.cpp 
  
 OBJECTS       = $(SOURCES:.cpp=.o)

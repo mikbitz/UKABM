@@ -23,7 +23,7 @@ int randomSeed,nsteps;
 string initialDate,finalDate;
 string populationGridFile;
 string agentFactoryType;
-string parameterFile,outputFileName,diseaseLocationFileName,recoveryLocationFileName,inputFileName,restartFileName;
+string parameterFile,summaryFileName,infectionMapFileName,recoveryLocationFileName,inputFileName,restartFileName;
 int numberOfAgents;
 double agentFraction;
 int NxCells,NyCells,restartInterval,outputInterval;

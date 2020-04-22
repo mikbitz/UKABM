@@ -12,6 +12,7 @@
 #include "layer.h"
 #include "searchGrid.h"
 #include "parameters.h"
+#include "outputs.h"
 #include <random>
 //------------------------------------------------------------------------
 //Set up a wrapper class that will provide uniform random numbers between 0 and 1
@@ -82,7 +83,7 @@ public:
      double getSize();
      string getText();
      searchGrid g;
-     vector<agent*>* agents;
+     vector<agent*>* agentList;
      randomizer random;
 private:
 
@@ -92,6 +93,7 @@ private:
      vector<layer*> layers;
      configuration* c;
      string text;
+     outputs* files;
   
 };
 #endif

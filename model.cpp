@@ -3,6 +3,7 @@
 #include "timing.h"
 #include "config.h"
 #include "movement.h"
+#include <functional>
 
 /**
 \file model.cpp
@@ -32,13 +33,11 @@ model::model(){
     parameters& p=parameters::getInstance();
     dt=p.timeStep;
     g.init();
+    //don't initialise outputs here - leads to infinite initialisation loop...
 
 }
 //-----------------------------------------------------------------------------------------------------------------
 void model::init(){
-   //clean up any old copies of files that might be storing infection data from a previous run
-  //remove(parameters::getInstance()->diseaseLocationFileName.c_str());
-  //remove(parameters::getInstance()->recoveryLocationFileName.c_str());
 
   //searchGrid::test();
   //disease::test();
@@ -47,7 +46,7 @@ void model::init(){
   p->init();
 
   c=new configuration();
-
+  files=new outputs();
 }
 //-----------------------------------------------------------------------------------------------------------------
 string model::getText(){
@@ -73,6 +72,7 @@ bool model::update(){
     if (tick%10==0){cout<<timing::getInstance().now()<<endl;}
 
     if (b){
+        if (tick % parameters::getInstance().outputInterval ==0) files->writeAll();
         tick++;
         timing::getInstance().update();
     }
@@ -91,3 +91,4 @@ double model::getSize(){
 void model::finish(){
   
 }
+

@@ -28,6 +28,7 @@ public:
     double StringToDouble( const std::string& string ) const ;
     int StringToInt( const std::string& string ) const;
     point2D getValidPoint(unsigned);
+    point2D getValidRandomisedPoint(unsigned);
     double getDataAt(unsigned);
     bool isValid(unsigned);
     double xOrigin();

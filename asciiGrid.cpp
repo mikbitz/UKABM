@@ -36,7 +36,16 @@
     }
     //---------------------------------------------------------------------------------------------- 
     point2D asciiGrid::getValidPoint(unsigned i){
-         //find a valid location
+         //find a valid location - return the co-ordinates, noting that y counts from top-left
+
+         unsigned x=_index[i] % _ncols;
+         unsigned y=_index[i] / _ncols;
+
+         return point2D(_xllcorner+x*_cellSize,_yllcorner+(_nrows-1-y)*_cellSize);
+     }
+    //---------------------------------------------------------------------------------------------- 
+    point2D asciiGrid::getValidRandomisedPoint(unsigned i){
+         //find a valid location - return a slightly randomised location nearby
 
          unsigned x=_index[i] % _ncols;
          unsigned y=_index[i] / _ncols;

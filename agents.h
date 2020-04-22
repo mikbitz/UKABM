@@ -17,18 +17,14 @@ initialises them and controls their update cycle.
 */
 class agents:public layer{
   float dt;
-  ofstream f;
 
 public:
     vector<agent*> ags;
 
 //-----------------------------------------------------------------------------------------------------------------
 agents(){
-
-    f.open(parameters::getInstance().outputFileName.c_str());
-    setName("diseaseSummary");
-    f<<"step"<<" susceptible"<<" infected"<<" recovered"<<" totalPop."<<endl;
-    model::getInstance().agents=&ags;
+    setName("agents");
+    model::getInstance().agentList=&ags;
     cout<<"Building agents...";
     agentFactory& F=agentFactorySelector::select(parameters::getInstance().agentFactoryType);
     F.createAgents(ags);
@@ -38,7 +34,7 @@ agents(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 ~agents(){
-    f.close();
+;
 }
 //-----------------------------------------------------------------------------------------------------------------
 bool update(){
@@ -59,14 +55,7 @@ bool update(){
             ags[i]->applyUpdate();
         }
 
-   if(model::getInstance().tick % parameters::getInstance().outputInterval ==0){
-    int inf=0,rec=0;
-    for (unsigned i=0;i<ags.size();i+=1){
-        if (ags[i]->infected )inf++;
-        if (ags[i]->recovered )rec++;
-    }
-    f<<model::getInstance().tick<<" "<<ags.size()-inf-rec<<" "<<inf<<" "<<rec<<" "<<ags.size()<<endl;
-   }
+   
    //make sure agents are properly in the search grid.
    model::getInstance().g.check(ags);
 

@@ -39,6 +39,8 @@ public:
     point2D getRandomPoint();
     vector <agent*> here(agent*);
     vector <agent*> inRadius(agent* ,double);
+    vector <agent*> inSquareRegion(double , double , double );
+    void   inSquare(unsigned ,double ,double ,double ,double ,vector<agent*>& );
     vector <agent*> neighbours4(agent*);
     vector <agent*> neighbours(agent*);
     void   inCell(int,vector<agent*>&);
@@ -53,6 +55,8 @@ public:
     void setSphere();
     vector<vector<double>> count();
     vector<vector<double>> count(std::function<bool(agent&)>);
+    vector<vector<double>> count(double);
+    vector<vector<double>> count(std::function<bool(agent&)>,double);
     asciiGridFileWriter* getAsciiFileWriter(const std::string&,double missing=-9999);
     asciiGridFileWriter* getAsciiFileWriter(const std::string&,const double,double missing=-9999);
     static void test();
@@ -64,7 +68,7 @@ private:
     static searchGrid* testGrid;
     void testMessage(string,bool);
     //functions and flags to deal with wrapping at grid edges
-    bool toroidal,cylX,cylY,spheroidal,hardE,hX,hY,expanding,expX,expY;
+    bool toroidal,cylX,cylY,spheroidal,hardE,hX,hY;
     void wrapCoordinates(agent*);
     void torus(double&,double&);
     void cylinderX(double&);

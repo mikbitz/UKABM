@@ -61,7 +61,7 @@ void searchGrid::init()
 }
 //------------------------------------------------------------------
 //kind of a dangerous function! 
-//Particles that fall outside the grid will get squidged to edges, wrapped or force grid expansion.
+//Particles that fall outside the grid will get squidged to edges or wrapped.
 void searchGrid::resize(double x0_,
                    double y0_,
                    double xSize_,
@@ -96,18 +96,15 @@ void searchGrid::wrapDefaults(){
         hardE      = true;
         hX         = true;
         hY         = true;
-        expanding  = false;
-        expX       = false;
-        expY       = false;
 
 }
 //------------------------------------------------------------------
 void searchGrid::setToroidal() {wrapDefaults();toroidal=true;setWrapX();setWrapY();}
-void searchGrid::setWrapX()    {cylX=true;hX=false;expX=false;hardE=false;expanding=false;spheroidal=false;}
-void searchGrid::setWrapY()    {cylY=true;hY=false;expY=false;hardE=false;expanding=false;spheroidal=false;}
+void searchGrid::setWrapX()    {cylX=true;hX=false;hardE=false;spheroidal=false;}
+void searchGrid::setWrapY()    {cylY=true;hY=false;hardE=false;spheroidal=false;}
 void searchGrid::setHardEdged(){wrapDefaults();}
-void searchGrid::setHardX()    {cylX=false;hX=true;expX=false;expanding=false;toroidal=false;spheroidal=false;}
-void searchGrid::setHardY()    {cylY=false;hY=true;expY=false;expanding=false;toroidal=false;spheroidal=false;}
+void searchGrid::setHardX()    {cylX=false;hX=true;toroidal=false;spheroidal=false;}
+void searchGrid::setHardY()    {cylY=false;hY=true;toroidal=false;spheroidal=false;}
 void searchGrid::setSphere()   {wrapDefaults();setWrapX();spheroidal=true;}
 //------------------------------------------------------------------
 void searchGrid::wrapCoordinates(agent* a){
@@ -185,18 +182,16 @@ void searchGrid::add(agent* a){
     //(at which point it would awkward to find the first instance, as the calculated cellindex
     //would always point at the second cell...)
     //Cellindex default in agent constructor makes a->cellIndex -1 if not yet in the grid
-    if (a->cellIndex!=-1)remove(a);
+    remove(a);
     //as a matter of policy force the agent into the grid
     //this might not be appropriate for other kinds of grid, but this one is assumed to define the model domain.
-    //if the grid is set to expand, though, then the particle won't have co-ordinates changed, but the grid will expand
-    //and then *all* particle indices need re-calculating.
     wrapCoordinates(a);
     a->cellIndex=findCellIndex(a->loc.x,a->loc.y);
     cells[a->cellIndex].insert(a);
 }
 //------------------------------------------------------------------
 void searchGrid::remove(agent* a){
-    cells[a->cellIndex].erase(a);
+    if (a->cellIndex!=-1)cells[a->cellIndex].erase(a);
 }
 //------------------------------------------------------------------
 void searchGrid::eraseAll(){
@@ -324,6 +319,8 @@ void   searchGrid::inCell(int q,vector<agent*>& L){
 }
 //------------------------------------------------------------------
 vector <agent*> searchGrid::inRadius(agent* a, double d){
+    //find all agents within a given distance of agent a
+    //may need to search multiple cells
     vector<agent*> temp;
 
     int q=a->cellIndex;
@@ -350,6 +347,7 @@ vector <agent*> searchGrid::inRadius(agent* a, double d){
   return temp;
 }
 //------------------------------------------------------------------
+//return all agents in a cell within a given distance of agent a
 void   searchGrid::inDist(int q,float d,agent* a,vector<agent*>& L){
     set<agent*>::iterator s;
     for (s=cells[q].begin();s!=cells[q].end();++s){
@@ -360,6 +358,55 @@ void   searchGrid::inDist(int q,float d,agent* a,vector<agent*>& L){
         if (cylX && abs(dx)>_xSize/2)dx=_xSize-abs(dx);
         if (cylY && abs(dy)>_ySize/2)dy=_ySize-abs(dy);
         if (dx*dx+dy*dy <= d*d)L.push_back(t);
+      }
+}
+//------------------------------------------------------------------
+vector <agent*> searchGrid::inSquareRegion(double x, double y, double d){
+    //find all agents within a given square of size d with bottom left location of (x,y)
+    vector<agent*> temp;
+    //The domain is spanned! avoid duplications
+    if (d>_xSize)d=_xSize;
+    if (d>_ySize)d=_ySize;
+    //get search indices
+    int il=(x-x0)/_xSize*NxCells; int jl=(y-y0)/_ySize*NyCells;
+    int iu=il + d/_xSize*NxCells+1; int ju=jl + d/_ySize*NyCells+1;
+
+    //hard edges
+    if (!cylX) {if (il<0) il=0;if (iu>=NxCells) iu=NxCells-1;}
+    if (!cylY) {if (jl<0) jl=0;if (ju>=NyCells) ju=NyCells-1;}
+    //cylinder wrap
+    if (cylX) {while (il<0){il+=NxCells;x=x+_xSize;}}
+    if (cylY) {while (jl<0){jl+=NyCells;y=y+_ySize;}}
+    for (int i=il;i<iu+1;i++)  {
+      for (int j=jl;j<ju+1;j++) {
+        int inx=i;
+        int iny=j;
+        //wrapping
+        if (cylX) {
+            if (inx>=NxCells){inx-=NxCells;d=d-(x0+_xSize-x);}
+        }
+ 
+        if (cylY) {
+            if (iny>=NyCells){iny-=NyCells;d=d-(y0+_ySize-y);}
+        }
+        int ind=inx+iny*NxCells;
+
+        if(ind>=0 && ind< (int)cells.size()) inSquare(ind,x,y,x+d,y+d,temp);
+
+      }
+
+    }
+  return temp;
+}
+//------------------------------------------------------------------
+//return all agents in a cell within a given area bounded by x,xd,y,yd
+void   searchGrid::inSquare(unsigned q,double x,double y,double xd, double yd,vector<agent*>& L){
+    set<agent*>::iterator s;
+    for (s=cells[q].begin();s!=cells[q].end();++s){
+        agent* t=*s;
+        double ax=t->loc.x;
+        double ay=t->loc.y;
+        if (ax>=x && ay>=y && ax<xd && ay<yd )L.push_back(t);
       }
 }
 //------------------------------------------------------------------
@@ -377,19 +424,55 @@ return point2D(x,y);
 //return a grid file writer if the current grid is exactly uniform in x/y cellsize
 asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath, double missing){
     //this function only works for a regular grid (i.e. x and y spacing equal)
-    cout<<_xSize/NxCells<<" "<<_ySize/NyCells<<endl;
     assert(_xSize/NxCells==_ySize/NyCells);
     return new asciiGridFileWriter(filePath,NxCells,NyCells,x0,y0,_xSize/NxCells,missing);
 }
 //------------------------------------------------------------------
-//return a grid file writer with a given cellsize
-asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,double cellsize,double missing){
+//return a grid file writer with a given cellsize, spanning the whole of this grid
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,double cellSize,double missing){
     //this function only works in conjunction with regular grid (i.e. x and y spacing equal)
     //use only with count functions that take this into account.
-    return new asciiGridFileWriter(filePath,NxCells,NyCells,x0,y0,cellsize,missing);
+    assert(_xSize/cellSize>0 && _ySize/cellSize>0);
+    return new asciiGridFileWriter(filePath,_xSize/cellSize,_ySize/cellSize,x0,y0,cellSize,missing);
 }
 //------------------------------------------------------------------
-//count total agents in each cell and return as a 2D vector
+//count total agents in each cell and return as a 2D vector, aggregating to regular grid size cellSize
+vector<vector<double>> searchGrid::count(double cellSize){
+    double x=x0,y=y0;
+    unsigned xcells=_xSize/cellSize,ycells=_ySize/cellSize;
+    assert(xcells>0 && ycells>0);
+    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
+    for(unsigned ix=0;ix<xcells;ix++){
+        for (unsigned iy=0;iy<ycells;iy++){
+            auto agentList=inSquareRegion(x, y, cellSize);
+            c[ix][iy]= agentList.size(); 
+            y+=cellSize;
+        }
+        x+=cellSize;
+    }
+    return c;
+}
+//------------------------------------------------------------------
+//count total agents with some true/false property in each cell, aggregating to regular grid size cellsize
+vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double cellSize){
+    double x=x0,y=y0;
+    unsigned xcells=_xSize/cellSize,ycells=_ySize/cellSize;
+    assert(xcells>0 && ycells>0);
+    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
+    for(unsigned ix=0;ix<xcells;ix++){
+        for (unsigned iy=0;iy<ycells;iy++){
+            auto agentList=inSquareRegion(x, y, cellSize);
+            for (auto agent:agentList){
+                if (func(*agent)) c[ix][iy]++; 
+            }
+            y+=cellSize;
+        }
+        x+=cellSize;
+    }
+    return c;
+}
+//------------------------------------------------------------------
+//count total agents in each cell, and return as a 2D vector
 vector<vector<double>> searchGrid::count(){
     std::vector<std::vector<double>>c(NxCells,std::vector<double>(NyCells,0));
     for (int ix=0;ix<NxCells;ix++)
@@ -399,12 +482,12 @@ vector<vector<double>> searchGrid::count(){
 }
 //------------------------------------------------------------------
 //count total agents with some true/false property in each cell
-vector<vector<double>> searchGrid::count(std::function<bool(agent&)> f){
+vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func){
     std::vector<std::vector<double>>c(NxCells,std::vector<double>(NyCells,0));
     for (int ix=0;ix<NxCells;ix++)
         for (int iy=0;iy<NyCells;iy++)
-            for (auto a:cells[iy * NxCells + ix]){
-            if (f(*a)) c[ix][iy]++; 
+            for (auto agent:cells[iy * NxCells + ix]){
+            if (func(*agent)) c[ix][iy]++; 
             }
     return c;
 }
@@ -592,7 +675,75 @@ void searchGrid::test(){
     testGrid->testMessage("Test 17",success);
 
     testGrid->check();
-    
+
+    //test grid aggregation
+    //remove the agents - there should be no occupied cells
+    testGrid->eraseAll();
+    //first test inSquare - picks agents out in a given cell
+     v[0]->loc.x= -500;    v[0]->loc.y= -500   ;testGrid->add(v[0]);
+     v[1]->loc.x= -499.5;  v[1]->loc.y= -499.1 ;testGrid->add(v[1]);
+    success=true;
+    vector<agent*>L;
+    testGrid->inSquare(0,-1000,-1000,1000,1000,L);
+    success=(L.size()==2);L.clear();
+    testGrid->inSquare(0,-499,-499,-498,-498,L);
+    success=success&&(L.size()==0);L.clear();
+    testGrid->inSquare(0,-499.6,-499.2,-498,-498,L);
+    success=success&&(L.size()==1);L.clear();
+    v[2]->loc.x= 500;  v[2]->loc.y= 500   ;testGrid->add(v[2]);
+    testGrid->inSquare(1000*1000-1,499,499,1000,700,L);
+    success=success&&(L.size()==1);L.clear();
+    testGrid->testMessage("Test 18",success);
+    //now test whether the co-ordinate based version works
+    success=true;
+    auto F=testGrid->inSquareRegion(-1000, -1000, 100);
+    success=success&&(F.size()==0);F.clear();
+    F=testGrid->inSquareRegion(-1000, -1000, 501);
+    success=success&&(F.size()==2);F.clear();
+    F=testGrid->inSquareRegion(0, 0, 50);
+    success=success&&(F.size()==0);F.clear();
+    v[3]->loc.x= 0;     v[3]->loc.y= 0      ;testGrid->add(v[3]);
+    F=testGrid->inSquareRegion(0, 0, 10);
+    success=success&&(F.size()==1);F.clear();
+    v[4]->loc.x=   0.;  v[4]->loc.y=   0.1   ;testGrid->add(v[4]);
+    F=testGrid->inSquareRegion(0, 0, 10);
+    success=success&&(F.size()==2);F.clear();
+    v[5]->loc.x=   0.5;  v[5]->loc.y=   0.3   ;testGrid->add(v[5]);
+    F=testGrid->inSquareRegion(0, 0, 10);
+    success=success&&(F.size()==3);F.clear();
+    v[6]->loc.x= 1.2;  v[6]->loc.y= 2.4   ;testGrid->add(v[6]);
+    F=testGrid->inSquareRegion(0, 0, 5);
+    success=success&&(F.size()==4);F.clear();
+    v[7]->loc.x= 10;  v[7]->loc.y= 10   ;testGrid->add(v[7]);
+    F=testGrid->inSquareRegion(0, 0, 5);
+    success=success&&(F.size()==4);F.clear();
+    F=testGrid->inSquareRegion(0, 0, 10);
+    success=success&&(F.size()==4);F.clear();
+    F=testGrid->inSquareRegion(0, 0, 10.01);
+    success=success&&(F.size()==5);F.clear();
+    F=testGrid->inSquareRegion(-0.1, -0.1, 10.01);
+    success=success&&(F.size()==4);F.clear();
+    F=testGrid->inSquareRegion(-0.1, -0.1, 10.1);
+    success=success&&(F.size()==4);F.clear();
+    F=testGrid->inSquareRegion(-0.1, -0.1, 10.11);
+    success=success&&(F.size()==5);F.clear();
+    F=testGrid->inSquareRegion(-0.1, -0.1, 0.11);
+    success=success&&(F.size()==1);F.clear();
+    F=testGrid->inSquareRegion(0.1, 0.1, 0.11);
+    success=success&&(F.size()==0);F.clear();
+    F=testGrid->inSquareRegion(0.1, 0.1, 0.5);
+    success=success&&(F.size()==1);F.clear();
+    testGrid->testMessage("Test 19",success);
+    //      v[2]->loc.x= -500;  v[2]->loc.y= -500   ;testGrid->add(v[2]);
+//      v[3]->loc.x= -499;  v[3]->loc.y= -500   ;testGrid->add(v[3]);
+//      v[4]->loc.x= -498;  v[4]->loc.y= -500   ;testGrid->add(v[4]);
+//      v[5]->loc.x= -500;  v[5]->loc.y= -499   ;testGrid->add(v[5]);
+//      v[6]->loc.x= -498;  v[6]->loc.y= -499   ;testGrid->add(v[6]);
+//      v[7]->loc.x= -498;  v[7]->loc.y= -498   ;testGrid->add(v[7]);
+//      v[8]->loc.x= -499;  v[8]->loc.y= -498   ;testGrid->add(v[8]);
+//      v[9]->loc.x= -500;  v[9]->loc.y= -497.5 ;testGrid->add(v[9]);
+//     v[10]->loc.x= -499; v[10]->loc.y= -496.5 ;testGrid->add(v[10]);
+//     v[11]->loc.x=  499; v[11]->loc.y=  499   ;testGrid->add(v[11]);
     //tidy up
     for (unsigned i=0;i<v.size();i++)delete v[i];
     v.clear();

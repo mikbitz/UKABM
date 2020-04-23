@@ -1,4 +1,6 @@
 23/04/2020
+Created aggregators limited by a set of upper and lower x/y co-ordinates
+Created cell aggregators to a fixed regular x-y size in searchGrid
 Added the ability to set missing in searchGrid asciiGridFileWriter, but with default set to -9999
 Added functions to retrieve searchgrid x/y size and origin
 Renamed asciigrid in population builder to clarify where from

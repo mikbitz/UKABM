@@ -472,6 +472,42 @@ vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double
     return c;
 }
 //------------------------------------------------------------------
+//count total agents in each cell and return as a 2D vector, aggregating to regular grid size cellSize, limited to a given domain
+vector<vector<double>> searchGrid::count(double cellSize,double xlo,double xhi,double ylo,double yhi){
+    double x=xlo,y=ylo;
+    unsigned xcells=xhi/cellSize,ycells=yhi/cellSize;
+    assert(xcells>0 && ycells>0);
+    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
+    for(unsigned ix=0;ix<xcells;ix++){
+        for (unsigned iy=0;iy<ycells;iy++){
+            auto agentList=inSquareRegion(x, y, cellSize);
+            c[ix][iy]= agentList.size(); 
+            y+=cellSize;
+        }
+        x+=cellSize;
+    }
+    return c;
+}
+//------------------------------------------------------------------
+//count total agents with some true/false property in each cell, aggregating to regular grid size cellsize, limited to a given domain
+vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double cellSize,double xlo,double xhi,double ylo,double yhi){
+    double x=xlo,y=ylo;
+    unsigned xcells=xhi/cellSize,ycells=yhi/cellSize;
+    assert(xcells>0 && ycells>0);
+    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
+    for(unsigned ix=0;ix<xcells;ix++){
+        for (unsigned iy=0;iy<ycells;iy++){
+            auto agentList=inSquareRegion(x, y, cellSize);
+            for (auto agent:agentList){
+                if (func(*agent)) c[ix][iy]++; 
+            }
+            y+=cellSize;
+        }
+        x+=cellSize;
+    }
+    return c;
+}
+//------------------------------------------------------------------
 //count total agents in each cell, and return as a 2D vector
 vector<vector<double>> searchGrid::count(){
     std::vector<std::vector<double>>c(NxCells,std::vector<double>(NyCells,0));

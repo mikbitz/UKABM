@@ -1,0 +1,13 @@
+23/04/2020
+Added the ability to set missing in searchGrid asciiGridFileWriter, but with default set to -9999
+Added functions to retrieve searchgrid x/y size and origin
+Renamed asciigrid in population builder to clarify where from
+Made index of missing cells private in asciiGrid
+Bugfix in population builder (not returning a value on probabilistic estimate when pop in a cell<1)
+22/04/2020
+Added an outputs class to abstract writing results to files.
+Gridded files supported by passing a function to the searchGrid so that it can sum over agents
+Searchgrid has a function to return an asciiGridFileWriter matched to its co-ordinates
+Parameter file updated to include filenames for output to gridded spatial maps
+asciiGridFileWriter able to take time series of (regular) grids in ARC format (but with only a single header)
+

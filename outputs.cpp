@@ -8,6 +8,7 @@ outputs::outputs(){
     //header line
     _summaryFile<<"step,susceptible,infected,recovered,totalPop."<<endl;
     _infections=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().infectionMapFileName);
+    _population=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().populationMapFileName);
 }
 //--------------------------------------------------------------------------
 outputs::~outputs(){
@@ -30,6 +31,8 @@ void outputs::writeAll(){
     //but have multiple data arrays with a timestamp line at the start of each
     _infections->writeExtraLabel(to_simple_string(timing::getInstance().now()));
     _infections->writeToFile(m.g.count(&agent::infected));
+    _population->writeExtraLabel(to_simple_string(timing::getInstance().now()));
+    _population->writeToFile(m.g.count());
 }
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------

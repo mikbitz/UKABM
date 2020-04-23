@@ -14,10 +14,12 @@ class searchGrid{
     vector<set<agent*> >cells;
     //x0 and y0 are the grid physical space origin
     //xSize and ysize the total physical extents of the domain (in metres, say)
-    double x0,y0,xSize,ySize;
+    double x0,y0,_xSize,_ySize;
     //Numbers of cells in x and y direction.
     //so the cell size is xSize/NxCells in the xdirection etc.
     int NxCells,NyCells;
+    std::vector<unsigned> _missing; // cells that are not valid - could use a map for cells to avoid this, but seems slow
+
 public:
     searchGrid();
     ~searchGrid();
@@ -51,9 +53,13 @@ public:
     void setSphere();
     vector<vector<double>> count();
     vector<vector<double>> count(std::function<bool(agent&)>);
-    asciiGridFileWriter* getAsciiFileWriter(const std::string&);
-    asciiGridFileWriter* getAsciiFileWriter(const std::string&,const double);
+    asciiGridFileWriter* getAsciiFileWriter(const std::string&,double missing=-9999);
+    asciiGridFileWriter* getAsciiFileWriter(const std::string&,const double,double missing=-9999);
     static void test();
+    double xOrigin();
+    double yOrigin();
+    double xSize();
+    double ySize();
 private:
     static searchGrid* testGrid;
     void testMessage(string,bool);

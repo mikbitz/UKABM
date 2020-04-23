@@ -5,6 +5,7 @@
 #include "asciiGridFileWriter.h"
 class outputs{
     asciiGridFileWriter* _infections;
+    asciiGridFileWriter* _population;
 public:
     outputs();
     ~outputs();

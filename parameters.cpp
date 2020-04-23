@@ -49,7 +49,7 @@ std::cout<< "number of timesteps   "<< nsteps           <<std::endl;
 std::cout<< "outputInterval        "<< outputInterval   <<std::endl;
 std::cout<< "summaryFileName       "<< summaryFileName   <<std::endl;
 std::cout<< "infectionMapFileName  "<< infectionMapFileName  <<std::endl;
-std::cout<< "recoveryLocationFileName"<< recoveryLocationFileName  <<std::endl;
+std::cout<< "populationMapFileName:"<< populationMapFileName  <<std::endl;
 std::cout<< "isRestart             "<< isRestart        <<std::endl;
 std::cout<< "restartInterval       "<< restartInterval  <<std::endl;
 std::cout<< "restartFileName       "<< restartFileName  <<std::endl;
@@ -90,33 +90,33 @@ void parameters::getParameters(){
         if (label[ 0 ] != '#'){
             bool success=false;
 
-            if (label=="timeStep:")            {f>> timeStep;                success=true;}
-            if (label=="nsteps:")              {f>> nsteps;                  success=true;}          
-            if (label=="outputInterval:")      {f>> outputInterval;          success=true;}  
-            if (label=="summaryFileName:")     {f>> summaryFileName;         success=true;}  
-            if (label=="infectionMapFileName:"){f>> infectionMapFileName;    success=true;}  
-            if (label=="recoveryLocationFile:"){f>> recoveryLocationFileName;success=true;}  
-            if (label=="isRestart:")           {f>> isRestart;               success=true;}       
-            if (label=="restartInterval:")     {f>> restartInterval;         success=true;} 
-            if (label=="restartFile:")         {f>> restartFileName;         success=true;} 
-            if (label=="inputFile:")           {f>> inputFileName;           success=true;}   
-            if (label=="initialDate:")         {f>> initialDate;             success=true;}     
-            if (label=="finalDate:")           {f>> finalDate;               success=true;}       
-            if (label=="recoveryTime:")        {f>> recoveryTime;            success=true;}    
-            if (label=="infectionRate:")       {f>> infectionRate;           success=true;}   
-            if (label=="infectionDist:")       {f>> infectionDist;           success=true;}   
-            if (label=="randomSeed:")          {f>> randomSeed;              success=true;}      
-            if (label=="showGUI:")             {f>> visible;                 success=true;}         
-            if (label=="xBins:")               {f>> NxCells;                 success=true;}         
-            if (label=="yBins:")               {f>> NyCells;                 success=true;}         
-            if (label=="xSize:")               {f>> xSize;                   success=true;}           
-            if (label=="ySize:")               {f>> ySize;                   success=true;}           
-            if (label=="xOrigin:")             {f>> x0;                      success=true;}              
-            if (label=="yOrigin:")             {f>> y0;                      success=true;}
-            if (label=="populationGridFile:")  {f>>populationGridFile;       success=true;}
-            if (label=="agentFactoryType:")    {f>>agentFactoryType;         success=true;}
-            if (label=="numberOfAgents:")      {f>>numberOfAgents;           success=true;}
-            if (label=="agentFraction:")       {f>>agentFraction;            success=true;}
+            if (label=="timeStep:")             {f>> timeStep;                success=true;}
+            if (label=="nsteps:")               {f>> nsteps;                  success=true;}          
+            if (label=="outputInterval:")       {f>> outputInterval;          success=true;}  
+            if (label=="summaryFileName:")      {f>> summaryFileName;         success=true;}  
+            if (label=="infectionMapFileName:") {f>> infectionMapFileName;    success=true;}  
+            if (label=="populationMapFileName:"){f>> populationMapFileName;   success=true;}  
+            if (label=="isRestart:")            {f>> isRestart;               success=true;}       
+            if (label=="restartInterval:")      {f>> restartInterval;         success=true;} 
+            if (label=="restartFile:")          {f>> restartFileName;         success=true;} 
+            if (label=="inputFile:")            {f>> inputFileName;           success=true;}   
+            if (label=="initialDate:")          {f>> initialDate;             success=true;}     
+            if (label=="finalDate:")            {f>> finalDate;               success=true;}       
+            if (label=="recoveryTime:")         {f>> recoveryTime;            success=true;}    
+            if (label=="infectionRate:")        {f>> infectionRate;           success=true;}   
+            if (label=="infectionDist:")        {f>> infectionDist;           success=true;}   
+            if (label=="randomSeed:")           {f>> randomSeed;              success=true;}      
+            if (label=="showGUI:")              {f>> visible;                 success=true;}         
+            if (label=="xBins:")                {f>> NxCells;                 success=true;}         
+            if (label=="yBins:")                {f>> NyCells;                 success=true;}         
+            if (label=="xSize:")                {f>> xSize;                   success=true;}           
+            if (label=="ySize:")                {f>> ySize;                   success=true;}           
+            if (label=="xOrigin:")              {f>> x0;                      success=true;}              
+            if (label=="yOrigin:")              {f>> y0;                      success=true;}
+            if (label=="populationGridFile:")   {f>>populationGridFile;       success=true;}
+            if (label=="agentFactoryType:")     {f>>agentFactoryType;         success=true;}
+            if (label=="numberOfAgents:")       {f>>numberOfAgents;           success=true;}
+            if (label=="agentFraction:")        {f>>agentFraction;            success=true;}
 
             if (!f.eof() && !success){
                 std::cout<<"Unrecognised label "<<label<<" in file "<<parameterFile<<" exiting..."<<std::endl;

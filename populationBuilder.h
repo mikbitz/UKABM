@@ -11,7 +11,7 @@ class populationBuilder{
     double _remainingHere;
     double _frac;
 public:
-    asciiGrid a;
+    asciiGrid asciiG;
     populationBuilder();
     point2D getNextLocation();
     void startCount();

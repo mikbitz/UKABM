@@ -11,7 +11,7 @@ searchGrid::~searchGrid(){
 //Initialization
 //------------------------------------------------------------------
 searchGrid::searchGrid(){
-    x0=-500;y0=-500;xSize=1000.;ySize=1000.;NxCells=1000;NyCells=1000;
+    x0=-500;y0=-500;_xSize=1000.;_ySize=1000.;NxCells=1000;NyCells=1000;
     dirty=false;
     cells.resize(NxCells*NyCells);
     wrapDefaults();
@@ -25,8 +25,8 @@ searchGrid::searchGrid(double x0_,
                        int    NyCells_):
                        x0(x0_),
                        y0(y0_),
-                       xSize(xSize_),
-                       ySize(ySize_),
+                       _xSize(xSize_),
+                       _ySize(ySize_),
                        NxCells(NxCells_),
                        NyCells(NyCells_)                       
 {
@@ -44,8 +44,8 @@ void searchGrid::init(double x0_,
 {
                        x0=x0_;
                        y0=y0_;
-                       xSize=xSize_;
-                       ySize=ySize_;
+                       _xSize=xSize_;
+                       _ySize=ySize_;
                        NxCells=NxCells_;
                        NyCells=NyCells_;                       
                        dirty=false;
@@ -71,8 +71,8 @@ void searchGrid::resize(double x0_,
 {
                    x0=x0_;
                    y0=y0_;
-                   xSize=xSize_;
-                   ySize=ySize_;
+                   _xSize=xSize_;
+                   _ySize=ySize_;
                    NxCells=NxCells_;
                    NyCells=NyCells_;
                    cells.resize(NxCells*NyCells);
@@ -133,18 +133,18 @@ void searchGrid::torus(double& x, double& y){
 }
 //------------------------------------------------------------------
 void searchGrid::cylinderX(double& x){
-    while (x >  xSize+x0)x=x-xSize;
-    while (x <= x0)      x=x+xSize;
+    while (x >  _xSize+x0)x=x-_xSize;
+    while (x <= x0)      x=x+_xSize;
 }
 //------------------------------------------------------------------
 void searchGrid::cylinderY(double& y){
-    while (y >  ySize+y0)y=y-ySize;
-    while (y <= y0)      y=y+ySize;
+    while (y >  _ySize+y0)y=y-_ySize;
+    while (y <= y0)      y=y+_ySize;
 }
 //------------------------------------------------------------------
 void searchGrid::sphere(double& x,double& y){
-    if (y > ySize+y0){y=ySize+y0-(y-y0-ySize);x=x+xSize/2;}
-    if (y < y0)      {y=y0      -(y-y0);      x=x+xSize/2;}
+    if (y > _ySize+y0){y=_ySize+y0-(y-y0-_ySize);x=x+_xSize/2;}
+    if (y < y0)      {y=y0      -(y-y0);      x=x+_xSize/2;}
     cylinderX(x);
 }//------------------------------------------------------------------
 void searchGrid::hardEdges(double& x,double& y){
@@ -153,12 +153,12 @@ void searchGrid::hardEdges(double& x,double& y){
 }
 //------------------------------------------------------------------
 void searchGrid::hardX(double& x){
-    if (x > xSize+x0)x=xSize+x0;
+    if (x > _xSize+x0)x=_xSize+x0;
     if (x < x0)      x=x0;
 }
 //------------------------------------------------------------------
 void searchGrid::hardY(double& y){
-    if (y > ySize+y0)y=ySize+y0;
+    if (y > _ySize+y0)y=_ySize+y0;
     if (y < y0)      y=y0;
 }
 //------------------------------------------------------------------
@@ -166,8 +166,8 @@ void searchGrid::hardY(double& y){
 //------------------------------------------------------------------
 int searchGrid::findCellIndex(double x,double y){
      // find the raster indices of bucket containing x,y
-    int ix = static_cast<int>((x-x0) /xSize * NxCells);
-    int iy = static_cast<int>((y-y0) /ySize * NyCells);
+    int ix = static_cast<int>((x-x0) /_xSize * NxCells);
+    int iy = static_cast<int>((y-y0) /_ySize * NyCells);
     //stop agents exactly on the extreme right boundary (or overflowing it) from wrapping around into the next row up
     if (ix==NxCells)ix--;
     //similarly make sure we don't overflow in y
@@ -328,8 +328,8 @@ vector <agent*> searchGrid::inRadius(agent* a, double d){
 
     int q=a->cellIndex;
     int lx=q%NxCells; int ly=q/NxCells;
-    int nx=int(d/xSize*NxCells+0.5);
-    int ny=int(d/ySize*NyCells+0.5);
+    int nx=int(d/_xSize*NxCells+0.5);
+    int ny=int(d/_ySize*NyCells+0.5);
     int il=-nx,iu=nx,jl=-nx,ju=nx;
     //The domain is spanned! avoid duplications
     if (nx>=NxCells/2) {il=-lx;iu=NxCells-1-lx;}
@@ -357,24 +357,36 @@ void   searchGrid::inDist(int q,float d,agent* a,vector<agent*>& L){
         double dx=(t->loc.x - a->loc.x);
         double dy=(t->loc.y - a->loc.y);
         //wrapping of distance measures
-        if (cylX && abs(dx)>xSize/2)dx=xSize-abs(dx);
-        if (cylY && abs(dy)>ySize/2)dy=ySize-abs(dy);
+        if (cylX && abs(dx)>_xSize/2)dx=_xSize-abs(dx);
+        if (cylY && abs(dy)>_ySize/2)dy=_ySize-abs(dy);
         if (dx*dx+dy*dy <= d*d)L.push_back(t);
       }
 }
 //------------------------------------------------------------------
+double searchGrid::xOrigin(){return x0;}
+double searchGrid::yOrigin(){return y0;}
+double searchGrid::xSize(){return _xSize;}
+double searchGrid::ySize(){return _ySize;}
+//------------------------------------------------------------------
 point2D   searchGrid::getRandomPoint(){
-float x=x0+xSize*model::getInstance().random.number();
-float y=y0+ySize*model::getInstance().random.number();
+float x=x0+_xSize*model::getInstance().random.number();
+float y=y0+_ySize*model::getInstance().random.number();
 return point2D(x,y);
 }
 //------------------------------------------------------------------
-//count total agents in each cell and return as a 2D vector
-asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath){
+//return a grid file writer if the current grid is exactly uniform in x/y cellsize
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath, double missing){
     //this function only works for a regular grid (i.e. x and y spacing equal)
-    cout<<xSize/NxCells<<" "<<ySize/NyCells<<endl;
-    assert(xSize/NxCells==ySize/NyCells);
-    return new asciiGridFileWriter(filePath,NxCells,NyCells,x0,y0,xSize/NxCells,-9999);
+    cout<<_xSize/NxCells<<" "<<_ySize/NyCells<<endl;
+    assert(_xSize/NxCells==_ySize/NyCells);
+    return new asciiGridFileWriter(filePath,NxCells,NyCells,x0,y0,_xSize/NxCells,missing);
+}
+//------------------------------------------------------------------
+//return a grid file writer with a given cellsize
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,double cellsize,double missing){
+    //this function only works in conjunction with regular grid (i.e. x and y spacing equal)
+    //use only with count functions that take this into account.
+    return new asciiGridFileWriter(filePath,NxCells,NyCells,x0,y0,cellsize,missing);
 }
 //------------------------------------------------------------------
 //count total agents in each cell and return as a 2D vector

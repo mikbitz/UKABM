@@ -64,6 +64,7 @@ layer* model::getLayer(unsigned i){
 //-----------------------------------------------------------------------------------------------------------------
 bool model::update(){
     //cout<<"------------------- step "<<tick<<" ---------------------"<<endl;
+    if (tick % parameters::getInstance().outputInterval ==0) files->writeAll();
     bool b=false;
     for (unsigned i=0;i<layers.size();i++){
       bool u=layers[i]->update();
@@ -72,7 +73,6 @@ bool model::update(){
     if (tick%10==0){cout<<timing::getInstance().now()<<endl;}
 
     if (b){
-        if (tick % parameters::getInstance().outputInterval ==0) files->writeAll();
         tick++;
         timing::getInstance().update();
     }

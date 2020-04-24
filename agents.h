@@ -29,7 +29,8 @@ agents(){
     agentFactory& F=agentFactorySelector::select(parameters::getInstance().agentFactoryType);
     F.createAgents(ags);
 
-    ags[0]->diseases["covid"]=new disease(ags[0]);ags[0]->infected=true;
+    ags[10000]->infectWith("covid");
+
     for (auto a:ags)a->addProcess(new movement(a));
 }
 //-----------------------------------------------------------------------------------------------------------------

@@ -23,7 +23,7 @@ public:
     unsigned ID,classNum;
     int cellIndex;
     vector<process*> processes;
-    map<string,disease*> diseases;
+    map<string,disease>_diseases;
     agent();
     void init();
     void preUpdate();
@@ -31,5 +31,9 @@ public:
     void applyUpdate();
     void setDest(places::place e);
     void addProcess(process* p);
+    void updateDiseases();
+    bool hasDisease(std::string name);
+    bool recoveredFrom(std::string name);
+    void infectWith(std::string name);
 };
 #endif

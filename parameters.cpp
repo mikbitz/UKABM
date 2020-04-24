@@ -57,6 +57,7 @@ std::cout<< "inputFileName         "<< inputFileName    <<std::endl;
 std::cout<< "initialDate           "<< initialDate      <<std::endl;
 std::cout<< "finalDate             "<< finalDate        <<std::endl;
 std::cout<< "recoveryTime          "<< recoveryTime     <<std::endl;
+std::cout<< "latencyTime           "<< latencyTime     <<std::endl;
 std::cout<< "infectionRate         "<< infectionRate    <<std::endl;
 std::cout<< "infectionDist         "<< infectionDist    <<std::endl;
 std::cout<< "randomSeed            "<< randomSeed       <<std::endl;
@@ -102,7 +103,8 @@ void parameters::getParameters(){
             if (label=="inputFile:")            {f>> inputFileName;           success=true;}   
             if (label=="initialDate:")          {f>> initialDate;             success=true;}     
             if (label=="finalDate:")            {f>> finalDate;               success=true;}       
-            if (label=="recoveryTime:")         {f>> recoveryTime;            success=true;}    
+            if (label=="recoveryTime:")         {f>> recoveryTime;            success=true;}
+            if (label=="latencyTime:")          {f>> latencyTime;             success=true;}
             if (label=="infectionRate:")        {f>> infectionRate;           success=true;}   
             if (label=="infectionDist:")        {f>> infectionDist;           success=true;}   
             if (label=="randomSeed:")           {f>> randomSeed;              success=true;}      

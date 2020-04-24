@@ -6,10 +6,11 @@ outputs::outputs(){
     //csv file to hold summary of disease information across whole agent set
     _summaryFile.open(parameters::getInstance().summaryFileName);
     //header line
-    _summaryFile<<"step,susceptible,infected,recovered,totalPop."<<endl;
+    _summaryFile<<"step,date,susceptible,infected,recovered,totalPop."<<endl;
+    //Note cellsize here *must* match those in writeALL below
     _outputCellSize=10000;
     parameters& p=parameters::getInstance();
-    std::string nFrames="frames "+std::to_string(p.nsteps/p.outputInterval);
+    std::string nFrames="maxFrames "+std::to_string(p.nsteps/p.outputInterval);
     _infections=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().infectionMapFileName,_outputCellSize,-9999);
     _infections->writeExtraLabel(nFrames);
     _population=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().populationMapFileName,_outputCellSize,-9999);
@@ -25,10 +26,11 @@ void outputs::writeAll(){
     int inf=0,rec=0;
     model& m=model::getInstance();
     for (unsigned i=0;i<m.agentList->size();i++){
-        if ((*m.agentList)[i]->infected )inf++;
-        if ((*m.agentList)[i]->recovered )rec++;
+        if ((*m.agentList)[i]->hasDisease("covid")){
+            if ((*m.agentList)[i]->recoveredFrom("covid") )rec++;else inf++;
+        }
     }
-    _summaryFile<<model::getInstance().tick<<","<<m.agentList->size()-inf-rec<<","<<inf<<","<<rec<<","<<m.agentList->size()<<endl;
+    _summaryFile<<model::getInstance().tick<<","<<timing::getInstance().now()<<","<<m.agentList->size()-inf-rec<<","<<inf<<","<<rec<<","<<m.agentList->size()<<endl;
     
     //gridded spatial maps of counts of agents with a given property- 
     //argument to g.count can be any function or variable in agent that returns bool.

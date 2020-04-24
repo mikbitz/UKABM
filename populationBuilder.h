@@ -10,8 +10,9 @@ class populationBuilder{
     unsigned _iter;
     double _remainingHere;
     double _frac;
+    asciiGrid _asciiG;
 public:
-    asciiGrid asciiG;
+
     populationBuilder();
     point2D getNextLocation();
     void startCount();

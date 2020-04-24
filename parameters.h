@@ -30,7 +30,7 @@ double agentFraction;
 int NxCells,NyCells,restartInterval,outputInterval;
 double xSize,ySize,x0,y0;
 bool isRestart;
-double recoveryTime,infectionRate,infectionDist;
+double latencyTime,recoveryTime,infectionRate,infectionDist;
 protected:
 parameters();
 parameters(string);

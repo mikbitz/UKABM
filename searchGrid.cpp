@@ -390,7 +390,6 @@ vector <agent*> searchGrid::inSquareRegion(double x, double y, double d){
             if (iny>=NyCells){iny-=NyCells;d=d-(y0+_ySize-y);}
         }
         int ind=inx+iny*NxCells;
-
         if(ind>=0 && ind< (int)cells.size()) inSquare(ind,x,y,x+d,y+d,temp);
 
       }
@@ -406,7 +405,8 @@ void   searchGrid::inSquare(unsigned q,double x,double y,double xd, double yd,ve
         agent* t=*s;
         double ax=t->loc.x;
         double ay=t->loc.y;
-        if (ax>=x && ay>=y && ax<xd && ay<yd )L.push_back(t);
+        //check whether in range allowing for exact upper and right boundary
+        if (ax>=x && ay>=y && ((ax<xd) || (ax==(x0+_xSize) && (ax==xd)) ) && ((ay<yd) || (ay==(y0+_ySize)  && (ay==yd)) ) )L.push_back(t);
       }
 }
 //------------------------------------------------------------------
@@ -436,88 +436,16 @@ asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,
     return new asciiGridFileWriter(filePath,_xSize/cellSize,_ySize/cellSize,x0,y0,cellSize,missing);
 }
 //------------------------------------------------------------------
-//return a grid file writer with a given cellsize, spanning the whole of this grid
+//return a grid file writer with a given cellsize, spanning a subrange of the grid
 asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,double cellSize,double xlo,double xhi,double ylo,double yhi,double missing){
     //this function only works in conjunction with regular grid (i.e. x and y spacing equal)
     //use only with count functions that take this into account.
-    assert(xhi>xlo && yhi>ylo);
+    unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
+    assert(xcells>0 && ycells>0);
     return new asciiGridFileWriter(filePath,(xhi-xlo)/cellSize,(yhi-ylo)/cellSize,xlo,ylo,cellSize,missing);
 }
 //------------------------------------------------------------------
-//count total agents in each cell and return as a 2D vector, aggregating to regular grid size cellSize
-vector<vector<double>> searchGrid::count(double cellSize){
-    double x=x0,y=y0;
-    unsigned xcells=_xSize/cellSize,ycells=_ySize/cellSize;
-    assert(xcells>0 && ycells>0);
-    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
-    for(unsigned ix=0;ix<xcells;ix++){
-        for (unsigned iy=0;iy<ycells;iy++){
-            auto agentList=inSquareRegion(x, y, cellSize);
-            c[ix][iy]= agentList.size(); 
-            y+=cellSize;
-        }
-        x+=cellSize;
-    }
-    return c;
-}
-//------------------------------------------------------------------
-//count total agents with some true/false property in each cell, aggregating to regular grid size cellsize
-vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double cellSize){
-    double x=x0,y=y0;
-    unsigned xcells=_xSize/cellSize,ycells=_ySize/cellSize;
-    assert(xcells>0 && ycells>0);
-    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
-    for(unsigned ix=0;ix<xcells;ix++){
-        for (unsigned iy=0;iy<ycells;iy++){
-            auto agentList=inSquareRegion(x, y, cellSize);
-            for (auto agent:agentList){
-                if (func(*agent)) c[ix][iy]++; 
-            }
-            y+=cellSize;
-        }
-        x+=cellSize;
-    }
-    return c;
-}
-//------------------------------------------------------------------
-//count total agents in each cell and return as a 2D vector, aggregating to regular grid size cellSize, limited to a given domain
-vector<vector<double>> searchGrid::count(double cellSize,double xlo,double xhi,double ylo,double yhi){
-    double x=xlo,y=ylo;
-    unsigned xcells=xhi/cellSize,ycells=yhi/cellSize;
-    assert(xcells>0 && ycells>0);
-    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
-    for(unsigned ix=0;ix<xcells;ix++){
-        for (unsigned iy=0;iy<ycells;iy++){
-            auto agentList=inSquareRegion(x, y, cellSize);
-            c[ix][iy]= agentList.size(); 
-            y+=cellSize;
-        }
-        x+=cellSize;
-    }
-    return c;
-}
-//------------------------------------------------------------------
-//count total agents with some true/false property in each cell, aggregating to regular grid size cellsize, limited to a given domain
-vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double cellSize,double xlo,double xhi,double ylo,double yhi){
-    double x=xlo,y=ylo;
-    assert(xhi>xlo && yhi>ylo);
-    unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
-    assert(xcells>0 && ycells>0);
-    std::vector<std::vector<double>>c((xhi-xlo)/cellSize,std::vector<double>((xhi-xlo)/cellSize,0));
-    for(unsigned ix=0;ix<xcells;ix++){
-        for (unsigned iy=0;iy<ycells;iy++){
-            auto agentList=inSquareRegion(x, y, cellSize);
-            for (auto agent:agentList){
-                if (func(*agent)) c[ix][iy]++; 
-            }
-            y+=cellSize;
-        }
-        x+=cellSize;
-    }
-    return c;
-}
-//------------------------------------------------------------------
-//count total agents in each cell, and return as a 2D vector
+//count total agents in each cell, and return as a 2D vector - NB not tested on upper right/top boundary for Cyl
 vector<vector<double>> searchGrid::count(){
     std::vector<std::vector<double>>c(NxCells,std::vector<double>(NyCells,0));
     for (int ix=0;ix<NxCells;ix++)
@@ -534,6 +462,54 @@ vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func){
             for (auto agent:cells[iy * NxCells + ix]){
             if (func(*agent)) c[ix][iy]++; 
             }
+    return c;
+}
+//------------------------------------------------------------------
+//count total agents in each cell and return as a 2D vector, aggregating to regular grid size cellSize
+vector<vector<double>> searchGrid::count(double cellSize){
+    return count(cellSize,x0,x0+_xSize,y0,y0+_ySize);
+}
+//------------------------------------------------------------------
+//count total agents with some true/false property in each cell, aggregating to regular grid size cellsize
+vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double cellSize){
+    return count(func,cellSize,x0,x0+_xSize,y0,y0+_ySize);
+}
+//------------------------------------------------------------------
+//count total agents in each cell and return as a 2D vector, aggregating to regular grid size cellSize, limited to a given domain
+vector<vector<double>> searchGrid::count(double cellSize,double xlo,double xhi,double ylo,double yhi){
+    double x=xlo,y=ylo;
+    unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
+    assert(xcells>0 && ycells>0);
+    std::vector<std::vector<double>>c(xcells,std::vector<double>(ycells,0));
+    for(unsigned ix=0;ix<xcells;ix++){
+        y=ylo;
+        for (unsigned iy=0;iy<ycells;iy++){
+            auto agentList=inSquareRegion(x, y, cellSize);
+            c[ix][iy]= agentList.size(); 
+            y+=cellSize;
+        }
+        x+=cellSize;
+    }
+    return c;
+}
+//------------------------------------------------------------------
+//count total agents with some true/false property in each cell, aggregating to regular grid size cellsize, limited to a given domain
+vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double cellSize,double xlo,double xhi,double ylo,double yhi){
+    double x=xlo,y=ylo;
+    unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
+    assert(xcells>0 && ycells>0);
+    std::vector<std::vector<double>>c(xcells,std::vector<double>(ycells,0));
+    for(unsigned ix=0;ix<xcells;ix++){
+        y=ylo;
+        for (unsigned iy=0;iy<ycells;iy++){
+            auto agentList=inSquareRegion(x, y, cellSize);
+            for (auto agent:agentList){
+                if (func(*agent)) c[ix][iy]++; 
+            }
+            y+=cellSize;
+        }
+        x+=cellSize;
+    }
     return c;
 }
 //put in spherical distance?
@@ -779,16 +755,55 @@ void searchGrid::test(){
     F=testGrid->inSquareRegion(0.1, 0.1, 0.5);
     success=success&&(F.size()==1);F.clear();
     testGrid->testMessage("Test 19",success);
-    //      v[2]->loc.x= -500;  v[2]->loc.y= -500   ;testGrid->add(v[2]);
-//      v[3]->loc.x= -499;  v[3]->loc.y= -500   ;testGrid->add(v[3]);
-//      v[4]->loc.x= -498;  v[4]->loc.y= -500   ;testGrid->add(v[4]);
-//      v[5]->loc.x= -500;  v[5]->loc.y= -499   ;testGrid->add(v[5]);
-//      v[6]->loc.x= -498;  v[6]->loc.y= -499   ;testGrid->add(v[6]);
-//      v[7]->loc.x= -498;  v[7]->loc.y= -498   ;testGrid->add(v[7]);
-//      v[8]->loc.x= -499;  v[8]->loc.y= -498   ;testGrid->add(v[8]);
-//      v[9]->loc.x= -500;  v[9]->loc.y= -497.5 ;testGrid->add(v[9]);
-//     v[10]->loc.x= -499; v[10]->loc.y= -496.5 ;testGrid->add(v[10]);
-//     v[11]->loc.x=  499; v[11]->loc.y=  499   ;testGrid->add(v[11]);
+    //now test returned gridded data
+    success=true;
+    //first the entire grid
+    auto C=testGrid->count(1000);
+    success=success&&(C.size()==1 && C[0].size()==1 && C[0][0]==8);
+    //now the grid at its current size
+    C=testGrid->count();
+    success=success&&(C.size()==1000 && C[0].size()==1000);
+    success=success&&(C[0][0]==2 && C[500][500]==3 && C[501][502]==1 && C[510][510]==1 && C[999][999]==1);
+    //now the grid at its current size, but set through cellSize parameter
+    C=testGrid->count(1);
+    success=success&&(C.size()==1000 && C[0].size()==1000);
+    success=success&&(C[0][0]==2 && C[500][500]==3 && C[501][502]==1 && C[510][510]==1 && C[999][999]==1);
+    //reduce resolution
+    C=testGrid->count(10);
+    success=success&&(C.size()==100 && C[0].size()==100);
+    success=success&&(C[0][0]==2 && C[50][50]==4 && C[51][51]==1 && C[99][99]==1);
+
+    C=testGrid->count(100);
+    success=success&&(C.size()==10 && C[0].size()==10);
+    success=success&&(C[0][0]==2 && C[5][5]==5 && C[9][9]==1);
+    testGrid->testMessage("Test 20",success);    
+    //something not just in powers of 10
+    success=true;
+    C=testGrid->count(500);
+
+    success=success&&(C.size()==2 && C[0].size()==2);
+    success=success&&(C[0][0]==2 && C[1][1]==6);
+    
+    C=testGrid->count(250);
+    success=success&&(C.size()==4 && C[0].size()==4);
+    success=success&&(C[0][0]==2 && C[2][2]==5 && C[3][3]==1);
+    
+    C=testGrid->count(30);
+    success=success&&(C.size()==33 && C[0].size()==33);
+    success=success&&(C[0][0]==2 && C[16][16]==4 && C[17][17]==1);
+
+    //The whole grid
+    C=testGrid->count(1000);
+    success=success&&(C.size()==1 && C[0].size()==1 && C[0][0]==8);
+
+    testGrid->testMessage("Test 21",success);
+    //Test grid subset
+    success=true;
+    C=testGrid->count(5,-0.1,20-0.1,-0.4,40-0.4);
+    success=success&&(C.size()==4 && C[0].size()==8 && C[0][0]==4 && C[2][2]==1);
+
+    testGrid->testMessage("Test 22",success);
+    C.clear();
     //tidy up
     for (unsigned i=0;i<v.size();i++)delete v[i];
     v.clear();

@@ -436,6 +436,14 @@ asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,
     return new asciiGridFileWriter(filePath,_xSize/cellSize,_ySize/cellSize,x0,y0,cellSize,missing);
 }
 //------------------------------------------------------------------
+//return a grid file writer with a given cellsize, spanning the whole of this grid
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,double cellSize,double xlo,double xhi,double ylo,double yhi,double missing){
+    //this function only works in conjunction with regular grid (i.e. x and y spacing equal)
+    //use only with count functions that take this into account.
+    assert(xhi>xlo && yhi>ylo);
+    return new asciiGridFileWriter(filePath,(xhi-xlo)/cellSize,(yhi-ylo)/cellSize,xlo,ylo,cellSize,missing);
+}
+//------------------------------------------------------------------
 //count total agents in each cell and return as a 2D vector, aggregating to regular grid size cellSize
 vector<vector<double>> searchGrid::count(double cellSize){
     double x=x0,y=y0;
@@ -492,9 +500,10 @@ vector<vector<double>> searchGrid::count(double cellSize,double xlo,double xhi,d
 //count total agents with some true/false property in each cell, aggregating to regular grid size cellsize, limited to a given domain
 vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double cellSize,double xlo,double xhi,double ylo,double yhi){
     double x=xlo,y=ylo;
-    unsigned xcells=xhi/cellSize,ycells=yhi/cellSize;
+    assert(xhi>xlo && yhi>ylo);
+    unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
     assert(xcells>0 && ycells>0);
-    std::vector<std::vector<double>>c(_xSize/cellSize,std::vector<double>(_ySize/cellSize,0));
+    std::vector<std::vector<double>>c((xhi-xlo)/cellSize,std::vector<double>((xhi-xlo)/cellSize,0));
     for(unsigned ix=0;ix<xcells;ix++){
         for (unsigned iy=0;iy<ycells;iy++){
             auto agentList=inSquareRegion(x, y, cellSize);

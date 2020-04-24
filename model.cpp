@@ -39,9 +39,9 @@ model::model(){
 //-----------------------------------------------------------------------------------------------------------------
 void model::init(){
 
-  //searchGrid::test();
+  searchGrid::test();
   //disease::test();
-  //exit(0);
+  exit(0);
   places* p=places::getInstance();
   p->init();
 

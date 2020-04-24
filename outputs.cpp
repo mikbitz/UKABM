@@ -7,8 +7,13 @@ outputs::outputs(){
     _summaryFile.open(parameters::getInstance().summaryFileName);
     //header line
     _summaryFile<<"step,susceptible,infected,recovered,totalPop."<<endl;
-    _infections=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().infectionMapFileName);
-    _population=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().populationMapFileName);
+    _outputCellSize=10000;
+    parameters& p=parameters::getInstance();
+    std::string nFrames="frames "+std::to_string(p.nsteps/p.outputInterval);
+    _infections=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().infectionMapFileName,_outputCellSize,-9999);
+    _infections->writeExtraLabel(nFrames);
+    _population=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().populationMapFileName,_outputCellSize,-9999);
+    _population->writeExtraLabel(nFrames);
 }
 //--------------------------------------------------------------------------
 outputs::~outputs(){
@@ -30,9 +35,10 @@ void outputs::writeAll(){
     //these files are similar to arc ascii grid, with the same global header,
     //but have multiple data arrays with a timestamp line at the start of each
     _infections->writeExtraLabel(to_simple_string(timing::getInstance().now()));
-    _infections->writeToFile(m.g.count(&agent::infected));
+    _infections->writeToFile(m.g.count(&agent::infected,_outputCellSize));
+    
     _population->writeExtraLabel(to_simple_string(timing::getInstance().now()));
-    _population->writeToFile(m.g.count());
+    _population->writeToFile(m.g.count(_outputCellSize));
 }
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------

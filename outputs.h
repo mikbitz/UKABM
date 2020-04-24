@@ -13,5 +13,6 @@ public:
     void test();
 private:
     std::ofstream _summaryFile;
+    double _outputCellSize;
 };
 #endif

@@ -16,10 +16,14 @@ finalDate: 2020-Apr-11
 #-------------------------------
 #output
 #-------------------------------
-#how often will output be made in units of teh timestep
+#how often will output be made in units of the timestep
 outputInterval: 1
 #simple csv file of summary data for the disease
-outputFile: diseaseSummary
+summaryFileName: diseaseSummary
+#time series spatial map of current infection numbers
+infectionMapFileName: infections.tasc
+#time series spatial map of current population numbers
+populationMapFileName: population.tasc
 #------------------------------
 #Methods for creating agents
 #------------------------------
@@ -27,12 +31,12 @@ outputFile: diseaseSummary
 agentFactoryType: worldpop
 #
 #
-#simple creator allows for variable number of agents
-numberOfAgents: 100000
+#simple creator allows for variable number of agents - uncomment if using this
+#numberOfAgents: 100000
 #
 #
 #worldpop allows for an approximate variable fraction of agents to be taken from a population grid
-agentFraction: 0.01
+agentFraction: 0.005
 #data file specifying the total population in a regular grid for the worldpop case
 #currently expected to be in ARC ascii format
 populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
@@ -40,8 +44,9 @@ populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
 #parameters for a simple disease
 #------------------------------
 recoveryTime: 21.
-infectionRate: 3.
-infectionDist: 10
+latencyTime: 2.
+infectionRate: 5.
+infectionDist: 1000
 #--------------------------------
 #random number seed for this run
 randomSeed: 250
@@ -50,8 +55,9 @@ randomSeed: 250
 #--------------------------------
 #size of the model search grid
 #more cells may lead to shorter run times...depending on things like infection distance...
-xBins: 1000
-yBins: 1000
+#depending on the actual grid physical size you might want to set these to keep cells roughly equal in x/y size
+xBins: 749
+yBins: 1243
 #defaults: may get over-ridden by model setup
 #actual size of the grid in metres
 xSize: 10000

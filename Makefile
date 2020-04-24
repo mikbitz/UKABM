@@ -6,7 +6,7 @@
 
 CXX           = g++
 DEFINES       =
-CXXFLAGS      = -pipe -std=gnu++11 -O3 -fopenmp -Wall -W -D_REENTRANT $(DEFINES)
+CXXFLAGS      = -pipe -std=gnu++17 -O3 -fopenmp -Wall -W -D_REENTRANT $(DEFINES)
 INCPATH       = -I.  -I/usr/include 
 LINK          = g++
 LFLAGS        = -Wl,-O1 

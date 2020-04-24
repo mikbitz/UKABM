@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------------------------------------------
 agent::agent(){
     ID=idnum;idnum++;
-    infected=false;exposed=false;recovered=false;
+    infected=false;exposed=false;recovered=false;numberInfected=0;
     cellIndex=-1;
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ void agent::updateDiseases(){
         // Loop over other agents
         for (unsigned i=0;i<neighbours.size();i++){
             if (neighbours[i]!=this){
-                if (d.infectious() && !neighbours[i]->hasDisease(name) &&  d.infectionOccurs())neighbours[i]->infectWith(name);}
+                if (d.infectious() && !neighbours[i]->hasDisease(name) &&  d.infectionOccurs()){neighbours[i]->infectWith(name);numberInfected++;}}
         }
     }
 }

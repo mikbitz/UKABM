@@ -19,6 +19,7 @@ public:
     vector<agent*> *friends;
     timeTable tTable;
     bool infected, exposed,recovered;
+    unsigned numberInfected;
     static unsigned idnum;
     unsigned ID,classNum;
     int cellIndex;

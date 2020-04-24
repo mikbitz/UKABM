@@ -71,7 +71,9 @@ bool model::update(){
       b=b || u;
     }
     if (tick%10==0){cout<<timing::getInstance().now()<<endl;}
-
+    double R0=0,infs=0;
+    for (auto a:(*agentList)){if (a->recoveredFrom("covid")){infs++; R0+=a->numberInfected;}}
+    if (infs>0 && tick%10==0)cout<<"R0?? :"<<R0/infs<<endl;
     if (b){
         tick++;
         timing::getInstance().update();

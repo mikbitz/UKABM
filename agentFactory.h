@@ -26,7 +26,14 @@ class worldpopFactory:public agentFactory{
             if (newAgentExists==1){
                 agent* a=new agent();
                 a->knownLocations[places::home]=p.getNextLocation();
-                a->knownLocations[places::work]=model::getInstance().g.getRandomPoint();
+                //distance travelled distributed approximately like 1./x^2 for x>=1;
+                //distances between 1km and 100km
+                double d=1010 / (1.01 - model::getInstance().random.number());
+                double pi=acos(-1.);
+                //random direction
+                double dcc=d*cos(2*pi*model::getInstance().random.number());
+                double dcs=d*sin(2*pi*model::getInstance().random.number());
+                a->knownLocations[places::work]=a->knownLocations[places::home]+point2D(dcc,dcs);
                 a->init();
                 model::getInstance().g.add(a);
                 agents.push_back(a);

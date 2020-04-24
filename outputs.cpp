@@ -11,9 +11,10 @@ outputs::outputs(){
     _outputCellSize=10000;
     parameters& p=parameters::getInstance();
     std::string nFrames="maxFrames "+std::to_string(p.nsteps/p.outputInterval);
-    _infections=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().infectionMapFileName,_outputCellSize,-9999);
+    std::string path="./";
+    _infections=model::getInstance().g.getAsciiFileWriter(path+parameters::getInstance().infectionMapFileName,_outputCellSize,-9999);
     _infections->writeExtraLabel(nFrames);
-    _population=model::getInstance().g.getAsciiFileWriter(parameters::getInstance().populationMapFileName,_outputCellSize,-9999);
+    _population=model::getInstance().g.getAsciiFileWriter(path+parameters::getInstance().populationMapFileName,_outputCellSize,-9999);
     _population->writeExtraLabel(nFrames);
 }
 //--------------------------------------------------------------------------

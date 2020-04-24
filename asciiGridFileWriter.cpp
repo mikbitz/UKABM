@@ -11,7 +11,7 @@
     _filePath(filePath)
     {
         _fileStream.open( filePath);
-        std::cout << "Writing output to file \"" << filePath << "\"..." << std::endl;
+        std::cout << "Writing map output to file \"" << filePath << "\"..." << std::endl;
         if(_fileStream.is_open( ) ){
             writeHeader(_fileStream);
         }else {

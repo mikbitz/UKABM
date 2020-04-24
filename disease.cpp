@@ -16,15 +16,15 @@ disease::disease(){
 }
 void disease::infect(){_infected=true;_timer=0;}
 void disease::tryToRecover(){
-    
-    if (-log(model::getInstance().random.number())<  1./_recoveryTime*parameters::getInstance().timeStep/24./3600.)
+    //avoid errors if recovery time set to zero!
+    if (-log(model::getInstance().random.number())<  1./(_recoveryTime+0.000001)*parameters::getInstance().timeStep/24./3600.)
         {
             _recovered=true;
             _infectious=false;
         }
 }
 void disease::maybeBecomeInfectious(){
-    if (-log(model::getInstance().random.number())<  1./_latencyTime*parameters::getInstance().timeStep/24./3600.)_infectious=true;
+    if (-log(model::getInstance().random.number())<  1./(_latencyTime+0.000001)*parameters::getInstance().timeStep/24./3600.)_infectious=true;
 }
 //constant rate of infection per unit time implies prob.
 //exponentially distributed. If infection rate is r, then prob. of

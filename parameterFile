@@ -11,7 +11,7 @@ timeStep:     14400
 nsteps: 300
 #date for the start of the run
 initialDate: 2020-Mar-10
-#nominal end data - at the moment run uration is actually controlled by nsteps above
+#nominal end date - at the moment run duration is actually controlled by nsteps above
 finalDate: 2020-Apr-11
 #-------------------------------
 #output
@@ -44,9 +44,9 @@ populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
 #parameters for a simple disease
 #------------------------------
 recoveryTime: 21.
-latencyTime: 2.
+latencyTime: 7.
 infectionRate: 5.
-infectionDist: 1000
+infectionDist: 100
 #--------------------------------
 #random number seed for this run
 randomSeed: 250

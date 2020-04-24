@@ -1,4 +1,8 @@
+24/04/2020
+Redesigned the disease class. Multiple simultaneous infectious diseases now possible
+Diseases have a few stages each exponentially distributed.
 23/04/2020
+Added asciiGird to searcGrid with arbitrary x/y ranges and co-ordinates.
 Created aggregators limited by a set of upper and lower x/y co-ordinates
 Created cell aggregators to a fixed regular x-y size in searchGrid
 Added the ability to set missing in searchGrid asciiGridFileWriter, but with default set to -9999

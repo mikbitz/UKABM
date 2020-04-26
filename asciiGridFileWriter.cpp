@@ -1,7 +1,7 @@
 #include "asciiGridFileWriter.h"
 #include <iostream>
 #include <assert.h>
-    asciiGridFileWriter::asciiGridFileWriter(const std::string& filePath,unsigned ncols,unsigned nrows,double xllc,double yllc,double cellSize,double nodata):
+    asciiGridFileWriter::asciiGridFileWriter(const std::string& filePath,const std::string& fileName,unsigned ncols,unsigned nrows,double xllc,double yllc,double cellSize,double nodata):
     _ncols(ncols),
     _nrows(nrows),
     _xllcorner(xllc),
@@ -10,8 +10,8 @@
     _NODATA_value(nodata),
     _filePath(filePath)
     {
-        _fileStream.open( filePath);
-        std::cout << "Writing map output to file \"" << filePath << "\"..." << std::endl;
+        _fileStream.open( filePath+fileName);
+        std::cout << "Writing map output to file \"" << fileName << "\"..." << std::endl;
         if(_fileStream.is_open( ) ){
             writeHeader(_fileStream);
         }else {

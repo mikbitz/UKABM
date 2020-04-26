@@ -59,9 +59,9 @@ public:
     vector<vector<double>> count(std::function<bool(agent&)>,double);
     vector<vector<double>> count(double,double ,double ,double ,double );
     vector<vector<double>> count(std::function<bool(agent&)>,double,double ,double ,double ,double );
-    asciiGridFileWriter* getAsciiFileWriter(const std::string&,double missing=-9999);
-    asciiGridFileWriter* getAsciiFileWriter(const std::string&,const double,double missing=-9999);
-    asciiGridFileWriter* getAsciiFileWriter(const std::string& ,double,double,double,double,double,double missing=-9999);
+    asciiGridFileWriter* getAsciiFileWriter(const std::string&,const std::string&,double missing=-9999);
+    asciiGridFileWriter* getAsciiFileWriter(const std::string&,const std::string&,const double,double missing=-9999);
+    asciiGridFileWriter* getAsciiFileWriter(const std::string&,const std::string&,double,double,double,double,double,double missing=-9999);
     static void test();
     double xOrigin();
     double yOrigin();

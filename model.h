@@ -74,6 +74,7 @@ public:
          update();
        }
      }
+     std::string filepath(){return _filePrefix;}
      unsigned tick;
      float dt;
      ~model();
@@ -94,6 +95,7 @@ private:
      configuration* c;
      string text;
      outputs* files;
+     std::string _filePrefix,_filePostfix;
   
 };
 #endif

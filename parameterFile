@@ -8,7 +8,7 @@
 #Time step in seconds
 timeStep:     14400
 #how many timesteps of the above length will teh model run for
-nsteps: 300
+nsteps: 500
 #date for the start of the run
 initialDate: 2020-Mar-10
 #nominal end date - at the moment run duration is actually controlled by nsteps above
@@ -16,6 +16,17 @@ finalDate: 2020-Apr-11
 #-------------------------------
 #output
 #-------------------------------
+#Unique name for this set of model runs, if desired
+experiment.name: testing
+
+#location for the output files - subdirectory will be created called experiment.<name>
+experiment.output.directory: ./output
+#short text to outline experiment purpose
+experiment.description: huh?
+#run number - allows runs with above name to be grouped into sets (experiments!)
+#if this value is set (uncomment line below) oldfiles may be overwritten. Otherwise new directories will be auto-created for each run starting at 0000
+#run.number: 0000
+
 #how often will output be made in units of the timestep
 outputInterval: 1
 #simple csv file of summary data for the disease

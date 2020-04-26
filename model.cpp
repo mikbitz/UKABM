@@ -3,6 +3,7 @@
 #include "timing.h"
 #include "config.h"
 #include "movement.h"
+#include <boost/filesystem.hpp>
 #include <functional>
 
 /**
@@ -38,15 +39,44 @@ model::model(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 void model::init(){
+    
+    //searchGrid::test();
+    //disease::test();
+    //exit(0);
+    places* p=places::getInstance();
+    p->init();
+    
+    c=new configuration();
 
-  //searchGrid::test();
-  //disease::test();
-  //exit(0);
-  places* p=places::getInstance();
-  p->init();
-
-  c=new configuration();
-  files=new outputs();
+    //-----------------
+    //naming convention for output files
+    _filePrefix=   parameters::getInstance().experimentOutputDirectory+
+    "/experiment."+parameters::getInstance().experimentName;
+    if (!boost::filesystem::exists(_filePrefix))boost::filesystem::create_directories(_filePrefix);
+    std::string runNumber= parameters::getInstance().runNumber;
+    std::string m00="/run_";
+    if (runNumber!=""){
+        m00=m00+runNumber;
+    }else{
+        //auto-increment run number if run.number is not set
+        int i=0;
+        m00="/run_0000";
+        while(boost::filesystem::exists(_filePrefix+m00)){    // Find a new directory name
+            i++;
+            std::stringstream ss;
+            int zeroIndex=1000;while(zeroIndex>i && zeroIndex>1){ss<<"0";zeroIndex=zeroIndex/10;}
+            ss<<i;
+            runNumber=ss.str();
+            m00="/run_"+runNumber;
+        }
+    }
+    if (!boost::filesystem::exists(_filePrefix+m00))boost::filesystem::create_directories(_filePrefix+m00);
+    parameters::getInstance().setRunNumber(runNumber);
+    _filePrefix= _filePrefix+m00+"/";
+    _filePostfix="";
+    cout<<"Outputfiles will be named "<<_filePrefix<<"<Data Name>"<<_filePostfix<<".<filenameExtension>"<<endl;
+    //-----------------
+    files=new outputs();    
 }
 //-----------------------------------------------------------------------------------------------------------------
 string model::getText(){

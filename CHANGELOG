@@ -1,3 +1,6 @@
+26/04/2020
+Added a line to main so as to output model local starting time and date
+Added naming scheme for experiments and directories: directories for output from every run now auto-created if needed
 24/04/2020
 Redesigned the disease class. Multiple simultaneous infectious diseases now possible
 Diseases have a few stages each exponentially distributed.

@@ -422,27 +422,27 @@ return point2D(x,y);
 }
 //------------------------------------------------------------------
 //return a grid file writer if the current grid is exactly uniform in x/y cellsize
-asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath, double missing){
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath, const std::string& fileName, double missing){
     //this function only works for a regular grid (i.e. x and y spacing equal)
     assert(_xSize/NxCells==_ySize/NyCells);
-    return new asciiGridFileWriter(filePath,NxCells,NyCells,x0,y0,_xSize/NxCells,missing);
+    return new asciiGridFileWriter(filePath,fileName,NxCells,NyCells,x0,y0,_xSize/NxCells,missing);
 }
 //------------------------------------------------------------------
 //return a grid file writer with a given cellsize, spanning the whole of this grid
-asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,double cellSize,double missing){
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,const std::string& fileName,double cellSize,double missing){
     //this function only works in conjunction with regular grid (i.e. x and y spacing equal)
     //use only with count functions that take this into account.
     assert(_xSize/cellSize>0 && _ySize/cellSize>0);
-    return new asciiGridFileWriter(filePath,_xSize/cellSize,_ySize/cellSize,x0,y0,cellSize,missing);
+    return new asciiGridFileWriter(filePath,fileName,_xSize/cellSize,_ySize/cellSize,x0,y0,cellSize,missing);
 }
 //------------------------------------------------------------------
 //return a grid file writer with a given cellsize, spanning a subrange of the grid
-asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,double cellSize,double xlo,double xhi,double ylo,double yhi,double missing){
+asciiGridFileWriter* searchGrid::getAsciiFileWriter(const std::string& filePath,const std::string& fileName,double cellSize,double xlo,double xhi,double ylo,double yhi,double missing){
     //this function only works in conjunction with regular grid (i.e. x and y spacing equal)
     //use only with count functions that take this into account.
     unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
     assert(xcells>0 && ycells>0);
-    return new asciiGridFileWriter(filePath,(xhi-xlo)/cellSize,(yhi-ylo)/cellSize,xlo,ylo,cellSize,missing);
+    return new asciiGridFileWriter(filePath,fileName,(xhi-xlo)/cellSize,(yhi-ylo)/cellSize,xlo,ylo,cellSize,missing);
 }
 //------------------------------------------------------------------
 //count total agents in each cell, and return as a 2D vector - NB not tested on upper right/top boundary for Cyl

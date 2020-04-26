@@ -34,6 +34,9 @@ summaryFileName="defaultOutput";
 parameterFile="defaultParameters";
 initialDate="2020-Jan-10";
 finalDate="2020-Jan-11";
+runNumber=""; 
+experimentOutputDirectory=".";
+experimentName="";
 }
 //-----------------------------------------------------------------------------------------------------------------
 parameters::parameters(string f):parameterFile(f){
@@ -47,7 +50,11 @@ std::cout<< "Successfully found parameters "            <<std::endl;
 std::cout<< "timeStep              "<< timeStep         <<std::endl;
 std::cout<< "number of timesteps   "<< nsteps           <<std::endl;
 std::cout<< "outputInterval        "<< outputInterval   <<std::endl;
-std::cout<< "summaryFileName       "<< summaryFileName   <<std::endl;
+std::cout<< "experiment.name:      "<<  experimentName  <<std::endl;
+std::cout<< "experiment.output.directory:"<<experimentOutputDirectory <<std::endl;
+std::cout<< "experiment.description:"<<experimentDescription <<std::endl; 
+std::cout<< "run.number:           "<< runNumber        <<std::endl;
+std::cout<< "summaryFileName       "<< summaryFileName  <<std::endl;
 std::cout<< "infectionMapFileName  "<< infectionMapFileName  <<std::endl;
 std::cout<< "populationMapFileName:"<< populationMapFileName  <<std::endl;
 std::cout<< "isRestart             "<< isRestart        <<std::endl;
@@ -57,7 +64,7 @@ std::cout<< "inputFileName         "<< inputFileName    <<std::endl;
 std::cout<< "initialDate           "<< initialDate      <<std::endl;
 std::cout<< "finalDate             "<< finalDate        <<std::endl;
 std::cout<< "recoveryTime          "<< recoveryTime     <<std::endl;
-std::cout<< "latencyTime           "<< latencyTime     <<std::endl;
+std::cout<< "latencyTime           "<< latencyTime      <<std::endl;
 std::cout<< "infectionRate         "<< infectionRate    <<std::endl;
 std::cout<< "infectionDist         "<< infectionDist    <<std::endl;
 std::cout<< "randomSeed            "<< randomSeed       <<std::endl;
@@ -92,8 +99,12 @@ void parameters::getParameters(){
             bool success=false;
 
             if (label=="timeStep:")             {f>> timeStep;                success=true;}
-            if (label=="nsteps:")               {f>> nsteps;                  success=true;}          
-            if (label=="outputInterval:")       {f>> outputInterval;          success=true;}  
+            if (label=="nsteps:")               {f>> nsteps;                  success=true;}
+            if (label=="outputInterval:")       {f>> outputInterval;          success=true;}
+            if (label=="experiment.name:")      {f>> experimentName;          success=true;}
+            if (label=="experiment.output.directory:"){f>> experimentOutputDirectory;          success=true;}
+            if (label=="experiment.description:"){f>> experimentDescription;          success=true;}
+            if (label=="run.number:")           {f>> runNumber;          success=true;}
             if (label=="summaryFileName:")      {f>> summaryFileName;         success=true;}  
             if (label=="infectionMapFileName:") {f>> infectionMapFileName;    success=true;}  
             if (label=="populationMapFileName:"){f>> populationMapFileName;   success=true;}  

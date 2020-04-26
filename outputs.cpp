@@ -11,10 +11,11 @@ outputs::outputs(){
     _outputCellSize=10000;
     parameters& p=parameters::getInstance();
     std::string nFrames="maxFrames "+std::to_string(p.nsteps/p.outputInterval);
-    std::string path="./";
-    _infections=model::getInstance().g.getAsciiFileWriter(path+parameters::getInstance().infectionMapFileName,_outputCellSize,-9999);
+    std::string path=model::getInstance().filepath();
+
+    _infections=model::getInstance().g.getAsciiFileWriter(path,parameters::getInstance().infectionMapFileName,_outputCellSize,-9999);
     _infections->writeExtraLabel(nFrames);
-    _population=model::getInstance().g.getAsciiFileWriter(path+parameters::getInstance().populationMapFileName,_outputCellSize,-9999);
+    _population=model::getInstance().g.getAsciiFileWriter(path,parameters::getInstance().populationMapFileName,_outputCellSize,-9999);
     _population->writeExtraLabel(nFrames);
 }
 //--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ void outputs::writeAll(){
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 void outputs::test(){
-    auto a=new asciiGridFileWriter("test",20,20,-10,-10,10,-9999);
+    auto a=new asciiGridFileWriter("./","test",20,20,-10,-10,10,-9999);
     std::vector<std::vector<double>> testData;
     testData.resize(20);
     for (int i=0;i<20;i++){testData[i].resize(20);}

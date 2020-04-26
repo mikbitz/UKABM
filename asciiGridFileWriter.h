@@ -12,7 +12,7 @@ class asciiGridFileWriter{
     std::ofstream _fileStream;
     std::string _filePath;
 public:
-    asciiGridFileWriter(const std::string& filePath,unsigned ncols, unsigned nrows,double xllc,double yllc,double cellSize,double nodata);
+    asciiGridFileWriter(const std::string& filePath,const std::string& fileName,unsigned ncols, unsigned nrows,double xllc,double yllc,double cellSize,double nodata);
     ~asciiGridFileWriter();
     void writeToFile(const std::vector<std::vector<double>>&  );
     void writeHeader(std::ofstream&);

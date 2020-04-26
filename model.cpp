@@ -76,7 +76,8 @@ void model::init(){
     _filePostfix="";
     cout<<"Outputfiles will be named "<<_filePrefix<<"<Data Name>"<<_filePostfix<<".<filenameExtension>"<<endl;
     //-----------------
-    files=new outputs();    
+    files=new outputs();
+    parameters::getInstance().saveParameters();
 }
 //-----------------------------------------------------------------------------------------------------------------
 string model::getText(){
@@ -121,6 +122,6 @@ double model::getSize(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 void model::finish(){
-  
+
 }
 

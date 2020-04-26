@@ -1,8 +1,10 @@
 #include "parameters.h"
+#include "model.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include "boost/date_time/posix_time/posix_time.hpp"
 //-----------------------------------------------------------------------------------------------------------------
 parameters* parameters::instance;
 //-----------------------------------------------------------------------------------------------------------------
@@ -44,42 +46,30 @@ getParameters();
 }
 //--------------------------------------------------------------------------------------------
 void parameters::printParameters(){
-std::cout<< "Input Parameter File "<<parameterFile      <<std::endl;
+std::cout<< "Input Parameter File: "<<parameterFile      <<std::endl;
 std::cout<< "----------------------------- "            <<std::endl;
 std::cout<< "Successfully found parameters "            <<std::endl;
-std::cout<< "timeStep              "<< timeStep         <<std::endl;
-std::cout<< "number of timesteps   "<< nsteps           <<std::endl;
-std::cout<< "outputInterval        "<< outputInterval   <<std::endl;
-std::cout<< "experiment.name:      "<<  experimentName  <<std::endl;
-std::cout<< "experiment.output.directory:"<<experimentOutputDirectory <<std::endl;
-std::cout<< "experiment.description:"<<experimentDescription <<std::endl; 
-std::cout<< "run.number:           "<< runNumber        <<std::endl;
-std::cout<< "summaryFileName       "<< summaryFileName  <<std::endl;
-std::cout<< "infectionMapFileName  "<< infectionMapFileName  <<std::endl;
-std::cout<< "populationMapFileName:"<< populationMapFileName  <<std::endl;
-std::cout<< "isRestart             "<< isRestart        <<std::endl;
-std::cout<< "restartInterval       "<< restartInterval  <<std::endl;
-std::cout<< "restartFileName       "<< restartFileName  <<std::endl;
-std::cout<< "inputFileName         "<< inputFileName    <<std::endl;
-std::cout<< "initialDate           "<< initialDate      <<std::endl;
-std::cout<< "finalDate             "<< finalDate        <<std::endl;
-std::cout<< "recoveryTime          "<< recoveryTime     <<std::endl;
-std::cout<< "latencyTime           "<< latencyTime      <<std::endl;
-std::cout<< "infectionRate         "<< infectionRate    <<std::endl;
-std::cout<< "infectionDist         "<< infectionDist    <<std::endl;
-std::cout<< "randomSeed            "<< randomSeed       <<std::endl;
-std::cout<< "show GUI              "<< visible          <<std::endl;
-std::cout<< "grid number of x bins "<< NxCells          <<std::endl;
-std::cout<< "grid number of y bins "<< NyCells          <<std::endl;
-std::cout<< "grid xSize            "<< xSize            <<std::endl;
-std::cout<< "grid ySize            "<< ySize            <<std::endl;
-std::cout<< "xOrigin               "<< x0               <<std::endl;
-std::cout<< "yOrigin               "<< y0               <<std::endl;
-std::cout<< "agentFactoryType:     "<<agentFactoryType  <<std::endl;
-std::cout<< "numberOfAgents:       "<<numberOfAgents    <<std::endl;
-std::cout<< "populationGridFile:   "<<populationGridFile<<std::endl;
-std::cout<< "agentFraction:        "<<agentFraction     <<std::endl;
+for (auto& [label,value]:named){
+    std::string name=label;
+    while(name.length()<30)name+=" ";
+    cout<<name<<"  "<<value.str()<<endl;
+}
 std::cout<< "----------------------------- "            <<std::endl;
+}
+//--------------------------------------------------------------------------------------------
+void parameters::saveParameters(){
+std::fstream f;
+f.open(model::getInstance().filepath()+"RunParameters",ios::out);
+f<<"Run started at: "<<boost::posix_time::second_clock::local_time()<<endl;
+f<< "----------------------------- "            <<std::endl;
+f<< "Input Parameter File: "<<parameterFile      <<std::endl;
+f<< "----------------------------- "            <<std::endl;
+for (auto& [label,value]:named){
+    std::string name=label;
+    while(name.length()<30)name+=" ";
+    f<<name<<"  "<<value.str()<<endl;
+}
+f<< "----------------------------- "            <<std::endl;
 }
 //--------------------------------------------------------------------------------------------
 void parameters::getParameters(){
@@ -88,7 +78,7 @@ void parameters::getParameters(){
     try{
     std::fstream f;
     //f.exceptions ( ifstream::failbit | ifstream::badbit );
-    f.open(parameterFile.c_str(),ios::in);
+    f.open(parameterFile,ios::in);
     std::string label;
     
     while (!f.eof()){
@@ -98,39 +88,37 @@ void parameters::getParameters(){
         if (label[ 0 ] != '#'){
             bool success=false;
 
-            if (label=="timeStep:")             {f>> timeStep;                success=true;}
-            if (label=="nsteps:")               {f>> nsteps;                  success=true;}
-            if (label=="outputInterval:")       {f>> outputInterval;          success=true;}
-            if (label=="experiment.name:")      {f>> experimentName;          success=true;}
-            if (label=="experiment.output.directory:"){f>> experimentOutputDirectory;          success=true;}
-            if (label=="experiment.description:"){f>> experimentDescription;          success=true;}
-            if (label=="run.number:")           {f>> runNumber;          success=true;}
-            if (label=="summaryFileName:")      {f>> summaryFileName;         success=true;}  
-            if (label=="infectionMapFileName:") {f>> infectionMapFileName;    success=true;}  
-            if (label=="populationMapFileName:"){f>> populationMapFileName;   success=true;}  
-            if (label=="isRestart:")            {f>> isRestart;               success=true;}       
-            if (label=="restartInterval:")      {f>> restartInterval;         success=true;} 
-            if (label=="restartFile:")          {f>> restartFileName;         success=true;} 
-            if (label=="inputFile:")            {f>> inputFileName;           success=true;}   
-            if (label=="initialDate:")          {f>> initialDate;             success=true;}     
-            if (label=="finalDate:")            {f>> finalDate;               success=true;}       
-            if (label=="recoveryTime:")         {f>> recoveryTime;            success=true;}
-            if (label=="latencyTime:")          {f>> latencyTime;             success=true;}
-            if (label=="infectionRate:")        {f>> infectionRate;           success=true;}   
-            if (label=="infectionDist:")        {f>> infectionDist;           success=true;}   
-            if (label=="randomSeed:")           {f>> randomSeed;              success=true;}      
-            if (label=="showGUI:")              {f>> visible;                 success=true;}         
-            if (label=="xBins:")                {f>> NxCells;                 success=true;}         
-            if (label=="yBins:")                {f>> NyCells;                 success=true;}         
-            if (label=="xSize:")                {f>> xSize;                   success=true;}           
-            if (label=="ySize:")                {f>> ySize;                   success=true;}           
-            if (label=="xOrigin:")              {f>> x0;                      success=true;}              
-            if (label=="yOrigin:")              {f>> y0;                      success=true;}
-            if (label=="populationGridFile:")   {f>>populationGridFile;       success=true;}
-            if (label=="agentFactoryType:")     {f>>agentFactoryType;         success=true;}
-            if (label=="numberOfAgents:")       {f>>numberOfAgents;           success=true;}
-            if (label=="agentFraction:")        {f>>agentFraction;            success=true;}
-
+            if (label=="timing.timeStep:")             {f>> timeStep;                  named[label]<<timeStep;                  success=true;}
+            if (label=="timing.nsteps:")               {f>> nsteps;                    named[label]<<nsteps;                    success=true;}
+            if (label=="timing.initialDate:")          {f>> initialDate;               named[label]<<initialDate;               success=true;}     
+            if (label=="timing.finalDate:")            {f>> finalDate;                 named[label]<<finalDate;                 success=true;}             
+            if (label=="experiment.name:")             {f>> experimentName;            named[label]<<experimentName;            success=true;}
+            if (label=="experiment.output.directory:") {f>> experimentOutputDirectory; named[label]<<experimentOutputDirectory; success=true;}
+            if (label=="experiment.description:")      {f>> experimentDescription;     named[label]<<experimentDescription;     success=true;}
+            if (label=="experiment.run.number:")       {f>> runNumber;                 named[label]<<runNumber;                 success=true;}
+            if (label=="output.summaryFileName:")      {f>> summaryFileName;                named[label]<<summaryFileName;           success=true;}  
+            if (label=="output.infectionMapFileName:") {f>> infectionMapFileName;           named[label]<<infectionMapFileName;      success=true;}  
+            if (label=="output.populationMapFileName:"){f>> populationMapFileName;          named[label]<<populationMapFileName;     success=true;}  
+            if (label=="output.outputInterval:")       {f>> outputInterval;            named[label]<<outputInterval;            success=true;}
+            if (label=="restart.isRestart:")            {f>> isRestart;                      named[label]<<isRestart;                 success=true;}       
+            if (label=="restart.restartInterval:")      {f>> restartInterval;                named[label]<<restartInterval;           success=true;} 
+            if (label=="restart.restartFile:")          {f>> restartFileName;                named[label]<< restartFileName;          success=true;}     
+            if (label=="disease.recoveryTime:")         {f>> recoveryTime;                   named[label]<<recoveryTime;              success=true;}
+            if (label=="disease.latencyTime:")          {f>> latencyTime;                    named[label]<<latencyTime;               success=true;}
+            if (label=="disease.infectionRate:")        {f>> infectionRate;                  named[label]<<infectionRate;             success=true;}   
+            if (label=="disease.infectionDist:")        {f>> infectionDist;                  named[label]<<infectionDist;             success=true;}   
+            if (label=="random.Seed:")           {f>> randomSeed;                     named[label]<<randomSeed;                success=true;}      
+            if (label=="grid.xBins:")                {f>> NxCells;                        named[label]<<NxCells;                   success=true;}         
+            if (label=="grid.yBins:")                {f>> NyCells;                        named[label]<<NyCells;                   success=true;}         
+            if (label=="grid.xSize:")                {f>> xSize;                          named[label]<<xSize;                     success=true;}           
+            if (label=="grid.ySize:")                {f>> ySize;                          named[label]<<xSize;                     success=true;}           
+            if (label=="grid.xOrigin:")              {f>> x0;                             named[label]<<x0;                        success=true;}              
+            if (label=="grid.yOrigin:")              {f>> y0;                             named[label]<<y0;                        success=true;}
+            if (label=="agents.populationGridFile:")   {f>>populationGridFile;              named[label]<<populationGridFile;        success=true;}
+            if (label=="agents.agentFactoryType:")     {f>>agentFactoryType;                named[label]<<agentFactoryType;          success=true;}
+            if (label=="agents.numberOfAgents:")       {f>>numberOfAgents;                  named[label]<<numberOfAgents;            success=true;}
+            if (label=="agents.agentFraction:")        {f>>agentFraction;                   named[label]<<agentFraction;             success=true;}
+    
             if (!f.eof() && !success){
                 std::cout<<"Unrecognised label "<<label<<" in file "<<parameterFile<<" exiting..."<<std::endl;
                 exit(1); 

@@ -1,18 +1,22 @@
 #Model parameters
 #lines starting with # are comments
-#format is label <any amount of white-space> value on each line
+#Format is "label <any amount of white-space> value" on each line
+#NB values cannot contain spaces!
+#Label is generally <category>.name:
+#These values will be output alphabetically to a filecalled "RunParameters"
+#So <Category> helps to group parameters together in this file
 #
 #-------------------------------
 #Timing parameters
 #-------------------------------
 #Time step in seconds
-timeStep:     14400
+timing.timeStep:     14400
 #how many timesteps of the above length will teh model run for
-nsteps: 500
+timing.nsteps: 1
 #date for the start of the run
-initialDate: 2020-Mar-10
+timing.initialDate: 2020-Mar-10
 #nominal end date - at the moment run duration is actually controlled by nsteps above
-finalDate: 2020-Apr-11
+timing.finalDate: 2020-Apr-11
 #-------------------------------
 #output
 #-------------------------------
@@ -22,57 +26,57 @@ experiment.name: testing
 #location for the output files - subdirectory will be created called experiment.<name>
 experiment.output.directory: ./output
 #short text to outline experiment purpose
-experiment.description: huh?
+experiment.description: testing-work
 #run number - allows runs with above name to be grouped into sets (experiments!)
 #if this value is set (uncomment line below) oldfiles may be overwritten. Otherwise new directories will be auto-created for each run starting at 0000
-#run.number: 0000
+#experiment.run.number: 0000
 
 #how often will output be made in units of the timestep
-outputInterval: 1
+output.outputInterval: 1
 #simple csv file of summary data for the disease
-summaryFileName: diseaseSummary
+output.summaryFileName: diseaseSummary
 #time series spatial map of current infection numbers
-infectionMapFileName: infections.tasc
+output.infectionMapFileName: infections.tasc
 #time series spatial map of current population numbers
-populationMapFileName: population.tasc
+output.populationMapFileName: population.tasc
 #------------------------------
 #Methods for creating agents
 #------------------------------
 #valid values currently are simple and worldpop
-agentFactoryType: worldpop
+agents.agentFactoryType: worldpop
 #
 #
 #simple creator allows for variable number of agents - uncomment if using this
-#numberOfAgents: 100000
+#agents.numberOfAgents: 100000
 #
 #
 #worldpop allows for an approximate variable fraction of agents to be taken from a population grid
-agentFraction: 0.005
+agents.agentFraction: 0.005
 #data file specifying the total population in a regular grid for the worldpop case
 #currently expected to be in ARC ascii format
-populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
+agents.populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
 #------------------------------
 #parameters for a simple disease
 #------------------------------
-recoveryTime: 21.
-latencyTime: 7.
-infectionRate: 5.
-infectionDist: 100
+disease.recoveryTime: 21.
+disease.latencyTime: 7.
+disease.infectionRate: 5.
+disease.infectionDist: 100
 #--------------------------------
 #random number seed for this run
-randomSeed: 250
+random.Seed: 250
 #--------------------------------
 #Grid parameters
 #--------------------------------
 #size of the model search grid
 #more cells may lead to shorter run times...depending on things like infection distance...
 #depending on the actual grid physical size you might want to set these to keep cells roughly equal in x/y size
-xBins: 749
-yBins: 1243
+grid.xBins: 749
+grid.yBins: 1243
 #defaults: may get over-ridden by model setup
 #actual size of the grid in metres
-xSize: 10000
-ySize: 10000
+grid.xSize: 10000
+grid.ySize: 10000
 #grid origin in metres
-xOrigin: -5000
-yOrigin: -5000
+grid.xOrigin: -5000
+grid.yOrigin: -5000

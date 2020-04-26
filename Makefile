@@ -10,7 +10,7 @@ CXXFLAGS      = -pipe -std=gnu++17 -O3 -fopenmp -Wall -W -D_REENTRANT $(DEFINES)
 INCPATH       = -I.  -I/usr/include 
 LINK          = g++
 LFLAGS        = -Wl,-O1 
-LIBS          = $(SUBLIBS)  -L/usr/lib64 -lboost_date_time -lpthread -lgomp
+LIBS          = $(SUBLIBS)  -L/usr/lib64 -lboost_date_time -lboost_filesystem -lboost_system -lpthread -lgomp
 
 DEL_FILE      = rm -f
 DEL_DIR       = rmdir

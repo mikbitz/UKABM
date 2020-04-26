@@ -1,7 +1,9 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 #include <string>
+#include <sstream>
 #include <vector>
+#include <map>
 using namespace std;
 
 /**
@@ -16,6 +18,7 @@ static parameters& getInstance();
 static parameters& getInstance(string);
 ~parameters();
 void printParameters();
+void saveParameters();
 void getParameters();
 double timeStep;
 bool visible;
@@ -37,6 +40,7 @@ protected:
 parameters();
 parameters(string);
 static parameters* instance;
+map<std::string,std::stringstream>named;
 
 };
 #endif

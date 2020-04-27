@@ -25,6 +25,8 @@ class worldpopFactory:public agentFactory{
         while (newAgentExists> -1){
             if (newAgentExists==1){
                 agent* a=new agent();
+                //simple uniform age distrubtion
+                a->setAge(model::getInstance().random.number()*80);
                 a->knownLocations[places::home]=p.getNextLocation();
                 //distance travelled distributed approximately like 1./x^2 for x>=1;
                 //distances between 1km and 100km
@@ -55,6 +57,7 @@ class simpleRandomFactory:public agentFactory{
         cout<<"Starting simple random agent generator..."<<endl;
         for (int i=0;i<parameters::getInstance().numberOfAgents;i++){
             agent* a=new agent();
+            a->setAge(model::getInstance().random.number()*80);
             a->knownLocations[places::home]=model::getInstance().g.getRandomPoint();
             a->knownLocations[places::work]=model::getInstance().g.getRandomPoint();
             a->init();

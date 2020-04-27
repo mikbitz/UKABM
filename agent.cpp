@@ -3,7 +3,9 @@
 //-----------------------------------------------------------------------------------------------------------------
 agent::agent(){
     ID=idnum;idnum++;
-    infected=false;exposed=false;recovered=false;numberInfected=0;
+    infected=false;exposed=false;recovered=false;
+    inHospital=false,critical=false,died=false;
+    numberInfected=0;
     cellIndex=-1;
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -18,9 +20,12 @@ void agent::init(){
     _pathSet.setKnownPaths();
     
 }
+void agent::setAge(double a){
+    age=a;//age in put in years
+}
 //-----------------------------------------------------------------------------------------------------------------
 void agent::preUpdate(){
-    //age++??in years??
+    age+=parameters::getInstance().timeStep/3600./24./365.;//in years...ignoring leaps! timestep is in seconds
     for (unsigned i=0;i<processes.size();i++)processes[i]->preUpdate();
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -62,7 +67,7 @@ bool agent::recoveredFrom(std::string name){
 }
 //------------------------------------------------------------------------------------------------------------
 void agent::infectWith(std::string name){
-    _diseases[name]=disease(name);_diseases[name].infect();
+    _diseases[name]=disease(name);_diseases[name].infect();exposed=true;
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setDest(places::place e){

@@ -1,0 +1,8 @@
+#comments follow #
+#Numbers have very broad uncertainty ranges
+#figures from Imperial report 9 for symptomatic cases
+#Assumed 50% in critical care die (this seems to be used to fix IFR?)
+covid
+age,10,20,30,40,50,60,70,80,90
+hosp,0.1,0.3,1.2,3.2,4.9,10.2,16.6,24.3,27.3
+crit,5,5,5,5,6.3,12.2,27.4,43.2,70.9

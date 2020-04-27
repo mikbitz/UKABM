@@ -1,0 +1,4 @@
+#comments follow #
+#infection rate is per day, recovery and latency time in days, distance in metres, percentage not showing symptoms, percentage that die in critical care
+name,infectionRate,recoveryTime,latencyTime,infectionDist,asymptomaticRate,criticalDeathRate
+covid,5,21,7,100,20,50

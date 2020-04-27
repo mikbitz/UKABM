@@ -4,27 +4,45 @@
 #include "parameters.h"
 #include <omp.h>
 #include <math.h>
+//constant rate of infection per unit time implies prob.
+//exponentially distributed. If infection rate is r, then prob. of
+//*not* being infected after finite time dt is exp(-r*dt)
+// so rand(0,1)>exp(-rdt) for infection, or -log(rand)<r*dt. NB this decays
+// more slowly than rand<r*dt, since there is a finite possibility of not being
+// infected when r*dt>1
 disease::disease(){
     _infected=false;
     _recovered=false;
     _infectious=false;
+    _died=false;
     _timer=0;
     _infectionRate= parameters::getInstance().infectionRate;//per day
     _latencyTime  = parameters::getInstance().latencyTime  ;//in days
     _recoveryTime = parameters::getInstance().recoveryTime ;//in days
    _infectionDistance=parameters::getInstance().infectionDist;//in metres
 }
+//------------------------------------------------------------------
 disease::disease(std::string name){
     _infected=false;
     _recovered=false;
     _infectious=false;
+    _died=false;
     _timer=0;
     _infectionRate= parameters::getInstance().disease(name,"infectionRate");//per day
     _latencyTime  = parameters::getInstance().disease(name,"latencyTime"  );//in days
     _recoveryTime = parameters::getInstance().disease(name,"recoveryTime" );//in days
-   _infectionDistance=parameters::getInstance().disease(name,"infectionDist");//in metres
+    _infectionDistance=parameters::getInstance().disease(name,"infectionDist");//in metres
 }
+//------------------------------------------------------------------
+void disease::update(){
+    if (_died || _recovered)return;
+    _timer++;
+    if (!_recovered)maybeBecomeInfectious();
+    tryToRecover();
+}
+//------------------------------------------------------------------
 void disease::infect(){_infected=true;_timer=0;}
+//------------------------------------------------------------------
 void disease::tryToRecover(){
     //add small number to _recoveryTime to avoid errors if set to zero!
     if (-log(model::getInstance().random.number())<  1./(_recoveryTime+0.000001)*parameters::getInstance().timeStep/24./3600.)
@@ -33,28 +51,22 @@ void disease::tryToRecover(){
             _infectious=false;
         }
 }
+//------------------------------------------------------------------
 void disease::maybeBecomeInfectious(){
     if (-log(model::getInstance().random.number())<  1./(_latencyTime+0.000001)*parameters::getInstance().timeStep/24./3600.)_infectious=true;
 }
-//constant rate of infection per unit time implies prob.
-//exponentially distributed. If infection rate is r, then prob. of
-//*not* being infected after finite time dt is exp(-r*dt)
-// so rand(0,1)>exp(-rdt) for infection, or -log(rand)<r*dt. NB this decays
-// more slowly than rand<r*dt, since there is a finite possibility of not being
-// infected when r*dt>1
+//------------------------------------------------------------------
 bool disease::infectionOccurs(){
     return -log(model::getInstance().random.number())< _infectionRate*parameters::getInstance().timeStep/24./3600.;
 }
+//------------------------------------------------------------------
 bool disease::infected(){return _infected;}
+//------------------------------------------------------------------
 bool disease::recovered(){return _recovered;}
+//------------------------------------------------------------------
 bool disease::infectious(){return _infectious;}
+//------------------------------------------------------------------
 double disease::infectionDistance(){return _infectionDistance;}
-void disease::update(){
-    _timer++;
-    if (!_recovered)maybeBecomeInfectious();
-    tryToRecover();
-    //if age (somecondition) die();
-}
 //------------------------------------------------------------------
 //Testing section
 //------------------------------------------------------------------

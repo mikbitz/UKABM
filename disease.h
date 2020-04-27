@@ -24,14 +24,15 @@ public:
     bool recovered();
     void update();
 private:
-    bool _infected=false;
-    bool _recovered=false;
-    bool _infectious=false;
-    double _infectionRate=0.5;
-    double _recoveryTime=21;
-    double _latencyTime=7;
-    double _infectionDistance=2.;
-    unsigned _timer=0;
+    bool _infected;
+    bool _recovered;
+    bool _infectious;
+    bool _died;
+    double _infectionRate;
+    double _recoveryTime;
+    double _latencyTime;
+    double _infectionDistance;
+    unsigned _timer;
 };
 
 #endif /* DISEASE_H */

@@ -120,7 +120,7 @@ void parameters::getParameters(){
             if (label=="agents.numberOfAgents:")       {f>>numberOfAgents;             named[label]<<numberOfAgents;            success=true;}
             if (label=="agents.agentFraction:")        {f>>agentFraction;              named[label]<<agentFraction;             success=true;}
             if (label=="disease.ParameterFile:")       {f>>diseaseParameterFile;       named[label]<<diseaseParameterFile;      success=true;}
-            if (label=="disease.MortalityRates:")      {f>>diseaseMortalityRates;      named[label]<<diseaseMortalityRates;     success=true;}
+            if (label=="disease.HospitalRates:")       {f>>diseaseHospitalRates;       named[label]<<diseaseHospitalRates;      success=true;}
 
             
             if (!f.eof() && !success){
@@ -140,18 +140,25 @@ void parameters::getParameters(){
       exit(1);
     }
 
-    readcsv dp(diseaseParameterFile);
+    readcsv dpars(diseaseParameterFile);
     //expect disease name as first item on each line
-    cout<<"found disease "<<dp[0][0]<<endl;
-    auto& header=dp.getHeader();
+    cout<<"found disease "<<dpars[0][0]<<endl;
+    auto& header=dpars.getHeader();
     
     //header holds the name for each disease parameter (header[0] is just "name")
-    for (unsigned i=1;i<dp[0].size();i++)_diseaseParameters[dp[0][0]][header[i]]=std::stod(dp[0][i]);
+    for (unsigned i=1;i<dpars[0].size();i++)_diseaseParameters[dpars[0][0]][header[i]]=std::stod(dpars[0][i]);
     
-    readcsv dm(diseaseMortalityRates);
-    cout<<"found mortality for "<<dm[0][0]<<endl;
-
-    for (unsigned i=1;i<dm[0].size();i++)_mortality[dm[0][0]].push_back(std::stod(dm[0][i]));
+    readcsv dHosp(diseaseHospitalRates);
+    header=dHosp.getHeader();
+    cout<<"found hospital rates for "<<header[0]<<endl;
+    for (unsigned row=1;row<dHosp.nrows();row++){
+        for (unsigned col=1;col<dHosp[0].size();col++){
+        std::string age=dHosp[0][col];
+        std::string value=dHosp[row][0];
+        _hospitalParameters[header[0]][age][value]=std::stod(dHosp[row][col]);
+        }
+    }
+    //for (unsigned i=1;i<dm[0].size();i++)_mortality[dm[0][0]].push_back(std::stod(dm[0][i]));
 
     
 }

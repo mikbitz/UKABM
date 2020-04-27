@@ -12,7 +12,7 @@
 #Time step in seconds
 timing.timeStep:     14400
 #how many timesteps of the above length will teh model run for
-timing.nsteps: 1
+timing.nsteps: 300
 #date for the start of the run
 timing.initialDate: 2020-Mar-10
 #nominal end date - at the moment run duration is actually controlled by nsteps above
@@ -58,9 +58,17 @@ agents.populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
 #------------------------------
 #parameters for a simple disease
 #------------------------------
+#Read disease parameters from files
+disease.ParameterFile: diseaseParameterFile
+disease.HospitalRates: diseaseHospitalRates
+#a generic anonymous disease
+#time in days
 disease.recoveryTime: 21.
+#time in days
 disease.latencyTime: 7.
+#rate per day
 disease.infectionRate: 5.
+#distance in metres
 disease.infectionDist: 100
 #--------------------------------
 #random number seed for this run

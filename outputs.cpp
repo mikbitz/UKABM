@@ -3,15 +3,17 @@
 #include "model.h"
 //--------------------------------------------------------------------------
 outputs::outputs(){
+    parameters& p=parameters::getInstance();
+    std::string path=model::getInstance().filepath();
     //csv file to hold summary of disease information across whole agent set
-    _summaryFile.open(parameters::getInstance().summaryFileName);
+    _summaryFile.open(path+parameters::getInstance().summaryFileName);
     //header line
     _summaryFile<<"step,date,susceptible,infected,recovered,totalPop."<<endl;
     //Note cellsize here *must* match those in writeALL below
     _outputCellSize=10000;
-    parameters& p=parameters::getInstance();
+
     std::string nFrames="maxFrames "+std::to_string(p.nsteps/p.outputInterval);
-    std::string path=model::getInstance().filepath();
+
 
     _infections=model::getInstance().g.getAsciiFileWriter(path,parameters::getInstance().infectionMapFileName,_outputCellSize,-9999);
     _infections->writeExtraLabel(nFrames);

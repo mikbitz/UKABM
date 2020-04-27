@@ -36,7 +36,7 @@ int NxCells,NyCells,restartInterval,outputInterval;
 double xSize,ySize,x0,y0;
 bool isRestart;
 std::string diseaseParameterFile;
-std::string diseaseMortalityRates;
+std::string diseaseHospitalRates;
 double latencyTime,recoveryTime,infectionRate,infectionDist;
 void setRunNumber(std::string n){runNumber=n;}
 protected:
@@ -45,7 +45,8 @@ parameters(string);
 static parameters* instance;
 //store parameter name/values
 map<std::string,std::stringstream>named;
-map<string,vector<double>>_mortality;
+//2D table of hospital and ciritcalcare rates, indexed by disease name
+std::map<std::string, std::map<std::string,  std::map<std::string, double> > > _hospitalParameters;
 std::map<std::string,std::map<std::string,double>>_diseaseParameters;
 };
 #endif

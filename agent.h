@@ -18,7 +18,7 @@ public:
     float age;
     vector<agent*> *friends;
     timeTable tTable;
-    bool infected, exposed,recovered;
+    bool infected, exposed,recovered,inHospital,critical,died;
     unsigned numberInfected;
     static unsigned idnum;
     unsigned ID,classNum;
@@ -32,6 +32,7 @@ public:
     void applyUpdate();
     void setDest(places::place e);
     void addProcess(process* p);
+    void setAge(double);
     void updateInfections();
     bool hasDisease(std::string name);
     bool recoveredFrom(std::string name);

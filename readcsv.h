@@ -24,6 +24,7 @@ public:
     void readData(std::ifstream&);
     void readHeader(std::ifstream&);
     std::vector<std::string>& getHeader(){return _header;}
+    unsigned nrows(){return _data.size();}
 
 };
 

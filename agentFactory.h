@@ -45,6 +45,7 @@ class worldpopFactory:public agentFactory{
         }
         cout<<endl;
         cout<<"Total agents created:"<<agents.size()<<endl;
+        //set age??
     }
 };
 class simpleRandomFactory:public agentFactory{
@@ -64,6 +65,7 @@ class simpleRandomFactory:public agentFactory{
         }
         cout<<endl;
         cout<<"Total agents created:"<<agents.size()<<endl;
+        //set age??
     }
 };
 class agentFactorySelector{

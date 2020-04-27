@@ -12,7 +12,12 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
 
-fp1="/home/moke/ukmodel/infections.tasc"
+base_dir="/home/moke/ukmodel/output/"
+varName="infections"
+runNumber="0002"
+experiment="experiment.testing"
+
+fp1=base_dir+experiment+"/run_"+runNumber+"/"+varName+".tasc"
 head=pd.read_table(fp1,nrows=6,header=None,sep=' ')
 nrows=head[1][1]
 #frame numbers start at 0
@@ -27,7 +32,7 @@ ax=fig.add_axes()
 
 plt.subplots_adjust(left=0.1, right=0.9, bottom=0., top=1.0)
 
-p=plt.imshow(values,vmin=0,vmax=100,cmap='bwr')
+p=plt.imshow(values,vmin=0,vmax=10,cmap='bwr')
 plt.colorbar(p)
 plt.tight_layout()
 plt.show()

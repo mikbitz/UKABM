@@ -32,7 +32,7 @@ public:
     void applyUpdate();
     void setDest(places::place e);
     void addProcess(process* p);
-    void updateDiseases();
+    void updateInfections();
     bool hasDisease(std::string name);
     bool recoveredFrom(std::string name);
     void infectWith(std::string name);

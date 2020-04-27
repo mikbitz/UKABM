@@ -14,9 +14,19 @@ disease::disease(){
     _recoveryTime = parameters::getInstance().recoveryTime ;//in days
    _infectionDistance=parameters::getInstance().infectionDist;//in metres
 }
+disease::disease(std::string name){
+    _infected=false;
+    _recovered=false;
+    _infectious=false;
+    _timer=0;
+    _infectionRate= parameters::getInstance().disease(name,"infectionRate");//per day
+    _latencyTime  = parameters::getInstance().disease(name,"latencyTime"  );//in days
+    _recoveryTime = parameters::getInstance().disease(name,"recoveryTime" );//in days
+   _infectionDistance=parameters::getInstance().disease(name,"infectionDist");//in metres
+}
 void disease::infect(){_infected=true;_timer=0;}
 void disease::tryToRecover(){
-    //avoid errors if recovery time set to zero!
+    //add small number to _recoveryTime to avoid errors if set to zero!
     if (-log(model::getInstance().random.number())<  1./(_recoveryTime+0.000001)*parameters::getInstance().timeStep/24./3600.)
         {
             _recovered=true;
@@ -43,7 +53,7 @@ void disease::update(){
     _timer++;
     if (!_recovered)maybeBecomeInfectious();
     tryToRecover();
-    //if (someconditione) die();
+    //if age (somecondition) die();
 }
 //------------------------------------------------------------------
 //Testing section

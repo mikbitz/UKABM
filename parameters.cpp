@@ -1,5 +1,6 @@
 #include "parameters.h"
 #include "model.h"
+#include "readcsv.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -96,29 +97,32 @@ void parameters::getParameters(){
             if (label=="experiment.output.directory:") {f>> experimentOutputDirectory; named[label]<<experimentOutputDirectory; success=true;}
             if (label=="experiment.description:")      {f>> experimentDescription;     named[label]<<experimentDescription;     success=true;}
             if (label=="experiment.run.number:")       {f>> runNumber;                 named[label]<<runNumber;                 success=true;}
-            if (label=="output.summaryFileName:")      {f>> summaryFileName;                named[label]<<summaryFileName;           success=true;}  
-            if (label=="output.infectionMapFileName:") {f>> infectionMapFileName;           named[label]<<infectionMapFileName;      success=true;}  
-            if (label=="output.populationMapFileName:"){f>> populationMapFileName;          named[label]<<populationMapFileName;     success=true;}  
+            if (label=="output.summaryFileName:")      {f>> summaryFileName;           named[label]<<summaryFileName;           success=true;}  
+            if (label=="output.infectionMapFileName:") {f>> infectionMapFileName;      named[label]<<infectionMapFileName;      success=true;}  
+            if (label=="output.populationMapFileName:"){f>> populationMapFileName;     named[label]<<populationMapFileName;     success=true;}  
             if (label=="output.outputInterval:")       {f>> outputInterval;            named[label]<<outputInterval;            success=true;}
-            if (label=="restart.isRestart:")            {f>> isRestart;                      named[label]<<isRestart;                 success=true;}       
-            if (label=="restart.restartInterval:")      {f>> restartInterval;                named[label]<<restartInterval;           success=true;} 
-            if (label=="restart.restartFile:")          {f>> restartFileName;                named[label]<< restartFileName;          success=true;}     
-            if (label=="disease.recoveryTime:")         {f>> recoveryTime;                   named[label]<<recoveryTime;              success=true;}
-            if (label=="disease.latencyTime:")          {f>> latencyTime;                    named[label]<<latencyTime;               success=true;}
-            if (label=="disease.infectionRate:")        {f>> infectionRate;                  named[label]<<infectionRate;             success=true;}   
-            if (label=="disease.infectionDist:")        {f>> infectionDist;                  named[label]<<infectionDist;             success=true;}   
-            if (label=="random.Seed:")           {f>> randomSeed;                     named[label]<<randomSeed;                success=true;}      
-            if (label=="grid.xBins:")                {f>> NxCells;                        named[label]<<NxCells;                   success=true;}         
-            if (label=="grid.yBins:")                {f>> NyCells;                        named[label]<<NyCells;                   success=true;}         
-            if (label=="grid.xSize:")                {f>> xSize;                          named[label]<<xSize;                     success=true;}           
-            if (label=="grid.ySize:")                {f>> ySize;                          named[label]<<xSize;                     success=true;}           
-            if (label=="grid.xOrigin:")              {f>> x0;                             named[label]<<x0;                        success=true;}              
-            if (label=="grid.yOrigin:")              {f>> y0;                             named[label]<<y0;                        success=true;}
-            if (label=="agents.populationGridFile:")   {f>>populationGridFile;              named[label]<<populationGridFile;        success=true;}
-            if (label=="agents.agentFactoryType:")     {f>>agentFactoryType;                named[label]<<agentFactoryType;          success=true;}
-            if (label=="agents.numberOfAgents:")       {f>>numberOfAgents;                  named[label]<<numberOfAgents;            success=true;}
-            if (label=="agents.agentFraction:")        {f>>agentFraction;                   named[label]<<agentFraction;             success=true;}
-    
+            if (label=="restart.isRestart:")           {f>> isRestart;                 named[label]<<isRestart;                 success=true;}       
+            if (label=="restart.restartInterval:")     {f>> restartInterval;           named[label]<<restartInterval;           success=true;} 
+            if (label=="restart.restartFile:")         {f>> restartFileName;           named[label]<< restartFileName;          success=true;}     
+            if (label=="disease.recoveryTime:")        {f>> recoveryTime;              named[label]<<recoveryTime;              success=true;}
+            if (label=="disease.latencyTime:")         {f>> latencyTime;               named[label]<<latencyTime;               success=true;}
+            if (label=="disease.infectionRate:")       {f>> infectionRate;             named[label]<<infectionRate;             success=true;}   
+            if (label=="disease.infectionDist:")       {f>> infectionDist;             named[label]<<infectionDist;             success=true;}   
+            if (label=="random.Seed:")                 {f>> randomSeed;                named[label]<<randomSeed;                success=true;}      
+            if (label=="grid.xBins:")                  {f>> NxCells;                   named[label]<<NxCells;                   success=true;}         
+            if (label=="grid.yBins:")                  {f>> NyCells;                   named[label]<<NyCells;                   success=true;}         
+            if (label=="grid.xSize:")                  {f>> xSize;                     named[label]<<xSize;                     success=true;}           
+            if (label=="grid.ySize:")                  {f>> ySize;                     named[label]<<xSize;                     success=true;}           
+            if (label=="grid.xOrigin:")                {f>> x0;                        named[label]<<x0;                        success=true;}              
+            if (label=="grid.yOrigin:")                {f>> y0;                        named[label]<<y0;                        success=true;}
+            if (label=="agents.populationGridFile:")   {f>>populationGridFile;         named[label]<<populationGridFile;        success=true;}
+            if (label=="agents.agentFactoryType:")     {f>>agentFactoryType;           named[label]<<agentFactoryType;          success=true;}
+            if (label=="agents.numberOfAgents:")       {f>>numberOfAgents;             named[label]<<numberOfAgents;            success=true;}
+            if (label=="agents.agentFraction:")        {f>>agentFraction;              named[label]<<agentFraction;             success=true;}
+            if (label=="disease.ParameterFile:")       {f>>diseaseParameterFile;       named[label]<<diseaseParameterFile;      success=true;}
+            if (label=="disease.MortalityRates:")      {f>>diseaseMortalityRates;      named[label]<<diseaseMortalityRates;     success=true;}
+
+            
             if (!f.eof() && !success){
                 std::cout<<"Unrecognised label "<<label<<" in file "<<parameterFile<<" exiting..."<<std::endl;
                 exit(1); 
@@ -130,9 +134,27 @@ void parameters::getParameters(){
     }
     f.close();
     printParameters();
-    
+
     } catch (fstream::failure err){
       std::cout<<"IO error while reading data file "<<parameterFile<<std::endl;
       exit(1);
     }
+
+    readcsv dp(diseaseParameterFile);
+    //expect disease name as first item on each line
+    cout<<"found disease "<<dp[0][0]<<endl;
+    auto& header=dp.getHeader();
+    
+    //header holds the name for each disease parameter (header[0] is just "name")
+    for (unsigned i=1;i<dp[0].size();i++)_diseaseParameters[dp[0][0]][header[i]]=std::stod(dp[0][i]);
+    
+    readcsv dm(diseaseMortalityRates);
+    cout<<"found mortality for "<<dm[0][0]<<endl;
+
+    for (unsigned i=1;i<dm[0].size();i++)_mortality[dm[0][0]].push_back(std::stod(dm[0][i]));
+
+    
+}
+double parameters::disease(const std::string& name,const std::string& parameter){
+    return _diseaseParameters[name][parameter];
 }

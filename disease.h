@@ -7,11 +7,13 @@
 
 #ifndef DISEASE_H
 #define DISEASE_H
+#include <string>
 class disease{
 
 public:
 public:
     disease();
+    disease(std::string);
     void infect();
     bool infected();
     bool infectious();

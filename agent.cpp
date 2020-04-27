@@ -20,25 +20,27 @@ void agent::init(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::preUpdate(){
+    //age++??in years??
     for (unsigned i=0;i<processes.size();i++)processes[i]->preUpdate();
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::update(){
-    updateDiseases();
+    updateInfections();
     for (unsigned i=0;i<processes.size();i++)processes[i]->update();
     
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::applyUpdate(){
-    
+    //allow all infections to complete before updating diseases (so that newly infected agents don't spread within timestep)
+    for (auto& ds:_diseases){auto& d=ds.second;d.update();if (d.infectious())infected=true;else infected=false;}
     //check in the agent's schedule to see whether it is time for the next activity.
     if (tTable.update()){setDest(tTable.getCurrent().place);}
     for (unsigned i=0;i<processes.size();i++)processes[i]->applyUpdate();
     
 }
 //------------------------------------------------------------------------------------------------------------
-void agent::updateDiseases(){
-    for (auto& ds:_diseases){auto& d=ds.second;d.update();if (d.infectious())infected=true;else infected=false;}
+void agent::updateInfections(){
+
     //c++11 for (auto& ds:_diseases){auto& name=ds.first;auto& d=ds.second
     for (auto& [name,d]:_diseases){
         vector<agent*>neighbours=model::getInstance().g.inRadius(this,d.infectionDistance());
@@ -60,7 +62,7 @@ bool agent::recoveredFrom(std::string name){
 }
 //------------------------------------------------------------------------------------------------------------
 void agent::infectWith(std::string name){
-    _diseases[name].infect();
+    _diseases[name]=disease(name);_diseases[name].infect();
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setDest(places::place e){

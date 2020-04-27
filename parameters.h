@@ -20,6 +20,7 @@ static parameters& getInstance(string);
 void printParameters();
 void saveParameters();
 void getParameters();
+double disease(const std::string& ,const std::string& );
 double timeStep;
 bool visible;
 int randomSeed,nsteps;
@@ -34,13 +35,17 @@ double agentFraction;
 int NxCells,NyCells,restartInterval,outputInterval;
 double xSize,ySize,x0,y0;
 bool isRestart;
+std::string diseaseParameterFile;
+std::string diseaseMortalityRates;
 double latencyTime,recoveryTime,infectionRate,infectionDist;
 void setRunNumber(std::string n){runNumber=n;}
 protected:
 parameters();
 parameters(string);
 static parameters* instance;
+//store parameter name/values
 map<std::string,std::stringstream>named;
-
+map<string,vector<double>>_mortality;
+std::map<std::string,std::map<std::string,double>>_diseaseParameters;
 };
 #endif

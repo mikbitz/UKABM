@@ -9,12 +9,12 @@ fig=plt.figure()
 fig.set_size_inches(3.5, 4., forward=True)
 plt.subplots_adjust(left=0.1, right=0.9, bottom=0., top=1.0)
 plt.show()
-#base_dir="/home/moke/working/"
-#varName="totalInfected"
-#runNumber="119"
-#experiment="experiment.testCovidUK"
+base_dir="/home/moke/ukmodel/output/"
+varName="infections"
+runNumber="0002"
+experiment="experiment.testing"
 
-fp1="/home/moke/ukmodel/infections.tasc"
+fp1=base_dir+experiment+"/run_"+runNumber+"/"+varName+".tasc"
 head=pd.read_table(fp1,nrows=6,header=None,sep=' ')
 nrows=head[1][1]
 t =int(head[1][5])

@@ -36,7 +36,7 @@
     }
     //---------------------------------------------------------------------------------------------- 
     point2D asciiGrid::getValidPoint(unsigned i){
-         //find a valid location - return the co-ordinates, noting that y counts from top-left
+         //find a valid location (i.e. does not contain NODATA value)- return the co-ordinates, noting that y counts from top-left
 
          unsigned x=_index[i] % _ncols;
          unsigned y=_index[i] / _ncols;

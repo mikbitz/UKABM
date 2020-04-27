@@ -1,4 +1,10 @@
+27/04/2020
+Added a disease mortality csv
+Disease parameters can now be read in from a csv file (stored in the parameters singleton)
+Added a csv reader
 26/04/2020
+By default parameters used in a run are output to a file called RunParameters
+Parameters in this file now grouped using categories in the parameterFile
 Added a line to main so as to output model local starting time and date
 Added naming scheme for experiments and directories: directories for output from every run now auto-created if needed
 24/04/2020

@@ -38,6 +38,7 @@ SOURCES       = main.cpp \
 		populationBuilder.cpp \
 		outputs.cpp \
 		asciiGridFileWriter.cpp \
+		readcsv.cpp \
 		agent.cpp 
  
 OBJECTS       = $(SOURCES:.cpp=.o)

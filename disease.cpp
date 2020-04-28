@@ -83,7 +83,7 @@ bool disease::needCriticalCare(double& age,const std::string& name){
     auto decade=getDecade(age);
     //chance of going into crit.
     auto crit=parameters::getInstance().needsCare(name,decade,"crit")/100;
-    auto timeInHospital=parameters::getInstance().disease(name,"inHospitalTimescale")/100;
+    auto timeInHospital=parameters::getInstance().disease(name,"inHospitalTimescale");
     //if time in hospital 8 days then rate would seem to be -ln(crit.)/(8*24*3600)?
     if (-log(model::getInstance().random.number())<-log(crit)/timeInHospital*parameters::getInstance().timeStep/24/3600)result=true;
     return result;
@@ -100,7 +100,7 @@ bool disease::criticalFatality(const std::string& name){
     bool result=false;
     //chance of dying in crit. (apparently about 50%)
     auto fatal=parameters::getInstance().disease(name,"criticalDeathRate")/100;
-    auto timeInCritical=parameters::getInstance().disease(name,"inCriticalCareTimescale")/100;
+    auto timeInCritical=parameters::getInstance().disease(name,"inCriticalCareTimescale");
     //if time in crit it 8 days then rate would seem to be -ln(fatal)/(8*24*3600)?
     if (-log(model::getInstance().random.number())<-log(fatal)/timeInCritical*parameters::getInstance().timeStep/24/3600){
      result=true;

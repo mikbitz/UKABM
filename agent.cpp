@@ -31,7 +31,7 @@ bool agent::infectious(){
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::exposed(){
     bool result=false;
-    if (!_died && hasDisease("covid"))result=!(_diseases["covid"].infectious());
+    if (!_died && hasDisease("covid") && !recoveredFrom("covid"))result=!(_diseases["covid"].infectious());
     return result;
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -65,6 +65,9 @@ void agent::applyUpdate(){
             if (_critical){
                 if (d.criticalFatality(name)) die();
             }
+        } else {
+            _inHospital=false;
+            _critical=false;
         }
     }
     //check in the agent's schedule to see whether it is time for the next activity.
@@ -90,6 +93,8 @@ void agent::updateInfections(){
 //------------------------------------------------------------------------------------------------------------
 void agent::die(){
     _died=true;
+    _inHospital=false;
+    _critical=false;
 }
 //------------------------------------------------------------------------------------------------------------
 bool agent::dead(){

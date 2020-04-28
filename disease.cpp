@@ -4,9 +4,10 @@
 #include "parameters.h"
 #include <omp.h>
 #include <math.h>
-//constant rate of infection per unit time implies prob.
-//exponentially distributed. If infection rate is r, then prob. of
-//*not* being infected after finite time dt is exp(-r*dt)
+// constant rate of infection per unit time implies prob. exponentially distributed.
+// depending on disease other distributions may be appropriate (e.g. infectiousness may be gamma distributed)
+// If infection rate is r, then prob. of
+// *not* being infected after finite time dt is exp(-r*dt)
 // so rand(0,1)>exp(-rdt) for infection, or -log(rand)<r*dt. NB this decays
 // more slowly than rand<r*dt, since there is a finite possibility of not being
 // infected when r*dt>1
@@ -35,18 +36,21 @@ disease::disease(std::string name){
     _recoveryTime = parameters::getInstance().disease(name,"recoveryTime" );//in days
     _infectionDistance=parameters::getInstance().disease(name,"infectionDist");//in metres
     if (model::getInstance().random.number()<parameters::getInstance().disease(name,"asymptomaticRate")/100)_asymptomatic=true;
+
+    if (_asymptomatic)_infectionRate=_infectionRate*parameters::getInstance().disease(name,"asymptomaticInfectionRatio");
 }
 //------------------------------------------------------------------
 void disease::update(){
     if (_died || _recovered)return;
     _timer++;
-    if (!_asymptomatic)maybeBecomeInfectious();
+    maybeBecomeInfectious();
     tryToRecover();
 }
 //------------------------------------------------------------------
 void disease::infect(){_infected=true;_timer=0;}
 //------------------------------------------------------------------
 void disease::maybeBecomeInfectious(){
+    //Imperial report 9 has this gamma distributed.
     if (-log(model::getInstance().random.number())<  1./(_latencyTime+0.000001)*parameters::getInstance().timeStep/24./3600.)_infectious=true;
 }
 //------------------------------------------------------------------
@@ -64,15 +68,24 @@ bool disease::infectionOccurs(){
 }
 //------------------------------------------------------------------
 bool disease::needHospitalisation(double& age,const std::string& name){
+    //infectious are assumed displaying symptoms...
+    if (_asymptomatic || !_infectious)return false;
+    bool result=false;
     auto decade=getDecade(age);
-    parameters::getInstance().needsCare(name,decade,"hosp");
-    return false;
+    //assume typical life of disease is recovery time?
+    auto hosp=parameters::getInstance().needsCare(name,decade,"hosp")/100;
+    if (model::getInstance().random.number()<-log(hosp)/(_recoveryTime+0.000001)*parameters::getInstance().timeStep/24/3600)result=true;
+    return result;
 }
 //------------------------------------------------------------------
 bool disease::needCriticalCare(double& age,const std::string& name){
+    bool result=false;
     auto decade=getDecade(age);
-    parameters::getInstance().needsCare(name,decade,"crit");
-    return false;
+    //chance of going into crit.
+    auto crit=parameters::getInstance().needsCare(name,decade,"crit")/100;
+    //if time in hospital 8 days then rate would seem to be -ln(crit.)/(8*24*3600)?
+    if (-log(model::getInstance().random.number())<-log(crit)/8*parameters::getInstance().timeStep/24/3600)result=true;
+    return result;
 }
 //------------------------------------------------------------------
 std::string disease::getDecade(double& age){
@@ -84,7 +97,13 @@ std::string disease::getDecade(double& age){
 //------------------------------------------------------------------
 bool disease::criticalFatality(const std::string& name){
     bool result=false;
-    if (model::getInstance().random.number()<parameters::getInstance().disease(name,"criticalDeathRate")/100)result=true;
+    //chance of dying in crit. (apparently about 50%)
+    auto fatal=parameters::getInstance().disease(name,"criticalDeathRate")/100;
+    //if time in crit it 8 days then rate would seem to be -ln(fatal)/(8*24*3600)?
+    if (-log(model::getInstance().random.number())<-log(fatal)/8*parameters::getInstance().timeStep/24/3600){
+     result=true;
+     _infectious=false;//would not be true for ebola...possibly also not for covid?
+    }
     return result;
 }
 //------------------------------------------------------------------

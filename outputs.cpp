@@ -42,7 +42,7 @@ void outputs::writeAll(){
             }
         }
     
-    _summaryFile<<model::getInstance().tick<<","<<timing::getInstance().now()<<","<<sus<<","<<exp<<","<<inf<<","<<inhospital<<","<<critical<<","<<rec<<","<<died<<m.agentList->size()<<endl;
+    _summaryFile<<model::getInstance().tick<<","<<timing::getInstance().now()<<","<<sus<<","<<exp<<","<<inf<<","<<inhospital<<","<<critical<<","<<rec<<","<<died<<","<<m.agentList->size()-died<<endl;
     
     //gridded spatial maps of counts of agents with a given property- 
     //argument to g.count can be any function or variable in agent that returns bool.

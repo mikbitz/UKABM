@@ -94,8 +94,12 @@ layer* model::getLayer(unsigned i){
 }
 //-----------------------------------------------------------------------------------------------------------------
 bool model::update(){
-    //cout<<"------------------- step "<<tick<<" ---------------------"<<endl;
+    //cout<<"------------------- step "<<tick<<" ---------------------"<<endl;        
+    //auto start=chrono::steady_clock::now();
     if (tick % parameters::getInstance().outputInterval ==0) files->writeAll();
+    //auto end=chrono::steady_clock::now();
+    //cout<<"timew "<<chrono::duration_cast<chrono::milliseconds>(end-start).count()<<endl;
+
     bool b=false;
     for (unsigned i=0;i<layers.size();i++){
       bool u=layers[i]->update();
@@ -122,6 +126,6 @@ double model::getSize(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 void model::finish(){
-
+std::cout<<_filePrefix<<" Complete"<<endl;
 }
 

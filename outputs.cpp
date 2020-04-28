@@ -8,7 +8,7 @@ outputs::outputs(){
     //csv file to hold summary of disease information across whole agent set
     _summaryFile.open(path+parameters::getInstance().summaryFileName);
     //header line
-    _summaryFile<<"step,date,susceptible,infected,recovered,totalPop."<<endl;
+    _summaryFile<<"step,date,susceptible,exposed,infectious,inhospital,critical,recovered,died,totalPop."<<endl;
     //Note cellsize here *must* match those in writeALL below
     _outputCellSize=10000;
 
@@ -27,21 +27,29 @@ outputs::~outputs(){
 //--------------------------------------------------------------------------
 void outputs::writeAll(){
     //summary of all agents across the whole model
-    int inf=0,rec=0;
+    int inf=0,rec=0,exp=0,sus=0,died=0,inhospital=0,critical=0;
     model& m=model::getInstance();
     for (unsigned i=0;i<m.agentList->size();i++){
-        if ((*m.agentList)[i]->hasDisease("covid")){
-            if ((*m.agentList)[i]->recoveredFrom("covid") )rec++;else inf++;
+        agent* a=(*m.agentList)[i];
+        if (a->dead())died++;
+        else{
+            if (a->exposed())exp++;
+            if (a->infectious())inf++;
+            if (a->inHospital())inhospital++;
+            if (a->critical())critical++;
+            if (!a->hasDisease("covid"))sus++;
+            if (a->recoveredFrom("covid") )rec++;
+            }
         }
-    }
-    _summaryFile<<model::getInstance().tick<<","<<timing::getInstance().now()<<","<<m.agentList->size()-inf-rec<<","<<inf<<","<<rec<<","<<m.agentList->size()<<endl;
+    
+    _summaryFile<<model::getInstance().tick<<","<<timing::getInstance().now()<<","<<sus<<","<<exp<<","<<inf<<","<<inhospital<<","<<critical<<","<<rec<<","<<died<<m.agentList->size()<<endl;
     
     //gridded spatial maps of counts of agents with a given property- 
     //argument to g.count can be any function or variable in agent that returns bool.
     //these files are similar to arc ascii grid, with the same global header,
     //but have multiple data arrays with a timestamp line at the start of each
     _infections->writeExtraLabel(to_simple_string(timing::getInstance().now()));
-    _infections->writeToFile(m.g.count(&agent::infected,_outputCellSize));
+    _infections->writeToFile(m.g.count(&agent::infectious,_outputCellSize));
     
     _population->writeExtraLabel(to_simple_string(timing::getInstance().now()));
     _population->writeToFile(m.g.count(_outputCellSize));

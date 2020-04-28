@@ -14,34 +14,41 @@ disease::disease(){
     _infected=false;
     _recovered=false;
     _infectious=false;
+    _asymptomatic=false;
     _died=false;
     _timer=0;
     _infectionRate= parameters::getInstance().infectionRate;//per day
     _latencyTime  = parameters::getInstance().latencyTime  ;//in days
     _recoveryTime = parameters::getInstance().recoveryTime ;//in days
-   _infectionDistance=parameters::getInstance().infectionDist;//in metres
+    _infectionDistance=parameters::getInstance().infectionDist;//in metres
 }
 //------------------------------------------------------------------
 disease::disease(std::string name){
     _infected=false;
     _recovered=false;
     _infectious=false;
+    _asymptomatic=false;
     _died=false;
     _timer=0;
     _infectionRate= parameters::getInstance().disease(name,"infectionRate");//per day
     _latencyTime  = parameters::getInstance().disease(name,"latencyTime"  );//in days
     _recoveryTime = parameters::getInstance().disease(name,"recoveryTime" );//in days
     _infectionDistance=parameters::getInstance().disease(name,"infectionDist");//in metres
+    if (model::getInstance().random.number()<parameters::getInstance().disease(name,"asymptomaticRate")/100)_asymptomatic=true;
 }
 //------------------------------------------------------------------
 void disease::update(){
     if (_died || _recovered)return;
     _timer++;
-    if (!_recovered)maybeBecomeInfectious();
+    if (!_asymptomatic)maybeBecomeInfectious();
     tryToRecover();
 }
 //------------------------------------------------------------------
 void disease::infect(){_infected=true;_timer=0;}
+//------------------------------------------------------------------
+void disease::maybeBecomeInfectious(){
+    if (-log(model::getInstance().random.number())<  1./(_latencyTime+0.000001)*parameters::getInstance().timeStep/24./3600.)_infectious=true;
+}
 //------------------------------------------------------------------
 void disease::tryToRecover(){
     //add small number to _recoveryTime to avoid errors if set to zero!
@@ -52,12 +59,33 @@ void disease::tryToRecover(){
         }
 }
 //------------------------------------------------------------------
-void disease::maybeBecomeInfectious(){
-    if (-log(model::getInstance().random.number())<  1./(_latencyTime+0.000001)*parameters::getInstance().timeStep/24./3600.)_infectious=true;
-}
-//------------------------------------------------------------------
 bool disease::infectionOccurs(){
     return -log(model::getInstance().random.number())< _infectionRate*parameters::getInstance().timeStep/24./3600.;
+}
+//------------------------------------------------------------------
+bool disease::needHospitalisation(double& age,const std::string& name){
+    auto decade=getDecade(age);
+    parameters::getInstance().needsCare(name,decade,"hosp");
+    return false;
+}
+//------------------------------------------------------------------
+bool disease::needCriticalCare(double& age,const std::string& name){
+    auto decade=getDecade(age);
+    parameters::getInstance().needsCare(name,decade,"crit");
+    return false;
+}
+//------------------------------------------------------------------
+std::string disease::getDecade(double& age){
+    //rates are given in bins of 10 years
+    int dc=(int(age/10)+1)*10; if (dc>90)dc=90;
+    std::string decade=to_string(dc);
+    return decade;
+}
+//------------------------------------------------------------------
+bool disease::criticalFatality(const std::string& name){
+    bool result=false;
+    if (model::getInstance().random.number()<parameters::getInstance().disease(name,"criticalDeathRate")/100)result=true;
+    return result;
 }
 //------------------------------------------------------------------
 bool disease::infected(){return _infected;}

@@ -139,7 +139,7 @@ void parameters::getParameters(){
       std::cout<<"IO error while reading data file "<<parameterFile<<std::endl;
       exit(1);
     }
-
+    //read in disease parameter files
     readcsv dpars(diseaseParameterFile);
     //expect disease name as first item on each line
     cout<<"found disease "<<dpars[0][0]<<endl;
@@ -158,10 +158,13 @@ void parameters::getParameters(){
         _hospitalParameters[header[0]][age][value]=std::stod(dHosp[row][col]);
         }
     }
-    //for (unsigned i=1;i<dm[0].size();i++)_mortality[dm[0][0]].push_back(std::stod(dm[0][i]));
-
     
 }
+//--------------------------------------------------------------------------------------------
 double parameters::disease(const std::string& name,const std::string& parameter){
     return _diseaseParameters[name][parameter];
+}
+//--------------------------------------------------------------------------------------------
+double parameters::needsCare(const std::string& name,const std::string& age,const std::string& value){
+    return _hospitalParameters[name][age][value];
 }

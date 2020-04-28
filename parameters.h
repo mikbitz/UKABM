@@ -21,6 +21,7 @@ void printParameters();
 void saveParameters();
 void getParameters();
 double disease(const std::string& ,const std::string& );
+double needsCare(const std::string& ,const std::string& ,const std::string&);
 double timeStep;
 bool visible;
 int randomSeed,nsteps;

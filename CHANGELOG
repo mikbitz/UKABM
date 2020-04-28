@@ -1,5 +1,11 @@
+28/04/2020
+Disease now allows for hospitalization, critical care and death (only CFR of hospital cases)
+Update outputs for above
+Parallel (openMP) loops now possible in re-gridding of agent locations
 27/04/2020
-Added a disease mortality csv
+Allowed for some people with disease to be asymptomatic
+Parameters can now read in and store tables of hospitalization and critical care rates for diseases
+Added a disease hospital and critical care csv
 Disease parameters can now be read in from a csv file (stored in the parameters singleton)
 Added a csv reader
 26/04/2020

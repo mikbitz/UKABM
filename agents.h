@@ -39,26 +39,39 @@ agents(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 bool update(){
-
+        //auto start=chrono::steady_clock::now();
         for (unsigned i=0;i<ags.size();i++){
             ags[i]->preUpdate();
         }
-        //currently doesn't really seem to scale here in parallel...
-        //#pragma omp parallel num_threads(omp_get_max_threads())
-        //{
-        //#pragma omp for schedule(dynamic)
+        //auto end1=chrono::steady_clock::now();
+        //cout<<"time1 "<<chrono::duration_cast<chrono::milliseconds>(end1-start).count()<<endl;
+        //is parallel here thread safe?
+        #pragma omp parallel num_threads(omp_get_max_threads())
+        {
+        #pragma omp for schedule(dynamic)
         for (unsigned i=0;i<ags.size();i+=1){
             ags[i]->update();
         }
-        //}
-
+        }
+        //auto end2=chrono::steady_clock::now();
+        //cout<<"time2 "<<chrono::duration_cast<chrono::milliseconds>(end2-end1).count()<<endl;
+        #pragma omp parallel num_threads(omp_get_max_threads())
+        {
+        #pragma omp for schedule(dynamic)
         for (unsigned i=0;i<ags.size();i+=1){
             ags[i]->applyUpdate();
         }
-
+        }
+        //auto end3=chrono::steady_clock::now();
+        //cout<<"time3 "<<chrono::duration_cast<chrono::milliseconds>(end3-end2).count()<<endl;
    
-   //make sure agents are properly in the search grid.
-   model::getInstance().g.check(ags);
+   //make sure agents are properly in the search grid. - very expensive!
+   //model::getInstance().g.check(ags);
+   //calling this on the whole grid turns out to be similar speed...
+    model::getInstance().g.check();    
+
+   //auto end4=chrono::steady_clock::now();
+   //cout<<"time4 "<<chrono::duration_cast<chrono::milliseconds>(end4-end3).count()<<endl;
 
  return true;
 }

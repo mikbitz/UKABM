@@ -23,11 +23,16 @@ public:
     void tryToRecover();
     bool recovered();
     void update();
+    bool needHospitalisation(double&,const std::string&);
+    bool needCriticalCare(double&,const std::string&);
+    bool criticalFatality(const std::string&);
 private:
+    std::string getDecade(double& age);
     bool _infected;
     bool _recovered;
     bool _infectious;
     bool _died;
+    bool _asymptomatic;
     double _infectionRate;
     double _recoveryTime;
     double _latencyTime;

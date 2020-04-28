@@ -15,10 +15,10 @@ public:
     pathSet _pathSet;
     point2D dest,loc,vel;
     float size;
-    float age;
+    double age;
     vector<agent*> *friends;
     timeTable tTable;
-    bool infected, exposed,recovered,inHospital,critical,died;
+    bool _inHospital,_critical,_died;
     unsigned numberInfected;
     static unsigned idnum;
     unsigned ID,classNum;
@@ -37,5 +37,11 @@ public:
     bool hasDisease(std::string name);
     bool recoveredFrom(std::string name);
     void infectWith(std::string name);
+    bool infectious();
+    bool exposed();
+    void die();
+    bool dead();
+    bool inHospital();
+    bool critical();
 };
 #endif

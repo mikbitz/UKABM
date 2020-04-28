@@ -1,5 +1,6 @@
 #include "searchGrid.h"
 #include "agent.h"
+#include <omp.h>
 //TODO Fix distance measures on the sphere and searches for neighbours at the poles
 //------------------------------------------------------------------
 //Destructor
@@ -209,26 +210,56 @@ void searchGrid::eraseAll(){
 void searchGrid::check(){
     //loop over all (occupied) cells and check every agent to see whether it should still be in the cell
     //If not add it to a list to be re-allocated
-    vector<agent*> temp;
-    for (auto& c:cells){
-        for (auto& a:c){
-            wrapCoordinates(a);
-            if (findCellIndex(a->loc.x,a->loc.y) != a->cellIndex) {
-                 temp.push_back(a);
+    //auto start=chrono::steady_clock::now();
+    
+    vector<vector<agent*>> temp(cells.size());//one instance per cell
+    //this loop can be parallelized as all writes are within cell.
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    {
+        #pragma omp for schedule(dynamic)
+        for (int i=0;i<(int)cells.size();i++){
+            auto c=cells[i];
+            for (auto& a:c){
+                wrapCoordinates(a);
+                auto index=findCellIndex(a->loc.x,a->loc.y);
+                if (index != a->cellIndex) {
+                    temp[i].push_back(a);remove(a);a->cellIndex=index;
+                }
             }
         }
     }
-    //re-allocate all mis-celled agents -note that add will remove them first...
-    //this ensures agents are never present in the grid twice 
+    //auto end=chrono::steady_clock::now();
+    //cout<<"timegf "<<chrono::duration_cast<chrono::milliseconds>(end-start).count()<<endl;
+    //re-allocate all mis-celled agents -note that they are removed first above...
+    //this ensures agents are never present in the grid twice
+    
+    //by creating temp2 the loop following can also be parallel  
+    vector<vector<agent*>> temp2(cells.size());
     for (unsigned i=0;i<temp.size();++i){
-        add(temp[i]);
+        for (auto& a:temp[i]){
+            temp2[a->cellIndex].push_back(a);
+        }
     }
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    {
+        #pragma omp for schedule(dynamic)
+        for (unsigned i=0;i<temp2.size();++i){
+            for (auto& a:temp2[i]){
+                cells[i].insert(a);
+            }
+        }
+    }
+    //auto end2=chrono::steady_clock::now();
+    //cout<<"timegs "<<chrono::duration_cast<chrono::milliseconds>(end2-end).count()<<endl;
     dirty=false;
 }
 //------------------------------------------------------------------
 void searchGrid::check(vector<agent*>& ags){
-    //loop over all (occupied) cells and check every agent to see whether it should still be in the cell
+    //loop over all agents and check every agent to see whether it should still be in the cell
     //If not add it to a list to be re-allocated
+    //this *may* be faster than cell method above...perhaps...
+    //how to make parallel though?
+    auto start=chrono::steady_clock::now();
     vector<agent*> temp;
     for (auto& a:ags){
         wrapCoordinates(a);
@@ -236,12 +267,20 @@ void searchGrid::check(vector<agent*>& ags){
             temp.push_back(a);
         }
     }
+    auto end=chrono::steady_clock::now();
+    cout<<"timegf "<<chrono::duration_cast<chrono::milliseconds>(end-start).count()<<endl;
+
     
     //re-allocate all mis-celled agents -note that add will remove them first...
-    //this ensures agents are never present in the grid twice 
+    //this ensures agents are never present in the grid twice
+    //this turns out to be slow...10 times the above!
+
     for (unsigned i=0;i<temp.size();++i){
         add(temp[i]);
     }
+    auto end2=chrono::steady_clock::now();
+    cout<<"timegs "<<chrono::duration_cast<chrono::milliseconds>(end2-end).count()<<endl;
+
     dirty=false;
 }
 //------------------------------------------------------------------
@@ -312,9 +351,9 @@ vector <agent*> searchGrid::neighbours(agent* a){
 }
 //------------------------------------------------------------------
 void   searchGrid::inCell(int q,vector<agent*>& L){
-    set<agent*>::iterator s;
-    for (s=cells[q].begin();s!=cells[q].end();++s){
-        L.push_back(*s);
+    //unordered_set<agent*>::iterator s;
+    for (auto& s:cells[q]){
+        L.push_back(s);
     }
 }
 //------------------------------------------------------------------
@@ -349,9 +388,8 @@ vector <agent*> searchGrid::inRadius(agent* a, double d){
 //------------------------------------------------------------------
 //return all agents in a cell within a given distance of agent a
 void   searchGrid::inDist(int q,float d,agent* a,vector<agent*>& L){
-    set<agent*>::iterator s;
-    for (s=cells[q].begin();s!=cells[q].end();++s){
-        agent* t=*s;
+
+    for (auto& t:cells[q]){
         double dx=(t->loc.x - a->loc.x);
         double dy=(t->loc.y - a->loc.y);
         //wrapping of distance measures
@@ -400,9 +438,7 @@ vector <agent*> searchGrid::inSquareRegion(double x, double y, double d){
 //------------------------------------------------------------------
 //return all agents in a cell within a given area bounded by x,xd,y,yd
 void   searchGrid::inSquare(unsigned q,double x,double y,double xd, double yd,vector<agent*>& L){
-    set<agent*>::iterator s;
-    for (s=cells[q].begin();s!=cells[q].end();++s){
-        agent* t=*s;
+    for (auto& t:cells[q]){
         double ax=t->loc.x;
         double ay=t->loc.y;
         //check whether in range allowing for exact upper and right boundary

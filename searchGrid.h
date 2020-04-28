@@ -2,6 +2,7 @@
 #define SEARCHGRID_H
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <vector>
 #include<string>
 #include "point2D.h"
@@ -11,7 +12,7 @@ class agent;
 class parameters;
 using namespace std;
 class searchGrid{
-    vector<set<agent*> >cells;
+    vector<unordered_set<agent*> >cells;
     //x0 and y0 are the grid physical space origin
     //xSize and ysize the total physical extents of the domain (in metres, say)
     double x0,y0,_xSize,_ySize;

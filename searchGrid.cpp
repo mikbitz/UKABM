@@ -197,11 +197,12 @@ void searchGrid::remove(agent* a){
 //------------------------------------------------------------------
 void searchGrid::eraseAll(){
     //loop over all (occupied) cells and remove every agent 
-    vector<agent*> temp;
+
     for (auto& c:cells){//each cell is a set of pointers to agents
         for (auto& a:c){//loop over the set - note agents are not destroyed!
             remove(a);
         }
+        assert(c.size()==0);
     }
 }
 //------------------------------------------------------------------
@@ -259,27 +260,18 @@ void searchGrid::check(vector<agent*>& ags){
     //If not add it to a list to be re-allocated
     //this *may* be faster than cell method above...perhaps...
     //how to make parallel though?
-    auto start=chrono::steady_clock::now();
-    vector<agent*> temp;
-    for (auto& a:ags){
-        wrapCoordinates(a);
-        if (findCellIndex(a->loc.x,a->loc.y) != a->cellIndex) {
-            temp.push_back(a);
+//    auto start=chrono::steady_clock::now();
+
+        for (auto& a:ags){
+            wrapCoordinates(a);
+            int index=findCellIndex(a->loc.x,a->loc.y);
+            if (index != a->cellIndex) {
+                add(a);
+            }
         }
-    }
-    auto end=chrono::steady_clock::now();
-    cout<<"timegf "<<chrono::duration_cast<chrono::milliseconds>(end-start).count()<<endl;
 
-    
-    //re-allocate all mis-celled agents -note that add will remove them first...
-    //this ensures agents are never present in the grid twice
-    //this turns out to be slow...10 times the above!
-
-    for (unsigned i=0;i<temp.size();++i){
-        add(temp[i]);
-    }
-    auto end2=chrono::steady_clock::now();
-    cout<<"timegs "<<chrono::duration_cast<chrono::milliseconds>(end2-end).count()<<endl;
+//    auto end=chrono::steady_clock::now();
+//    cout<<"timegf "<<chrono::duration_cast<chrono::milliseconds>(end-start).count()<<endl;
 
     dirty=false;
 }
@@ -517,14 +509,20 @@ vector<vector<double>> searchGrid::count(double cellSize,double xlo,double xhi,d
     unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
     assert(xcells>0 && ycells>0);
     std::vector<std::vector<double>>c(xcells,std::vector<double>(ycells,0));
+    //Inner loop seems to parallelize OK here, but not outer?
     for(unsigned ix=0;ix<xcells;ix++){
-        y=ylo;
-        for (unsigned iy=0;iy<ycells;iy++){
-            auto agentList=inSquareRegion(x, y, cellSize);
-            c[ix][iy]= agentList.size(); 
-            y+=cellSize;
+        x=xlo+ix*cellSize;
+        #pragma omp parallel num_threads(omp_get_max_threads())
+        {
+            #pragma omp for schedule(dynamic) 
+            for (unsigned iy=0;iy<ycells;iy++){
+                y=ylo+iy*cellSize;
+                auto agentList=inSquareRegion(x, y, cellSize);
+                c[ix][iy]= agentList.size(); 
+                
+            }
+            
         }
-        x+=cellSize;
     }
     return c;
 }
@@ -535,16 +533,20 @@ vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double
     unsigned xcells=(xhi-xlo)/cellSize,ycells=(yhi-ylo)/cellSize;
     assert(xcells>0 && ycells>0);
     std::vector<std::vector<double>>c(xcells,std::vector<double>(ycells,0));
+    
     for(unsigned ix=0;ix<xcells;ix++){
-        y=ylo;
-        for (unsigned iy=0;iy<ycells;iy++){
-            auto agentList=inSquareRegion(x, y, cellSize);
-            for (auto agent:agentList){
-                if (func(*agent)) c[ix][iy]++; 
+        x=xlo+ix*cellSize;    
+        #pragma omp parallel num_threads(omp_get_max_threads())
+        {
+            #pragma omp for schedule(dynamic) 
+            for (unsigned iy=0;iy<ycells;iy++){
+                y=ylo+iy*cellSize;
+                auto agentList=inSquareRegion(x, y, cellSize);
+                for (auto agent:agentList){
+                    if (func(*agent)) c[ix][iy]++; 
+                }
             }
-            y+=cellSize;
         }
-        x+=cellSize;
     }
     return c;
 }
@@ -586,14 +588,15 @@ void searchGrid::test(){
     //only one cell should be occupied
     success=true;
     for (unsigned i=0;i<testGrid->cells.size();i++){if (i!=ind){success=success && (testGrid->cells[i].size()== 0);}}
-    testGrid->testMessage("Test 6",success);
     //the single cell should have fifty agents
+    for (unsigned i=0;i<testGrid->cells.size();i++){if (i==ind){success=success && (testGrid->cells[i].size()== 50);}}
+    testGrid->testMessage("Test 6",success);
     success=true;
-    for (auto& c:testGrid->cells){success=success && (c.size()== 50);}
     //remove the agents - there should be no occupied cells
     testGrid->eraseAll();
     success=true;
-    for (auto& c:testGrid->cells){success=success && (c.size()==0);}
+   
+    for (auto& c:testGrid->cells){success=success && (c.size()==0); if (c.size()!=0)cout<<"huh? "<<c.size()<<endl;}
     testGrid->testMessage("Test 7",success);
     //the cells are of size 1, the origin is at -500,-500 - put an agent in cell 0
     v[0]->loc.x=-500;v[0]->loc.y=-500;testGrid->add(v[0]);
@@ -808,7 +811,6 @@ void searchGrid::test(){
     C=testGrid->count(10);
     success=success&&(C.size()==100 && C[0].size()==100);
     success=success&&(C[0][0]==2 && C[50][50]==4 && C[51][51]==1 && C[99][99]==1);
-
     C=testGrid->count(100);
     success=success&&(C.size()==10 && C[0].size()==10);
     success=success&&(C[0][0]==2 && C[5][5]==5 && C[9][9]==1);

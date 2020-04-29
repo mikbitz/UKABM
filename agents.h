@@ -67,7 +67,7 @@ bool update(){
    
    //make sure agents are properly in the search grid. - very expensive!
    //model::getInstance().g.check(ags);
-   //calling this on the whole grid turns out to be similar speed...
+   //calling this on the whole grid turns out to be similar speed...this version llelizes somewhat
     model::getInstance().g.check();    
 
    //auto end4=chrono::steady_clock::now();

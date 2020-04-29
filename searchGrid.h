@@ -12,7 +12,7 @@ class agent;
 class parameters;
 using namespace std;
 class searchGrid{
-    vector<unordered_set<agent*> >cells;
+    vector<set<agent*> >cells;
     //x0 and y0 are the grid physical space origin
     //xSize and ysize the total physical extents of the domain (in metres, say)
     double x0,y0,_xSize,_ySize;

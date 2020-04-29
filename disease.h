@@ -18,14 +18,16 @@ public:
     bool infected();
     bool infectious();
     double infectionDistance();
-    void maybeBecomeInfectious();
+    bool maybeBecomeInfectious();
     bool infectionOccurs();
-    void tryToRecover();
+    bool tryToRecover();
     bool recovered();
     void update();
     bool needHospitalisation(double&,const std::string&);
     bool needCriticalCare(double&,const std::string&);
     bool criticalFatality(const std::string&);
+    static void test();
+    static void testMessage(std::string,bool);
 private:
     std::string getDecade(double& age);
     bool _infected;

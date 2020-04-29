@@ -16,6 +16,7 @@ public:
     point2D dest,loc,vel;
     float size;
     double age;
+    char sex;
     vector<agent*> *friends;
     timeTable tTable;
     bool _inHospital,_critical,_died;
@@ -33,6 +34,7 @@ public:
     void setDest(places::place e);
     void addProcess(process* p);
     void setAge(double);
+    void setSex(const char&);
     void updateInfections();
     bool hasDisease(std::string name);
     bool recoveredFrom(std::string name);

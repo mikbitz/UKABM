@@ -17,7 +17,11 @@ public:
     float size;
     double age;
     char sex;
-    vector<agent*> *friends;
+    map<agent*,agent*> children;
+    map<agent*,agent*> friends;
+    agent* mother,*father;
+    agent* partner;
+
     timeTable tTable;
     bool _inHospital,_critical,_died;
     unsigned numberInfected;

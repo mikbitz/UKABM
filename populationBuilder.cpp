@@ -60,8 +60,42 @@
         return success;
     }
     //----------------------------------------------------------------------------------------------
-
-
-
-
+    void populationBuilder::configurePopulation(std::vector<agent*>agents){
+        for (auto& a:agents){
+            setSex(a);
+            setAge(a);
+            findPartner(a);
+            findParents(a);
+            education(a);
+            setUpWork(a);
+        }
+        
+        //                 if(age>65)retired()//60 for women? some age for in care?
+        //                 if (!inEducation && !retired) working()//includes unemployed/not participating in work - disabilities?
+        //                 findParents()
+        //                 if (age>16)findPartner()//allow for single occupation - also homeless?
+        //                 if (age<16)moveToHome()//percent in care?percent single families?
+        //                 if (inWork){allocateWorkType();getWorkLocation();}//requires size of working population?
+    }
+    void populationBuilder::setSex(agent* a){
+        if (model::getInstance().random.number()<0.5)a->setSex('m');//defaults to f
+    }
+    void populationBuilder::setAge(agent* a){
+        a->setAge(model::getInstance().random.number()*80);;
+    }
+    void populationBuilder::findPartner(agent* a){
+        ;
+    }
+    void populationBuilder::findParents(agent* a){
+        ;
+    }
+    void populationBuilder::education(agent* a){
+              //                 if (age>16)sixthform()//all? apprentices?
+        //                 if (age>18)university()//50%?
+               //                 if(age<16)schoolchild()//under fives?
+        //                 if (age<5)preschool() ;
+    }
+    void populationBuilder::setUpWork(agent* a){
+        ;
+    }
 

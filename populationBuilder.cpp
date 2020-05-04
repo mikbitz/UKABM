@@ -66,36 +66,39 @@
             setAge(a);
             findPartner(a);
             findParents(a);
-            education(a);
+            setUpEducation(a);
             setUpWork(a);
+            findFriends(a);
         }
-        
-        //                 if(age>65)retired()//60 for women? some age for in care?
-        //                 if (!inEducation && !retired) working()//includes unemployed/not participating in work - disabilities?
-        //                 findParents()
-        //                 if (age>16)findPartner()//allow for single occupation - also homeless?
-        //                 if (age<16)moveToHome()//percent in care?percent single families?
-        //                 if (inWork){allocateWorkType();getWorkLocation();}//requires size of working population?
     }
     void populationBuilder::setSex(agent* a){
         if (model::getInstance().random.number()<0.5)a->setSex('m');//defaults to f
     }
     void populationBuilder::setAge(agent* a){
-        a->setAge(model::getInstance().random.number()*80);;
+        a->setAge(model::getInstance().random.number()*80);
     }
     void populationBuilder::findPartner(agent* a){
-        ;
+        ;//if (age>16)findPartner()//allow for singles, partners move in together (homeless?), allow for boy/girlfriends? 
     }
     void populationBuilder::findParents(agent* a){
-        ;
+        ;//if (age<16)moveToHome()//percent in care?percent single families?- also homeless?
     }
-    void populationBuilder::education(agent* a){
+    void populationBuilder::setUpEducation(agent* a){
               //                 if (age>16)sixthform()//all? apprentices?
         //                 if (age>18)university()//50%?
                //                 if(age<16)schoolchild()//under fives?
-        //                 if (age<5)preschool() ;
+        //                 if (age<5)preschool() ;if a>21 education level?
     }
     void populationBuilder::setUpWork(agent* a){
         ;
+                //                 if(age>65)retired()//60 for women? some age for in care?
+        //                 if (!inEducation && !retired) working()//includes unemployed/not participating in work - disabilities?
+        //                 if (inWork){allocateWorkType();getWorkLocation();}//requires size of working population?
+        //setWorkplace nearest Place of type matched to jobtype
+        //so map[jobtype] returns placeType
+        //grid of placetypes finds location
     }
-
+    void populationBuilder::findFriends(agent* a){
+        ;
+                //allow for age and work/school assortativity...
+    }

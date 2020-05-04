@@ -23,7 +23,8 @@ public:
     void setAge(agent* a);
     void findPartner(agent* a);
     void findParents(agent* a);
-    void education(agent* a);
+    void setUpEducation(agent* a);
     void setUpWork(agent* a);
+    void findFriends(agent* a);
 };
 #endif

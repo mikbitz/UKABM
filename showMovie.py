@@ -11,7 +11,7 @@ plt.subplots_adjust(left=0.1, right=0.9, bottom=0., top=1.0)
 plt.show()
 base_dir="/home/moke/ukmodel/output/"
 varName="infections"
-runNumber="0064"
+runNumber="0009"
 experiment="experiment.testing"
 
 fp1=base_dir+experiment+"/run_"+runNumber+"/"+varName+".tasc"
@@ -35,6 +35,6 @@ def animate(i):
 anim = animation.FuncAnimation(fig, animate, frames=t, interval=50)
 # Set up formatting for the movie files
 #Writer = animation.writers['ffmpeg']
-#writer = Writer(fps=15, metadata=dict(artist='Total Stock Biomass'), bitrate=1800)
-#anim.save('UKStockBiomass.mp4', writer=writer)
+#writer = Writer(fps=15, metadata=dict(artist='Total infections'), bitrate=1800)
+#anim.save('UKInfections.mp4', writer=writer)
 

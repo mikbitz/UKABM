@@ -1,4 +1,15 @@
+05/05/2020
+Included a map in the searchgrid that allows generic places to be added and searched for by agents
+Added reading of csv files to places so that lists of co-ordintaes of given types of places can be included
+29/04/2020
+Sketched out some functions to help make population more realistic in agentFactory
+Time to reach hospital also now read in from diseaseParameterFile
+Slight simplification in searchgrid check(vector<agent*>)
+Parallel loops in serachGrid for counting
+Some simple tests added to disease.cpp
 28/04/2020
+Time in hospital and in critical care now set from disease parameter file
+Distributions over time in hospital etc. all set to exponential using above timings
 Disease now allows for hospitalization, critical care and death (only CFR of hospital cases)
 Update outputs for above
 Parallel (openMP) loops now possible in re-gridding of agent locations

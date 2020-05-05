@@ -1,6 +1,8 @@
 #include "searchGrid.h"
 #include "agent.h"
+#include "places.h"
 #include <omp.h>
+
 //TODO Fix distance measures on the sphere and searches for neighbours at the poles
 //------------------------------------------------------------------
 //Destructor
@@ -175,6 +177,22 @@ int searchGrid::findCellIndex(double x,double y){
     if (iy<0)iy=0;
     // return the bucket's linear index
     return iy * NxCells + ix;
+}
+//------------------------------------------------------------------
+void searchGrid::wrapCoordinates(place* a){
+    
+    if (spheroidal){sphere   (a->loc.x,a->loc.y);}
+    if (toroidal)  {torus    (a->loc.x,a->loc.y);}
+    else{
+        if (cylX)      {cylinderX(a->loc.x)      ;}
+        if (cylY)      {cylinderY(a->loc.y)      ;}
+    }  
+    
+    if (hardE)     {hardEdges(a->loc.x,a->loc.y);}
+    else{
+        if (hX)        {hardX    (a->loc.x)      ;}
+        if (hY)        {hardY    (a->loc.y)      ;}
+    }
 }
 //------------------------------------------------------------------
 void searchGrid::add(agent* a){
@@ -550,7 +568,63 @@ vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double
     }
     return c;
 }
-//put in spherical distance?
+//------------------------------------------------------------------
+void searchGrid::add(place* p){
+    //many places with the same type can exist in a given grid cell
+    wrapCoordinates(p);
+    unsigned cellIndex=findCellIndex(p->loc.x,p->loc.y);
+    locations[cellIndex].insert(std::pair<unsigned,place*>(p->placeType(),p));
+}
+//------------------------------------------------------------------
+void searchGrid::remove(place* p){
+    unsigned cellIndex=findCellIndex(p->loc.x,p->loc.y);
+    auto range=locations[cellIndex].equal_range(p->placeType());
+    for (auto& it=range.first;it!=range.second;it++){
+     if (it->second==p)locations[cellIndex].erase(it);
+    }
+}//------------------------------------------------------------------
+vector <place*> searchGrid::inRadius(agent* a,unsigned placeType, double d){
+    //find all places of a given type within a given distance of agent a
+    //may need to search multiple cells
+    vector<place*> temp;
+
+    int q=a->cellIndex;
+    int lx=q%NxCells; int ly=q/NxCells;
+    int nx=int(d/_xSize*NxCells+0.5);
+    int ny=int(d/_ySize*NyCells+0.5);
+    int il=-nx,iu=nx,jl=-nx,ju=nx;
+    //The domain is spanned! avoid duplications
+    if (nx>=NxCells/2) {il=-lx;iu=NxCells-1-lx;}
+    if (ny>=NyCells/2) {jl=-ly;ju=NyCells-1-ly;}
+    //hard edges
+    if (!cylX) {if (lx<nx) il=-lx;if (lx>=NxCells-1-nx) iu=NxCells-1-lx;}
+    if (!cylY) {if (ly<ny) jl=-ly;if (ly>=NyCells-1-ny) ju=NyCells-1-ly;}
+    
+    for (int i=il;i<iu+1;i++)  {
+      for (int j=jl;j<ju+1;j++) {
+        //wrapping
+        int inx=lx+i; if (cylX) {while (inx<0)inx+=NxCells; while (inx>=NxCells)inx-=NxCells;}
+        int iny=ly+j; if (cylY) {while (iny<0)iny+=NyCells; while (iny>=NyCells)iny-=NyCells;}
+        int ind=inx+iny*NxCells;
+        if(ind>=0 && ind< (int)cells.size()) inDist(ind,d,a,placeType,temp);
+      }
+    }
+  return temp;
+}
+//------------------------------------------------------------------
+//return all places of a given type in a cell within a given distance of agent a
+void   searchGrid::inDist(int cellIndex,float d,agent* a,unsigned placeType, vector<place*>& L){
+    auto range=locations[cellIndex].equal_range(placeType);
+    for (auto& it=range.first;it!=range.second;it++){
+        place* p=it->second;
+        double dx=(p->loc.x - a->loc.x);
+        double dy=(p->loc.y - a->loc.y);
+        //wrapping of distance measures
+        if (cylX && abs(dx)>_xSize/2)dx=_xSize-abs(dx);
+        if (cylY && abs(dy)>_ySize/2)dy=_ySize-abs(dy);
+        if (dx*dx+dy*dy <= d*d)L.push_back(p);
+    }
+}
 //------------------------------------------------------------------
 //Testing section
 //------------------------------------------------------------------
@@ -842,6 +916,47 @@ void searchGrid::test(){
 
     testGrid->testMessage("Test 22",success);
     C.clear();
+    //test place finding
+    success=true;
+    //test place creation
+    place* p=new place(0);
+    success=success && (p->loc.x==0 && p->loc.y==0);
+    //test add to grid
+    testGrid->add(p);
+    auto locs=testGrid->inRadius(v[3],0,1);
+    success=success && (locs.size()==1);
+    //and remove
+    testGrid->remove(p);
+    locs=testGrid->inRadius(v[3],0,1);
+    success=success && (locs.size()==0);
+    //add some other places types and locations
+    //original type 0
+    testGrid->add(p);
+    locs=testGrid->inRadius(v[3],0,1);
+    success=success && (locs.size()==1);
+    //type 1
+    auto p1=new place(1);
+    testGrid->add(p1);
+    auto p2=new place(1);
+    locs=testGrid->inRadius(v[3],1,1);
+    success=success && (locs.size()==1);
+    //second type 1
+    p2->setLocation(0.32,2);
+    testGrid->add(p2);
+    //still one close by
+    locs=testGrid->inRadius(v[3],1,1);
+    success=success && (locs.size()==1);
+    //two further away
+    locs=testGrid->inRadius(v[3],1,4);
+    success=success && (locs.size()==2);
+    //remove close by one
+    testGrid->remove(p1);
+    locs=testGrid->inRadius(v[3],1,4);
+    success=success && (locs.size()==1);
+    //check co-ords of retrieved
+    success=success && (locs[0]->loc.x==0.32 && locs[0]->loc.y==2);
+    testGrid->testMessage("Test 23",success);
+
     //tidy up
     for (unsigned i=0;i<v.size();i++)delete v[i];
     v.clear();

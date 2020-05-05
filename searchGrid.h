@@ -10,6 +10,7 @@
 #include <functional>
 class agent;
 class parameters;
+class place;
 using namespace std;
 class searchGrid{
     vector<set<agent*> >cells;
@@ -20,6 +21,8 @@ class searchGrid{
     //so the cell size is xSize/NxCells in the xdirection etc.
     int NxCells,NyCells;
     std::vector<unsigned> _missing; // cells that are not valid - could use a map for cells to avoid this, but seems slow
+    //allow for places to exist in the grid as well as agents.Multimap allows for places to have a typeID to distinguish them by type, with many of one type in a cell
+    std::map<unsigned, std::multimap<unsigned,place*> > locations;
 
 public:
     searchGrid();
@@ -31,6 +34,10 @@ public:
     int  findCellIndex(double,double);
     void add(agent*);
     void remove(agent*);
+    void add(place*);
+    void remove(place*);
+    vector <place*> inRadius(agent* ,unsigned,double);
+    void inDist(int,float,agent*,unsigned,vector<place*>&);
     void eraseAll();
     void check();
     void check(agent*);
@@ -74,6 +81,7 @@ private:
     //functions and flags to deal with wrapping at grid edges
     bool toroidal,cylX,cylY,spheroidal,hardE,hX,hY;
     void wrapCoordinates(agent*);
+    void wrapCoordinates(place*);
     void torus(double&,double&);
     void cylinderX(double&);
     void cylinderY(double&);

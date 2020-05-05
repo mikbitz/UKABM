@@ -29,7 +29,6 @@ parameters& parameters::getInstance(string f){
 //-----------------------------------------------------------------------------------------------------------------
 parameters::parameters(){
 cout<<"The default model parameters were put in place"<<endl;
-visible=false;
 randomSeed=10;
 timeStep=0.2;
 nsteps=35000;
@@ -121,6 +120,9 @@ void parameters::getParameters(){
             if (label=="agents.agentFraction:")        {f>>agentFraction;              named[label]<<agentFraction;             success=true;}
             if (label=="disease.ParameterFile:")       {f>>diseaseParameterFile;       named[label]<<diseaseParameterFile;      success=true;}
             if (label=="disease.HospitalRates:")       {f>>diseaseHospitalRates;       named[label]<<diseaseHospitalRates;      success=true;}
+            if (label=="placeTypeFile:")               {f>>placeTypeFile;              named[label]<<placeTypeFile;             success=true;}
+            if (label=="placeFile:")                   {f>>placeFile;                  named[label]<<placeFile;                 success=true;}
+
 
             
             if (!f.eof() && !success){
@@ -139,6 +141,10 @@ void parameters::getParameters(){
       std::cout<<"IO error while reading data file "<<parameterFile<<std::endl;
       exit(1);
     }
+    readDiseaseParameters();
+}
+//--------------------------------------------------------------------------------------------
+void parameters::readDiseaseParameters(){
     //read in disease parameter files
     readcsv dpars(diseaseParameterFile);
     //expect disease name as first item on each line

@@ -2,4 +2,4 @@
 #infection rate is per day, recovery and latency time in days, distance in metres, percentage not showing symptoms, percentage that die in critical care
 #all other timescales in days. Asymptotic Infection ratio is the rate at which asymp people infect compared to those with symptoms
 name,infectionRate,recoveryTime,latencyTime,infectionDist,asymptomaticRate,asymptomaticInfectionRatio,hospitalisationTimescale,inHospitalTimescale,inCriticalCareTimescale,criticalDeathRate
-covid,2,19,5,100,66,0.5,5,8,8,50
+covid,24,19,5,100,66,0.5,5,8,8,50

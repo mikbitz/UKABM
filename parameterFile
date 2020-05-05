@@ -10,9 +10,9 @@
 #Timing parameters
 #-------------------------------
 #Time step in seconds
-timing.timeStep:     14400
+timing.timeStep:    14400
 #how many timesteps of the above length will teh model run for
-timing.nsteps: 300
+timing.nsteps: 900
 #date for the start of the run
 timing.initialDate: 2020-Mar-10
 #nominal end date - at the moment run duration is actually controlled by nsteps above
@@ -42,8 +42,8 @@ output.populationMapFileName: population.tasc
 #------------------------------
 #Methods for creating agents
 #------------------------------
-#valid values currently are simple and worldpop
-agents.agentFactoryType: worldpop
+#valid values currently are simple, simpleWorldpop fancyWorldpop
+agents.agentFactoryType: simpleWorldpop
 #
 #
 #simple creator allows for variable number of agents - uncomment if using this
@@ -56,6 +56,11 @@ agents.agentFraction: 0.005
 #currently expected to be in ARC ascii format
 agents.populationGridFile: worldpop/gbr_ppp_2020UKnatgrid1km.asc
 #------------------------------
+#places
+#------------------------------
+placeTypeFile: placeTypes
+placeFile: places.csv
+#------------------------------
 #parameters for a simple disease
 #------------------------------
 #Read disease parameters from files
@@ -63,13 +68,13 @@ disease.ParameterFile: diseaseParameterFile
 disease.HospitalRates: diseaseHospitalRates
 #a generic anonymous disease
 #time in days
-disease.recoveryTime: 21.
+#disease.recoveryTime: 21.
 #time in days
-disease.latencyTime: 7.
+#disease.latencyTime: 7.
 #rate per day
-disease.infectionRate: 5.
+#disease.infectionRate: 5.
 #distance in metres
-disease.infectionDist: 100
+#disease.infectionDist: 100
 #--------------------------------
 #random number seed for this run
 random.Seed: 250

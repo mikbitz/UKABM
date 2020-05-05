@@ -43,8 +43,8 @@ void model::init(){
     //searchGrid::test();
     //disease::test();
     //exit(0);
-    places* p=places::getInstance();
-    p->init();
+    places& p=places::getInstance();
+    p.init();
     
     c=new configuration();
 
@@ -107,7 +107,7 @@ bool model::update(){
     }
     if (tick%10==0){cout<<timing::getInstance().now()<<endl;}
     double R0=0,infs=0;
-    for (auto a:(*agentList)){if (a->recoveredFrom("covid")){infs++; R0+=a->numberInfected;}}
+    for (auto a:(*agentList)){if (a->recoveredFrom("covid") && a->numberInfected>0){infs++; R0+=a->numberInfected;}}
     if (infs>0 && tick%10==0)cout<<"R0?? :"<<R0/infs<<endl;
     if (b){
         tick++;

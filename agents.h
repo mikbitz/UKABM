@@ -28,6 +28,8 @@ agents(){
     cout<<"Building agents...";
     agentFactory& F=agentFactorySelector::select(parameters::getInstance().agentFactoryType);
     F.createAgents(ags);
+    
+    //infect 10 agentsin random spatial locations
     shuffle (ags.begin(), ags.end(), std::default_random_engine(parameters::getInstance().randomSeed));
     for (unsigned i=0;i<10;i++)ags[10000+i]->infectWith("covid");
 

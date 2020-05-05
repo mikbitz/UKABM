@@ -26,7 +26,7 @@ public:
     bool _inHospital,_critical,_died;
     unsigned numberInfected;
     static unsigned idnum;
-    unsigned ID,classNum;
+    unsigned ID;
     int cellIndex;
     vector<process*> processes;
     map<string,disease>_diseases;

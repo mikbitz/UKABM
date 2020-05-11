@@ -8,8 +8,8 @@
 #include "disease.h"
 class agent{
 public:
-    map<places::place,point2D> knownLocations;
-    places::place oldPlace,newPlace;
+    map<places::placeE,point2D> knownLocations;
+    places::placeE oldPlace,newPlace;
     path currentPath;
     unsigned pathState;
     pathSet _pathSet;
@@ -21,24 +21,13 @@ public:
     map<agent*,agent*> friends;
     agent* mother,*father;
     agent* partner;
+    place* work;
+    place* home;
 
     timeTable tTable;
     bool _inHospital,_critical,_died;
     unsigned numberInfected;
-    static unsigned idnum;
-    unsigned ID;
-    int cellIndex;
-    vector<process*> processes;
     map<string,disease>_diseases;
-    agent();
-    void init();
-    void preUpdate();
-    void update();
-    void applyUpdate();
-    void setDest(places::place e);
-    void addProcess(process* p);
-    void setAge(double);
-    void setSex(const char&);
     void updateInfections();
     bool hasDisease(std::string name);
     bool recoveredFrom(std::string name);
@@ -49,5 +38,21 @@ public:
     bool dead();
     bool inHospital();
     bool critical();
+    
+    static unsigned idnum;
+    unsigned ID;
+    int cellIndex;
+    vector<process*> processes;
+
+    agent();
+    void init();
+    void preUpdate();
+    void update();
+    void applyUpdate();
+    void setDest(places::placeE e);
+    void addProcess(process* p);
+    void setAge(double);
+    void setSex(const char&);
+
 };
 #endif

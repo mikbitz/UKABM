@@ -128,7 +128,7 @@ void agent::infectWith(std::string name){
     _diseases[name]=disease(name);_diseases[name].infect();
 }
 //-----------------------------------------------------------------------------------------------------------------
-void agent::setDest(places::place e){
+void agent::setDest(places::placeE e){
     //cout<<"set Dest "<<newPlace<<" "<< oldPlace<<" "<<e<<endl;
     oldPlace=newPlace;
     newPlace=e;

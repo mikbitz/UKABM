@@ -2,17 +2,17 @@
 #define PATHS_H
 #include "places.h"
 struct path{
-    vector<places::place> steps;
+    vector<places::placeE> steps;
     unsigned state;
     path(){state=0;}
-    void addStep(places::place p){steps.push_back(p);}
-    places::place getStep(unsigned i){return steps[i];}
+    void addStep(places::placeE p){steps.push_back(p);}
+    places::placeE getStep(unsigned i){return steps[i];}
     bool moreSteps(unsigned i){return i<steps.size();}
     
 };
 
 struct pathSet{
-    map<places::place, map<places::place, path> > paths;
+    map<places::placeE, map<places::placeE, path> > paths;
     pathSet(){
         
     }

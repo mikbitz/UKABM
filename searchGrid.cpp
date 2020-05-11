@@ -586,8 +586,9 @@ void searchGrid::remove(place* p){
 vector <place*> searchGrid::inRadius(agent* a,unsigned placeType, double d){
     //find all places of a given type within a given distance of agent a
     //may need to search multiple cells
+    //return results sorted by distance
     vector<place*> temp;
-
+    vector<std::pair<place*,double>>pairsForSort;
     int q=a->cellIndex;
     int lx=q%NxCells; int ly=q/NxCells;
     int nx=int(d/_xSize*NxCells+0.5);
@@ -601,19 +602,26 @@ vector <place*> searchGrid::inRadius(agent* a,unsigned placeType, double d){
     if (!cylY) {if (ly<ny) jl=-ly;if (ly>=NyCells-1-ny) ju=NyCells-1-ly;}
     
     for (int i=il;i<iu+1;i++)  {
-      for (int j=jl;j<ju+1;j++) {
-        //wrapping
-        int inx=lx+i; if (cylX) {while (inx<0)inx+=NxCells; while (inx>=NxCells)inx-=NxCells;}
-        int iny=ly+j; if (cylY) {while (iny<0)iny+=NyCells; while (iny>=NyCells)iny-=NyCells;}
-        int ind=inx+iny*NxCells;
-        if(ind>=0 && ind< (int)cells.size()) inDist(ind,d,a,placeType,temp);
-      }
+        for (int j=jl;j<ju+1;j++) {
+            //wrapping
+            int inx=lx+i; if (cylX) {while (inx<0)inx+=NxCells; while (inx>=NxCells)inx-=NxCells;}
+            int iny=ly+j; if (cylY) {while (iny<0)iny+=NyCells; while (iny>=NyCells)iny-=NyCells;}
+            int ind=inx+iny*NxCells;
+            if(ind>=0 && ind< (int)cells.size()) inDist(ind,d,a,placeType,pairsForSort);
+        }
     }
-  return temp;
+    //use lamba function for sort
+    std::sort(pairsForSort.begin(),pairsForSort.end(),
+              [](const std::pair<place*,double> &a, const std::pair<place*,double> &b) -> bool
+              { 
+                  return a.second < b.second; 
+              });
+    for (auto& pr:pairsForSort)temp.push_back(pr.first);
+    return temp;
 }
 //------------------------------------------------------------------
 //return all places of a given type in a cell within a given distance of agent a
-void   searchGrid::inDist(int cellIndex,float d,agent* a,unsigned placeType, vector<place*>& L){
+void   searchGrid::inDist(int cellIndex,float d,agent* a,unsigned placeType, vector<std::pair<place*,double>>& L){
     auto range=locations[cellIndex].equal_range(placeType);
     for (auto& it=range.first;it!=range.second;it++){
         place* p=it->second;
@@ -622,7 +630,9 @@ void   searchGrid::inDist(int cellIndex,float d,agent* a,unsigned placeType, vec
         //wrapping of distance measures
         if (cylX && abs(dx)>_xSize/2)dx=_xSize-abs(dx);
         if (cylY && abs(dy)>_ySize/2)dy=_ySize-abs(dy);
-        if (dx*dx+dy*dy <= d*d)L.push_back(p);
+        const double dist=dx*dx+dy*dy;
+        std::pair<place*,double> pear=std::make_pair(p,dist);
+        if (dist <= d*d)L.push_back(pear);
     }
 }
 //------------------------------------------------------------------
@@ -937,10 +947,10 @@ void searchGrid::test(){
     //type 1
     auto p1=new place(1);
     testGrid->add(p1);
-    auto p2=new place(1);
     locs=testGrid->inRadius(v[3],1,1);
     success=success && (locs.size()==1);
     //second type 1
+    auto p2=new place(1);
     p2->setLocation(0.32,2);
     testGrid->add(p2);
     //still one close by
@@ -956,11 +966,32 @@ void searchGrid::test(){
     //check co-ords of retrieved
     success=success && (locs[0]->loc.x==0.32 && locs[0]->loc.y==2);
     testGrid->testMessage("Test 23",success);
+    //remove second place
+    testGrid->remove(p2);
+    //test ordering by distance v[3] is at (0,0)
+    p1->setLocation(0,5);
+    testGrid->add(p1);
+    p2->setLocation(4,0);
+    testGrid->add(p2);
+    auto p3=new place(1);
+    p3->setLocation(2,3);
+    testGrid->add(p3);
+    auto p4=new place(1);
+    testGrid->add(p4);
+    auto p5=new place(2);
+    testGrid->add(p5);
+    locs=testGrid->inRadius(v[3],1,5);
+    success=success && (locs.size()==4);
+    //order by distance should be p4,p3,p2,p1
+    success=success && (locs[0]==p4 && locs[1]==p3 && locs[2]==p2 && locs[3]==p1);
+    testGrid->testMessage("Test 24",success);
 
     //tidy up
+
+    delete testGrid;
     for (unsigned i=0;i<v.size();i++)delete v[i];
     v.clear();
-    delete testGrid;
+    delete p;delete p1; delete p2;delete p3;delete p4;delete p5;
 }
 //------------------------------------------------------------------
 void searchGrid::testMessage(string s,bool success){

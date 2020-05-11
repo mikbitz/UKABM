@@ -37,7 +37,7 @@ public:
     void add(place*);
     void remove(place*);
     vector <place*> inRadius(agent* ,unsigned,double);
-    void inDist(int,float,agent*,unsigned,vector<place*>&);
+    void inDist(int,float,agent*,unsigned,vector<std::pair<place*,double>>&);
     void eraseAll();
     void check();
     void check(agent*);

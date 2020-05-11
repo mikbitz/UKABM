@@ -6,21 +6,25 @@
 #include <string>
 class place{
 public:
-    point2D loc;
-    unsigned type;
-    place(){type=0;init();}
-    place(unsigned t){type=t;init();}
-    void init(){_ID=idnum;idnum++;}
-    void setType(unsigned t){type=t;}
+
+    place(){_type=0;init();}
+    place(unsigned t){_type=t;init();}
+    void init(){_ID=idnum;idnum++;_capacity=500;}
+    void setType(unsigned t){_type=t;}
     void setLocation(point2D p){loc=p;}
     void setLocation(double x, double y){loc=point2D(x,y);}
     unsigned placeType(){
-        return type;
+        return _type;
     }
     unsigned ID(){return _ID;}
+    double X(){return loc.x;}
+    double Y(){return loc.y;}
+    point2D loc;
 private:
     static unsigned idnum;
     unsigned _ID;
+    unsigned _capacity;
+    unsigned _type;
 };
 
 //------------------------------------------------------------------
@@ -30,12 +34,13 @@ protected:
     
 public:
     static places& getInstance();
-    enum place{home,work};
-    void getLocations(std::map<places::place, point2D>& locations);
+    unsigned operator[](std::string);
+    enum placeE{home,work};
+    void getLocations(std::map<places::placeE, point2D>& locations);
     void init();
     bool update();
     static places* instance;
-    std::map<std::string,unsigned>placeTypes;
+    std::map<std::string,unsigned>_placeTypes;
     
 };
 #endif

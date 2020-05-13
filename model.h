@@ -91,6 +91,7 @@ private:
      static model* instance;
      model();
      void clean();
+     void setOutputFilePaths();
      vector<layer*> layers;
      configuration* c;
      string text;

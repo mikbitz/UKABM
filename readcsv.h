@@ -19,12 +19,12 @@ class readcsv{
     int StringToInt( const std::string& string ) const;
 public:
     readcsv(std::string,bool header=true, bool commented=true);
-    std::vector<std::string> operator[](unsigned i){return _data[i];}
+    std::vector<std::string> operator[](unsigned i);
     void readFile( const std::string&,bool  );
     void readData(std::ifstream&);
     void readHeader(std::ifstream&);
-    std::vector<std::string>& getHeader(){return _header;}
-    unsigned nrows(){return _data.size();}
+    std::vector<std::string>& getHeader();
+    unsigned nrows();
 
 };
 

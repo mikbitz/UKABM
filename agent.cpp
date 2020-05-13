@@ -5,8 +5,10 @@ agent::agent(){
     ID=idnum;idnum++;
     _inHospital=false,_critical=false,_died=false;
     numberInfected=0;
-    sex='f';
+    _sex='f';
     cellIndex=-1;
+    _jobType=std::numeric_limits<unsigned>::max();
+    _workStatus=unemployed;
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::init(){
@@ -22,11 +24,19 @@ void agent::init(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setAge(double a){
-    age=a;//age in put in years
+    _age=a;//age input in years
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setSex(const char& s){
-    sex=s;//age in put in years
+    _sex=s;
+}
+//-----------------------------------------------------------------------------------------------------------------
+void agent::setWork(place* p){
+    _workPlace=p;
+}
+//-----------------------------------------------------------------------------------------------------------------
+void agent::setJobType(const unsigned& j ){
+    _jobType=j;
 }
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::infectious(){
@@ -43,7 +53,7 @@ bool agent::exposed(){
 //-----------------------------------------------------------------------------------------------------------------
 void agent::preUpdate(){
     if (_died)return;
-    age+=parameters::getInstance().timeStep/3600./24./365.;//in years...ignoring leaps! timeStep is in seconds
+    _age+=parameters::getInstance().timeStep/3600./24./365.;//in years...ignoring leaps! timeStep is in seconds
     for (unsigned i=0;i<processes.size();i++)processes[i]->preUpdate();
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -62,10 +72,10 @@ void agent::applyUpdate(){
     for (auto& [name,d]:_diseases){
         if (!recoveredFrom(name)){
             if (!_inHospital){
-                _inHospital=d.needHospitalisation(age,name);
+                _inHospital=d.needHospitalisation(_age,name);
             }else{
                 //if in hospital check for need of critical care
-                _critical=d.needCriticalCare(age,name);
+                _critical=d.needCriticalCare(_age,name);
             }
             //if critical check for death - this should get the CFR of those in hospital
             if (_critical){
@@ -140,4 +150,20 @@ void agent::setDest(places::placeE e){
 //-----------------------------------------------------------------------------------------------------------------
 void agent::addProcess(process* p){
     processes.push_back(p); 
+}
+//-----------------------------------------------------------------------------------------------------------------
+double agent::X(){
+    return loc.x; 
+}
+//-----------------------------------------------------------------------------------------------------------------
+double agent::Y(){
+    return loc.y; 
+}
+//-----------------------------------------------------------------------------------------------------------------
+bool agent::hasWork(){
+    return _jobType!=std::numeric_limits<unsigned>::max(); 
+}
+//-----------------------------------------------------------------------------------------------------------------
+bool agent::worker(){
+    return (_workStatus==unemployed || _workStatus==working); 
 }

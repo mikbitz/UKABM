@@ -43,12 +43,15 @@ void model::init(){
     //searchGrid::test();
     //disease::test();
     //exit(0);
-    places& p=places::getInstance();
-    p.init();
     
     c=new configuration();
 
-    //-----------------
+    setOutputFilePaths();
+    files=new outputs();
+    parameters::getInstance().saveParameters();
+}
+//-----------------------------------------------------------------------------------------------------------------
+void model::setOutputFilePaths(){
     //naming convention for output files
     _filePrefix=   parameters::getInstance().experimentOutputDirectory+
     "/experiment."+parameters::getInstance().experimentName;
@@ -75,9 +78,6 @@ void model::init(){
     _filePrefix= _filePrefix+m00+"/";
     _filePostfix="";
     cout<<"Outputfiles will be named "<<_filePrefix<<"<Data Name>"<<_filePostfix<<".<filenameExtension>"<<endl;
-    //-----------------
-    files=new outputs();
-    parameters::getInstance().saveParameters();
 }
 //-----------------------------------------------------------------------------------------------------------------
 string model::getText(){

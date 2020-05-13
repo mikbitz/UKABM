@@ -12,19 +12,28 @@ class populationBuilder{
     double _remainingHere;
     double _frac;
     asciiGrid _asciiG;
+    unsigned _workingPop;
+    void retired(agent*);
+    void worker(agent*);
+    void university(agent*);
+    void sixthform(agent*);
+    void schoolchild(agent*);
+    void preschool(agent*);
+    void setSex(agent* a);
+    void setAge(agent* a);
+    void findPartner(agent* a);
+    void findParents(agent* a);
+    void setUpEducation(agent* a);
+    void setUpWork(std::vector<agent*>&);
+    void findFriends(agent* a);
+    double commuteDistance();
 public:
     
     populationBuilder();
     point2D getNextLocation();
     void startCount();
     int personAtNextLocation();
-    void configurePopulation(std::vector<agent*>agents);
-    void setSex(agent* a);
-    void setAge(agent* a);
-    void findPartner(agent* a);
-    void findParents(agent* a);
-    void setUpEducation(agent* a);
-    void setUpWork(agent* a);
-    void findFriends(agent* a);
+    void configurePopulation(std::vector<agent*>&agents);
+
 };
 #endif

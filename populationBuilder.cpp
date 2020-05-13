@@ -5,6 +5,7 @@
 #include "populationBuilder.h"
 #include "asciiGrid.h"
 #include "model.h"
+#include "readcsv.h"
 #include <iostream>
 #include <sstream>
 #include <point2D.h>
@@ -20,7 +21,9 @@
                    _asciiG.ySize(),
                    parameters::getInstance().NxCells,
                    parameters::getInstance().NyCells);
-
+        //places need to be initialised after grid resize
+         places& p=places::getInstance();
+         p.init();
         _iter=0;
         _remainingHere=0;
         _frac=parameters::getInstance().agentFraction;
@@ -60,45 +63,123 @@
         return success;
     }
     //----------------------------------------------------------------------------------------------
-    void populationBuilder::configurePopulation(std::vector<agent*>agents){
+    void populationBuilder::configurePopulation(std::vector<agent*>&agents){
+        shuffle (agents.begin(), agents.end(), std::default_random_engine(parameters::getInstance().randomSeed));
+        _workingPop=agents.size();
         for (auto& a:agents){
             setSex(a);
             setAge(a);
             findPartner(a);
             findParents(a);
             setUpEducation(a);
-            setUpWork(a);
             findFriends(a);
         }
+        setUpWork(agents);
     }
+    //----------------------------------------------------------------------------------------------
     void populationBuilder::setSex(agent* a){
         if (model::getInstance().random.number()<0.5)a->setSex('m');//defaults to f
     }
+    //----------------------------------------------------------------------------------------------
     void populationBuilder::setAge(agent* a){
-        a->setAge(model::getInstance().random.number()*80);
+        double r=model::getInstance().random.number();
+        //uniform age up to 60 plus 20% over 60 with a linear decline to 90
+        a->setAge(r*60);r=model::getInstance().random.number();if (r>0.8)a->setAge(90-30*pow((1-(r-0.8)/0.2),0.5));
     }
+    //----------------------------------------------------------------------------------------------
     void populationBuilder::findPartner(agent* a){
         ;//if (age>16)findPartner()//allow for singles, partners move in together (homeless?), allow for boy/girlfriends? 
     }
+    //----------------------------------------------------------------------------------------------
     void populationBuilder::findParents(agent* a){
         ;//if (age<16)moveToHome()//percent in care?percent single families?- also homeless?
     }
+    //----------------------------------------------------------------------------------------------
     void populationBuilder::setUpEducation(agent* a){
-              //                 if (age>16)sixthform()//all? apprentices?
-        //                 if (age>18)university()//50%?
-               //                 if(age<16)schoolchild()//under fives?
-        //                 if (age<5)preschool() ;if a>21 education level?
+        retired(a);
+        if (a->age()<=65)worker(a);
+        if (a->age()<21)university(a);
+        if (a->age()<18)sixthform(a);
+        if (a->age()<16)schoolchild(a);
+        if (a->age()< 5)preschool(a);
     }
-    void populationBuilder::setUpWork(agent* a){
-        ;
-                //                 if(age>65)retired()//60 for women? some age for in care?
-        //                 if (!inEducation && !retired) working()//includes unemployed/not participating in work - disabilities?
-        //                 if (inWork){allocateWorkType();getWorkLocation();}//requires size of working population?
-        //setWorkplace nearest Place of type matched to jobtype
-        //so map[jobtype] returns placeType
-        //grid of placetypes finds location
+    //----------------------------------------------------------------------------------------------
+    void populationBuilder::retired(agent* a){
+        if ((a->age()>60 && a->sex()=='f') || (a->age()>65)){_workingPop--;}//set agent to retired, workplace=home
+        if (a->age()>80);//in care (random?) home and work to carehome
     }
+    //----------------------------------------------------------------------------------------------
+    void populationBuilder::worker(agent* a){
+        ;//inwork//includes unemployed/not participating in work - disabilities?//UK workforce participation is about 64% - unemployment about 4% - so about 33M employed? Nearly equal M/F
+        ;//above age distrib. gives about 58% 
+    }
+    //----------------------------------------------------------------------------------------------
+    void populationBuilder::university(agent* a){
+        if (a->age()>=18 && model::getInstance().random.number() < 0.3){_workingPop--;}//in unversity
+    }
+    //----------------------------------------------------------------------------------------------
+    void populationBuilder::sixthform(agent* a){
+        _workingPop--;//upper secondary school - all agents under 18 taken out of workingPop - workplace=school
+    }
+    //----------------------------------------------------------------------------------------------
+    void populationBuilder::schoolchild(agent* a){
+        if (a->age()>=12);//lower secondary
+            else;//primary
+    }
+    //----------------------------------------------------------------------------------------------
+    void populationBuilder::preschool(agent* a){
+        ;//neither in work nor school (but maybe in nursery?)
+    }
+    //----------------------------------------------------------------------------------------------
+    void populationBuilder::setUpWork(std::vector<agent*>&agents){
+        cout<<"Labour participation expected "<<float(_workingPop)/agents.size()<<endl;
+        
+        auto jobTypes=readcsv("jobTypes");//table of jobtypes and workplaces, with fraction of jobType in each placeType
+        auto placeTypes=jobTypes.getHeader();//header gives placetype string for each job
+        
+        //loop over types of job
+        for (unsigned jt=0;jt<jobTypes.nrows();jt++){
+            for (unsigned p=1;p<placeTypes.size();p++){
+                //retrieve placeType index - this allows one to find the places in the grid
+                auto placeType=places::getInstance()[placeTypes[p]];
+                //cout<<placeTypes[p]<<" "<<placeType<<endl;
+                if (placeType!=places::unknownType){
+                    //number of workers expected - could be emtpy
+                    if (jobTypes[jt].size()>p && jobTypes[jt][p]!=""){
+                        double fraction=std::stod(jobTypes[jt][p]);
+                        if (fraction>0){
+                            unsigned number=_workingPop*fraction;
+                            //cout<<jobTypes[jt][0]<<endl;
+                            for (auto a:agents){
+                                if (number>0 && a->worker() && !a->hasWork()){//need to count over jobtype
+                                    double d=commuteDistance();
+                                    auto possibleWorkPlaces=model::getInstance().g.inRadius(a,placeType,d);//gridded places give locations
+                                    //returned places are ordered by distance, closest first - what if none found?
+                                    if (possibleWorkPlaces.size()>0){
+                                        number--;
+                                        unsigned k=possibleWorkPlaces.size()-1;//choose k to start from largest distance (should be closest to attempted commute distance)
+                                        a->setWork(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken 
+                                        possibleWorkPlaces[k]->incrementWorkForce();//increase place number of workforce
+                                        a->setJobType(jt);//allocate jobtype to agent
+                                    }
+                                }
+                            }
+                            cout<<number<<endl;
+                        }
+                    }
+                }
+            }
+        }
+        places::getInstance().printWorkForceSizes();
+        exit(0);
+    }
+    //----------------------------------------------------------------------------------------------
     void populationBuilder::findFriends(agent* a){
         ;
-                //allow for age and work/school assortativity...
+        //allow for age and work/school assortativity...
+    }
+    //----------------------------------------------------------------------------------------------
+    double populationBuilder::commuteDistance(){
+        //1/x^2 distrubtion for the moment, up to 100km (=>inverse linear cumulative distrib.)
+        return 1010 / (1.01 - model::getInstance().random.number());
     }

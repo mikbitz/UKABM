@@ -64,6 +64,7 @@
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::configurePopulation(std::vector<agent*>&agents){
+        //randomize the agent order so that we don't have preferred agents by grid location  
         shuffle (agents.begin(), agents.end(), std::default_random_engine(parameters::getInstance().randomSeed));
         _workingPop=agents.size();
         for (auto& a:agents){
@@ -83,8 +84,10 @@
     //----------------------------------------------------------------------------------------------
     void populationBuilder::setAge(agent* a){
         double r=model::getInstance().random.number();
-        //uniform age up to 60 plus 20% over 60 with a linear decline to 90
-        a->setAge(r*60);r=model::getInstance().random.number();if (r>0.8)a->setAge(90-30*pow((1-(r-0.8)/0.2),0.5));
+        //uniform age up to 60 plus 20% over 60 with a linear decline to 90 (implies quadratic cumulative distribution)
+        a->setAge(r*60);
+        r=model::getInstance().random.number();
+        if (r>0.8)a->setAge(90-30*pow((1-(r-0.8)/0.2),0.5));
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::findPartner(agent* a){
@@ -105,7 +108,11 @@
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::retired(agent* a){
-        if ((a->age()>60 && a->sex()=='f') || (a->age()>65)){_workingPop--;}//set agent to retired, workplace=home
+        if ((a->age()>60 && a->sex()=='f') || (a->age()>65)){
+            _workingPop--;
+            a->setWorkStatus("retired");//workstatus defaults to unemployed
+        }
+        //set agent to retired, workplace=home
         if (a->age()>80);//in care (random?) home and work to carehome
     }
     //----------------------------------------------------------------------------------------------
@@ -115,20 +122,26 @@
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::university(agent* a){
-        if (a->age()>=18 && model::getInstance().random.number() < 0.3){_workingPop--;}//in unversity
+        if (a->age()>=18 && model::getInstance().random.number() < 0.3){
+            _workingPop--;
+            a->setWorkStatus("ineducation");
+            a->setEducationStatus("higher");
+        }//in unversity
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::sixthform(agent* a){
-        _workingPop--;//upper secondary school - all agents under 18 taken out of workingPop - workplace=school
+        _workingPop--;
+        a->setWorkStatus("ineducation");
+        a->setEducationStatus("uppersecondary");//upper secondary school - all agents under 18 taken out of workingPop - workplace=school
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::schoolchild(agent* a){
-        if (a->age()>=12);//lower secondary
-            else;//primary
+        if (a->age()>=12)a->setEducationStatus("secondary");//lower secondary
+        else             a->setEducationStatus("primary");//primary
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::preschool(agent* a){
-        ;//neither in work nor school (but maybe in nursery?)
+        a->setEducationStatus("preschool");//neither in work nor school (but maybe in nursery?)
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::setUpWork(std::vector<agent*>&agents){
@@ -151,20 +164,20 @@
                             unsigned number=_workingPop*fraction;
                             //cout<<jobTypes[jt][0]<<endl;
                             for (auto a:agents){
-                                if (number>0 && a->worker() && !a->hasWork()){//need to count over jobtype
+                                if (number>0 && a->worker() && !a->hasWork()){//number counts for this jobtype and placetype
                                     double d=commuteDistance();
                                     auto possibleWorkPlaces=model::getInstance().g.inRadius(a,placeType,d);//gridded places give locations
                                     //returned places are ordered by distance, closest first - what if none found?
                                     if (possibleWorkPlaces.size()>0){
                                         number--;
                                         unsigned k=possibleWorkPlaces.size()-1;//choose k to start from largest distance (should be closest to attempted commute distance)
-                                        a->setWork(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken 
-                                        possibleWorkPlaces[k]->incrementWorkForce();//increase place number of workforce
-                                        a->setJobType(jt);//allocate jobtype to agent
+                                        a->setWork(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken -currently places take any number!
+                                        possibleWorkPlaces[k]->incrementWorkForce();
+                                        a->setJobType(jt);
                                     }
                                 }
                             }
-                            cout<<number<<endl;
+                            //cout<<number<<endl;
                         }
                     }
                 }

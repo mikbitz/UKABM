@@ -7,8 +7,9 @@ agent::agent(){
     numberInfected=0;
     _sex='f';
     cellIndex=-1;
-    _jobType=std::numeric_limits<unsigned>::max();
+    _jobType=std::numeric_limits<unsigned>::max();//default for no job
     _workStatus=unemployed;
+    _educationStatus=secondary;//UK adults should all have at least this?
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::init(){
@@ -37,7 +38,23 @@ void agent::setWork(place* p){
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setJobType(const unsigned& j ){
     _jobType=j;
+    _workStatus=working;
 }
+//-----------------------------------------------------------------------------------------------------------------
+void agent::setWorkStatus(const std::string& s){
+    if (s=="retired")    _workStatus=retired;
+    if (s=="ineducation")_workStatus=ineducation;
+}
+//-----------------------------------------------------------------------------------------------------------------
+void agent::setEducationStatus(const std::string& s){
+    if (s=="preschool")     _educationStatus=preschool;
+    if (s=="primary")       _educationStatus=primary;
+    if (s=="uppersecondary")_educationStatus=uppersecondary;
+    if (s=="secondary")     _educationStatus=secondary;
+    if (s=="higher")        _educationStatus=higher;
+    if (s=="postgrad")      _educationStatus=postgrad;
+}
+
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::infectious(){
     bool result=false;
@@ -161,7 +178,7 @@ double agent::Y(){
 }
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::hasWork(){
-    return _jobType!=std::numeric_limits<unsigned>::max(); 
+    return _workStatus==working; 
 }
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::worker(){

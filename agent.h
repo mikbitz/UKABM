@@ -11,8 +11,10 @@ private:
     place* _workPlace;
     place* _home;
     unsigned _jobType;
-    enum workTypes{ineducation,unemployed,working,retired};
+    enum workTypes{ineducation,unemployed,working,retired};//could also include casual,zero hours...
     workTypes _workStatus ;
+    enum educationTypes{preschool,primary,secondary,uppersecondary,higher,postgrad};//coudl also include "further"
+    educationTypes _educationStatus;
 public:
     map<places::placeE,point2D> knownLocations;
     places::placeE oldPlace,newPlace;
@@ -58,6 +60,8 @@ public:
     void addProcess(process* p);
     void setJobType(const unsigned&);
     void setWork(place*);
+    void setWorkStatus(const std::string&);
+    void setEducationStatus(const std::string&);
     void setAge(double);
     void setSex(const char&);
     char sex(){return _sex;}

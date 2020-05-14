@@ -1,0 +1,387 @@
+\hypertarget{classagent}{}\section{agent Class Reference}
+\label{classagent}\index{agent@{agent}}
+
+
+Collaboration diagram for agent\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classagent__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classagent_a7fef7c5b65fb384d74d7606168058212}\label{classagent_a7fef7c5b65fb384d74d7606168058212}} 
+void {\bfseries update\+Infections} ()
+\item 
+bool \mbox{\hyperlink{classagent_aab67fe9df4777af3690138fa97d0a3a1}{has\+Disease}} (std\+::string)
+\begin{DoxyCompactList}\small\item\em Check to see whether the agent has ever carried a disease with the given name. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classagent_a0eee49d52e6c47d7b425bc72cf5caf67}{recovered\+From}} (std\+::string)
+\begin{DoxyCompactList}\small\item\em Check to see whether the agent has recovered from a named disease. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classagent_ac55fabf889e49a48c055c9c495062d5e}{infect\+With}} (std\+::string)
+\begin{DoxyCompactList}\small\item\em Infect this agent with a disease with a given name. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classagent_ae186a297218e835ac064bf7a329d5b42}{infectious}} ()
+\begin{DoxyCompactList}\small\item\em True if the agent can infect other agents. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classagent_a2a92e38a01bd4c7e03747a3a35d741a0}\label{classagent_a2a92e38a01bd4c7e03747a3a35d741a0}} 
+bool {\bfseries exposed} ()
+\item 
+\mbox{\Hypertarget{classagent_a3c31fe2f6f752a35261041b5bef3c532}\label{classagent_a3c31fe2f6f752a35261041b5bef3c532}} 
+void {\bfseries die} ()
+\item 
+\mbox{\Hypertarget{classagent_a9b9b71b861f9074017a73128c098ef7d}\label{classagent_a9b9b71b861f9074017a73128c098ef7d}} 
+bool {\bfseries dead} ()
+\item 
+\mbox{\Hypertarget{classagent_ac10f380bcc7416f6b2dacaab82d6c7ed}\label{classagent_ac10f380bcc7416f6b2dacaab82d6c7ed}} 
+bool {\bfseries in\+Hospital} ()
+\item 
+\mbox{\Hypertarget{classagent_a8da7d990a32c8b88ce57288b4ddb9dac}\label{classagent_a8da7d990a32c8b88ce57288b4ddb9dac}} 
+bool {\bfseries critical} ()
+\item 
+\mbox{\Hypertarget{classagent_a9b33e19cdc7822f578dd3ea84ae4247b}\label{classagent_a9b33e19cdc7822f578dd3ea84ae4247b}} 
+void {\bfseries init} ()
+\item 
+\mbox{\Hypertarget{classagent_a62677fb1d4e4cb968f297654a34bb2e9}\label{classagent_a62677fb1d4e4cb968f297654a34bb2e9}} 
+void {\bfseries pre\+Update} ()
+\item 
+\mbox{\Hypertarget{classagent_ae20b0b8a169fb7a459c7b195bb970d80}\label{classagent_ae20b0b8a169fb7a459c7b195bb970d80}} 
+void {\bfseries update} ()
+\item 
+\mbox{\Hypertarget{classagent_a30fdee285896c4918428d8713eb9f8b7}\label{classagent_a30fdee285896c4918428d8713eb9f8b7}} 
+void {\bfseries apply\+Update} ()
+\item 
+\mbox{\Hypertarget{classagent_a4474a96ab84b2f4285d672142ac255d8}\label{classagent_a4474a96ab84b2f4285d672142ac255d8}} 
+void {\bfseries set\+Dest} (unsigned)
+\item 
+\mbox{\Hypertarget{classagent_ab29f844fd10dbcd22271dc49da13970c}\label{classagent_ab29f844fd10dbcd22271dc49da13970c}} 
+void {\bfseries add\+Process} (\mbox{\hyperlink{classprocess}{process}} $\ast$p)
+\item 
+\mbox{\Hypertarget{classagent_a89e017002b8df70ed9ccac07f7335f1a}\label{classagent_a89e017002b8df70ed9ccac07f7335f1a}} 
+void {\bfseries set\+Job\+Type} (const unsigned \&)
+\item 
+\mbox{\Hypertarget{classagent_a580f51ad01e693343049bc65e37eb319}\label{classagent_a580f51ad01e693343049bc65e37eb319}} 
+void {\bfseries set\+Work\+Place} (\mbox{\hyperlink{classplace}{place}} $\ast$)
+\item 
+\mbox{\Hypertarget{classagent_a66caa39215e0fba347152cbf7190c85e}\label{classagent_a66caa39215e0fba347152cbf7190c85e}} 
+void {\bfseries set\+Work\+Status} (const std\+::string \&)
+\item 
+\mbox{\Hypertarget{classagent_afbfba46faf7104f44f19dfef8dd72585}\label{classagent_afbfba46faf7104f44f19dfef8dd72585}} 
+void {\bfseries set\+Education\+Status} (const std\+::string \&)
+\item 
+\mbox{\Hypertarget{classagent_ad5a0596438a813a44840ad542416dc50}\label{classagent_ad5a0596438a813a44840ad542416dc50}} 
+void {\bfseries set\+Age} (double)
+\item 
+\mbox{\Hypertarget{classagent_aaeb64899916c47b42bfdfbc43427d9a8}\label{classagent_aaeb64899916c47b42bfdfbc43427d9a8}} 
+void {\bfseries set\+Sex} (const char \&)
+\item 
+\mbox{\Hypertarget{classagent_a0c0cbe17943c2fc044905fe877b14ade}\label{classagent_a0c0cbe17943c2fc044905fe877b14ade}} 
+char {\bfseries sex} ()
+\item 
+\mbox{\Hypertarget{classagent_a1f8475f933cfae0199d73c108faff1ad}\label{classagent_a1f8475f933cfae0199d73c108faff1ad}} 
+double {\bfseries age} ()
+\item 
+double \mbox{\hyperlink{classagent_a312bd1aeb3c660f43bb3bf5a8f0764e7}{X}} ()
+\begin{DoxyCompactList}\small\item\em Return the current X location of the agent. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classagent_a56b8ea7b9138c5e4b92530d454e247ad}{Y}} ()
+\begin{DoxyCompactList}\small\item\em Return the current Y location of the agent. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classagent_a5d5e7089351107f21f00c73e342feb59}\label{classagent_a5d5e7089351107f21f00c73e342feb59}} 
+bool {\bfseries has\+Work} ()
+\item 
+\mbox{\Hypertarget{classagent_abcfbb2865a7cb599df7a6c5cbff2ce05}\label{classagent_abcfbb2865a7cb599df7a6c5cbff2ce05}} 
+bool {\bfseries worker} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classagent_a3b5f19fe489aeaa4a44365b80a20de50}\label{classagent_a3b5f19fe489aeaa4a44365b80a20de50}} 
+map$<$ unsigned, \mbox{\hyperlink{classpoint2D}{point2D}} $>$ {\bfseries known\+Locations}
+\item 
+\mbox{\Hypertarget{classagent_adb1d1bc0cee97d9c4d3c68536e84f3f6}\label{classagent_adb1d1bc0cee97d9c4d3c68536e84f3f6}} 
+unsigned {\bfseries old\+Place}
+\item 
+\mbox{\Hypertarget{classagent_a14bacf305626b17d29eef5681f284f7a}\label{classagent_a14bacf305626b17d29eef5681f284f7a}} 
+unsigned {\bfseries new\+Place}
+\item 
+\mbox{\Hypertarget{classagent_ad7fc52cb970a53fb03f3a08f6e00c4de}\label{classagent_ad7fc52cb970a53fb03f3a08f6e00c4de}} 
+\mbox{\hyperlink{structpath}{path}} {\bfseries current\+Path}
+\item 
+\mbox{\Hypertarget{classagent_ac297c591823cd9c23c8cdbcaea964344}\label{classagent_ac297c591823cd9c23c8cdbcaea964344}} 
+unsigned {\bfseries path\+State}
+\item 
+\mbox{\Hypertarget{classagent_a51641f914b14e5c5be4fd6ea7a6f50f3}\label{classagent_a51641f914b14e5c5be4fd6ea7a6f50f3}} 
+\mbox{\hyperlink{structpathSet}{path\+Set}} {\bfseries \+\_\+path\+Set}
+\item 
+\mbox{\Hypertarget{classagent_a625057d4c53fe2581f1c963d4da601ba}\label{classagent_a625057d4c53fe2581f1c963d4da601ba}} 
+\mbox{\hyperlink{classpoint2D}{point2D}} {\bfseries loc}
+\item 
+\mbox{\Hypertarget{classagent_a1cf261bbb26132bbc68c0a7d920437f4}\label{classagent_a1cf261bbb26132bbc68c0a7d920437f4}} 
+\mbox{\hyperlink{classpoint2D}{point2D}} {\bfseries dest}
+\item 
+\mbox{\Hypertarget{classagent_a5ff902fc713259415266ca26f2bb8ecb}\label{classagent_a5ff902fc713259415266ca26f2bb8ecb}} 
+\mbox{\hyperlink{classpoint2D}{point2D}} {\bfseries vel}
+\item 
+\mbox{\Hypertarget{classagent_aa029a96be166646fb046873a73d3fbdd}\label{classagent_aa029a96be166646fb046873a73d3fbdd}} 
+float {\bfseries \+\_\+size}
+\item 
+\mbox{\Hypertarget{classagent_a9c76eb9369864fb60a2d5a4f44c56843}\label{classagent_a9c76eb9369864fb60a2d5a4f44c56843}} 
+double {\bfseries \+\_\+age}
+\item 
+\mbox{\Hypertarget{classagent_ad2e0f7c2a20dcfa12f07a07520ee7e4a}\label{classagent_ad2e0f7c2a20dcfa12f07a07520ee7e4a}} 
+char {\bfseries \+\_\+sex}
+\item 
+\mbox{\Hypertarget{classagent_a2f484df3bd597a8974b892415f7a81da}\label{classagent_a2f484df3bd597a8974b892415f7a81da}} 
+map$<$ \mbox{\hyperlink{classagent}{agent}} $\ast$, \mbox{\hyperlink{classagent}{agent}} $\ast$ $>$ {\bfseries children}
+\item 
+\mbox{\Hypertarget{classagent_a591d6d0b76938f2d8ce45b81ddc9198e}\label{classagent_a591d6d0b76938f2d8ce45b81ddc9198e}} 
+map$<$ \mbox{\hyperlink{classagent}{agent}} $\ast$, \mbox{\hyperlink{classagent}{agent}} $\ast$ $>$ {\bfseries friends}
+\item 
+\mbox{\Hypertarget{classagent_a34b299f3d80898282060620413ca4c39}\label{classagent_a34b299f3d80898282060620413ca4c39}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries mother}
+\item 
+\mbox{\Hypertarget{classagent_a40954e3f65115355c91f935a01341a56}\label{classagent_a40954e3f65115355c91f935a01341a56}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries father}
+\item 
+\mbox{\Hypertarget{classagent_ae684b71a09da86798ffb134c0ff1e0ba}\label{classagent_ae684b71a09da86798ffb134c0ff1e0ba}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries partner}
+\item 
+\mbox{\Hypertarget{classagent_a0a669d47bb2f6781ea5ec1f2cdfdd4e2}\label{classagent_a0a669d47bb2f6781ea5ec1f2cdfdd4e2}} 
+\mbox{\hyperlink{structtimeTable}{time\+Table}} {\bfseries t\+Table}
+\item 
+\mbox{\Hypertarget{classagent_a4a2f231b103bbe13452570921e296ea1}\label{classagent_a4a2f231b103bbe13452570921e296ea1}} 
+bool {\bfseries \+\_\+in\+Hospital}
+\item 
+\mbox{\Hypertarget{classagent_a9803ed96415b37e5ad091848a53e1944}\label{classagent_a9803ed96415b37e5ad091848a53e1944}} 
+bool {\bfseries \+\_\+critical}
+\item 
+\mbox{\Hypertarget{classagent_a0d09f2c676410b866a348291900ee520}\label{classagent_a0d09f2c676410b866a348291900ee520}} 
+bool {\bfseries \+\_\+died}
+\item 
+unsigned \mbox{\hyperlink{classagent_a4145c90d534f84deb22a93560809134c}{number\+Infected}}
+\begin{DoxyCompactList}\small\item\em Accumulates the number of other agents infected by this agent. \end{DoxyCompactList}\item 
+map$<$ string, \mbox{\hyperlink{classdisease}{disease}} $>$ \mbox{\hyperlink{classagent_a2352342e95bc77041c07c0dafdfb7cd2}{\+\_\+diseases}}
+\begin{DoxyCompactList}\small\item\em A dictionary of named diseases currently carried by this agent. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classagent_a7f99e11ffb5c042be84e2917cba7af3a}\label{classagent_a7f99e11ffb5c042be84e2917cba7af3a}} 
+unsigned {\bfseries ID}
+\item 
+\mbox{\Hypertarget{classagent_a3db995cae037474ae4bf7adcb7cd44cc}\label{classagent_a3db995cae037474ae4bf7adcb7cd44cc}} 
+int {\bfseries cell\+Index}
+\item 
+\mbox{\Hypertarget{classagent_a13305f6e66e992cf1c6ffa7b027c4201}\label{classagent_a13305f6e66e992cf1c6ffa7b027c4201}} 
+vector$<$ \mbox{\hyperlink{classprocess}{process}} $\ast$ $>$ {\bfseries processes}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classagent_a4fd7d01331ffd547ae9fc8eb9b05516d}\label{classagent_a4fd7d01331ffd547ae9fc8eb9b05516d}} 
+static unsigned {\bfseries idnum} =0
+\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classagent_a56ecbbe6f1ec07d60ed3c30988810e22}\label{classagent_a56ecbbe6f1ec07d60ed3c30988810e22}} 
+enum {\bfseries work\+Types} \{ {\bfseries ineducation}, 
+{\bfseries unemployed}, 
+{\bfseries working}, 
+{\bfseries retired}
+ \}
+\item 
+\mbox{\Hypertarget{classagent_a499a1e074636f81ed46fe569107e6cde}\label{classagent_a499a1e074636f81ed46fe569107e6cde}} 
+enum {\bfseries education\+Types} \{ \newline
+{\bfseries preschool}, 
+{\bfseries primary}, 
+{\bfseries secondary}, 
+{\bfseries uppersecondary}, 
+\newline
+{\bfseries higher}, 
+{\bfseries postgrad}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classagent_a232bde3d6f75bac6c1fba313b7124b13}\label{classagent_a232bde3d6f75bac6c1fba313b7124b13}} 
+\mbox{\hyperlink{classplace}{place}} $\ast$ {\bfseries \+\_\+work\+Place}
+\item 
+\mbox{\Hypertarget{classagent_a6db9c370528e73527b4d7a8b00ffab23}\label{classagent_a6db9c370528e73527b4d7a8b00ffab23}} 
+\mbox{\hyperlink{classplace}{place}} $\ast$ {\bfseries \+\_\+home}
+\item 
+\mbox{\Hypertarget{classagent_a4155df9fba51d2a5387b266e74f0703e}\label{classagent_a4155df9fba51d2a5387b266e74f0703e}} 
+unsigned {\bfseries \+\_\+job\+Type}
+\item 
+\mbox{\Hypertarget{classagent_a79ee05496cc1bc2d806fbb70a45d9f99}\label{classagent_a79ee05496cc1bc2d806fbb70a45d9f99}} 
+work\+Types {\bfseries \+\_\+work\+Status}
+\item 
+\mbox{\Hypertarget{classagent_abbfd4798d2b47e4b418a9aefa75fd75b}\label{classagent_abbfd4798d2b47e4b418a9aefa75fd75b}} 
+education\+Types {\bfseries \+\_\+education\+Status}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 15 of file agent.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classagent_aab67fe9df4777af3690138fa97d0a3a1}\label{classagent_aab67fe9df4777af3690138fa97d0a3a1}} 
+\index{agent@{agent}!has\+Disease@{has\+Disease}}
+\index{has\+Disease@{has\+Disease}!agent@{agent}}
+\subsubsection{\texorpdfstring{has\+Disease()}{hasDisease()}}
+{\footnotesize\ttfamily bool agent\+::has\+Disease (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+
+
+Check to see whether the agent has ever carried a disease with the given name. 
+
+Returns false if there is no entry in the dictionary of diseases, true if it is present, even if teh agent has recovered or died This allows for testing recovered agents (or for them to have limited time immunity), or for dead agents still to be infectious
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \+:A string specifying the name of the disease to test for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+
+
+Definition at line 144 of file agent.\+cpp.
+
+\mbox{\Hypertarget{classagent_ae186a297218e835ac064bf7a329d5b42}\label{classagent_ae186a297218e835ac064bf7a329d5b42}} 
+\index{agent@{agent}!infectious@{infectious}}
+\index{infectious@{infectious}!agent@{agent}}
+\subsubsection{\texorpdfstring{infectious()}{infectious()}}
+{\footnotesize\ttfamily bool agent\+::infectious (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+True if the agent can infect other agents. 
+
+Currently only applies for Covid19! This function is used in creating maps in output.\+cpp via the \mbox{\hyperlink{classsearchGrid}{search\+Grid}}, so be careful about modifying \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]Should take a disease name as the argument\end{DoxyRefDesc}
+
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+
+
+Definition at line 58 of file agent.\+cpp.
+
+\mbox{\Hypertarget{classagent_ac55fabf889e49a48c055c9c495062d5e}\label{classagent_ac55fabf889e49a48c055c9c495062d5e}} 
+\index{agent@{agent}!infect\+With@{infect\+With}}
+\index{infect\+With@{infect\+With}!agent@{agent}}
+\subsubsection{\texorpdfstring{infect\+With()}{infectWith()}}
+{\footnotesize\ttfamily void agent\+::infect\+With (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+
+
+Infect this agent with a disease with a given name. 
+
+This both adds the disease name to the dictionary and creates a new disease object with the name of the disease The disease object is then updated to the \char`\"{}infected\char`\"{} state, which indicates that this is a newly acquired disease.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \+:A string specifying the name of the disease \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 154 of file agent.\+cpp.
+
+\mbox{\Hypertarget{classagent_a0eee49d52e6c47d7b425bc72cf5caf67}\label{classagent_a0eee49d52e6c47d7b425bc72cf5caf67}} 
+\index{agent@{agent}!recovered\+From@{recovered\+From}}
+\index{recovered\+From@{recovered\+From}!agent@{agent}}
+\subsubsection{\texorpdfstring{recovered\+From()}{recoveredFrom()}}
+{\footnotesize\ttfamily bool agent\+::recovered\+From (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+
+
+Check to see whether the agent has recovered from a named disease. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \+:A string specifying the name of the disease to test for\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+
+
+Definition at line 148 of file agent.\+cpp.
+
+\mbox{\Hypertarget{classagent_a312bd1aeb3c660f43bb3bf5a8f0764e7}\label{classagent_a312bd1aeb3c660f43bb3bf5a8f0764e7}} 
+\index{agent@{agent}!X@{X}}
+\index{X@{X}!agent@{agent}}
+\subsubsection{\texorpdfstring{X()}{X()}}
+{\footnotesize\ttfamily double agent\+::X (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Return the current X location of the agent. 
+
+\begin{DoxyReturn}{Returns}
+double 
+\end{DoxyReturn}
+
+
+Definition at line 173 of file agent.\+cpp.
+
+\mbox{\Hypertarget{classagent_a56b8ea7b9138c5e4b92530d454e247ad}\label{classagent_a56b8ea7b9138c5e4b92530d454e247ad}} 
+\index{agent@{agent}!Y@{Y}}
+\index{Y@{Y}!agent@{agent}}
+\subsubsection{\texorpdfstring{Y()}{Y()}}
+{\footnotesize\ttfamily double agent\+::Y (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Return the current Y location of the agent. 
+
+\begin{DoxyReturn}{Returns}
+double 
+\end{DoxyReturn}
+
+
+Definition at line 177 of file agent.\+cpp.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classagent_a2352342e95bc77041c07c0dafdfb7cd2}\label{classagent_a2352342e95bc77041c07c0dafdfb7cd2}} 
+\index{agent@{agent}!\+\_\+diseases@{\+\_\+diseases}}
+\index{\+\_\+diseases@{\+\_\+diseases}!agent@{agent}}
+\subsubsection{\texorpdfstring{\+\_\+diseases}{\_diseases}}
+{\footnotesize\ttfamily map$<$string,\mbox{\hyperlink{classdisease}{disease}}$>$ agent\+::\+\_\+diseases}
+
+
+
+A dictionary of named diseases currently carried by this agent. 
+
+If the agent has never had a given disease, then there will be no entry in the dictionary. Such agents are assumed to be susceptible. 
+
+Definition at line 56 of file agent.\+h.
+
+\mbox{\Hypertarget{classagent_a4145c90d534f84deb22a93560809134c}\label{classagent_a4145c90d534f84deb22a93560809134c}} 
+\index{agent@{agent}!number\+Infected@{number\+Infected}}
+\index{number\+Infected@{number\+Infected}!agent@{agent}}
+\subsubsection{\texorpdfstring{number\+Infected}{numberInfected}}
+{\footnotesize\ttfamily unsigned agent\+::number\+Infected}
+
+
+
+Accumulates the number of other agents infected by this agent. 
+
+Currently this is not distinguished by disease so really only works if there is just a single disease 
+
+Definition at line 49 of file agent.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{agent_8h}{agent.\+h}}\item 
+agent.\+cpp\item 
+agents.\+h\end{DoxyCompactItemize}

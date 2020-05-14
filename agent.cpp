@@ -146,12 +146,14 @@ bool agent::hasDisease(std::string name){
 }
 //------------------------------------------------------------------------------------------------------------
 bool agent::recoveredFrom(std::string name){
+    //be careful here not to accidentally insert "name"
     if (hasDisease(name)) return _diseases[name].recovered();
     return false;
 }
 //------------------------------------------------------------------------------------------------------------
 void agent::infectWith(std::string name){
-    _diseases[name]=disease(name);_diseases[name].infect();
+    _diseases[name]=disease(name);
+    _diseases[name].infect();
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setDest(unsigned e){

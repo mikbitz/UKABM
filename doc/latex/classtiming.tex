@@ -1,0 +1,121 @@
+\hypertarget{classtiming}{}\section{timing Class Reference}
+\label{classtiming}\index{timing@{timing}}
+
+
+Collaboration diagram for timing\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{classtiming__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtiming_a5c91382984c1f17f3678030277bca2b7}\label{classtiming_a5c91382984c1f17f3678030277bca2b7}} 
+void {\bfseries update} ()
+\item 
+\mbox{\Hypertarget{classtiming_aff54a0e908c64c52155ab254e4c16b31}\label{classtiming_aff54a0e908c64c52155ab254e4c16b31}} 
+ptime {\bfseries now} () const
+\item 
+\mbox{\Hypertarget{classtiming_af7f37b61e8ad76615b81a9e620ed1b20}\label{classtiming_af7f37b61e8ad76615b81a9e620ed1b20}} 
+date {\bfseries today} () const
+\item 
+\mbox{\Hypertarget{classtiming_a32e58b29ebab4444095da675a7366311}\label{classtiming_a32e58b29ebab4444095da675a7366311}} 
+date {\bfseries tomorrow} () const
+\item 
+\mbox{\Hypertarget{classtiming_a386cc29fbab2bcb13c319fa5847e6c02}\label{classtiming_a386cc29fbab2bcb13c319fa5847e6c02}} 
+date {\bfseries yesterday} () const
+\item 
+\mbox{\Hypertarget{classtiming_a89db990194b162a228a1db8497a78bdf}\label{classtiming_a89db990194b162a228a1db8497a78bdf}} 
+date {\bfseries initial\+Day} () const
+\item 
+\mbox{\Hypertarget{classtiming_aa6fa7d6bb3338a83cf26deddab164dcd}\label{classtiming_aa6fa7d6bb3338a83cf26deddab164dcd}} 
+ptime {\bfseries start\+Of\+School\+Day} () const
+\item 
+\mbox{\Hypertarget{classtiming_a44b6864a75b11c761eaaa6d6546f5c92}\label{classtiming_a44b6864a75b11c761eaaa6d6546f5c92}} 
+ptime {\bfseries end\+Of\+School\+Day} () const
+\item 
+\mbox{\Hypertarget{classtiming_add6be686df899d4d114545f791ceb5d0}\label{classtiming_add6be686df899d4d114545f791ceb5d0}} 
+date {\bfseries start\+Of\+School\+Term} () const
+\item 
+\mbox{\Hypertarget{classtiming_a672fd71230612e481b36eb408497c816}\label{classtiming_a672fd71230612e481b36eb408497c816}} 
+date {\bfseries end\+Of\+School\+Term} () const
+\item 
+\mbox{\Hypertarget{classtiming_aa5bd281f145600c23293b94577799ca8}\label{classtiming_aa5bd281f145600c23293b94577799ca8}} 
+date\+\_\+period {\bfseries half\+Term} () const
+\item 
+\mbox{\Hypertarget{classtiming_a79eb6645a9ccc90e59fc73594dc3b0c5}\label{classtiming_a79eb6645a9ccc90e59fc73594dc3b0c5}} 
+date\+\_\+period {\bfseries term} () const
+\item 
+\mbox{\Hypertarget{classtiming_a251ccabb3906aaa811758eea285b32ac}\label{classtiming_a251ccabb3906aaa811758eea285b32ac}} 
+time\+\_\+period {\bfseries school\+Day} () const
+\item 
+\mbox{\Hypertarget{classtiming_af80c4617bd5afd2f7c23a08f163bd465}\label{classtiming_af80c4617bd5afd2f7c23a08f163bd465}} 
+time\+\_\+period {\bfseries lunch\+Time} () const
+\item 
+\mbox{\Hypertarget{classtiming_af39bf7bf9b0c1a4429ed3d228660fd8f}\label{classtiming_af39bf7bf9b0c1a4429ed3d228660fd8f}} 
+time\+\_\+period {\bfseries morning\+Break\+Time} () const
+\item 
+\mbox{\Hypertarget{classtiming_a296ee7a0fce0144583b4ce632e669b89}\label{classtiming_a296ee7a0fce0144583b4ce632e669b89}} 
+time\+\_\+period {\bfseries afternoon\+Break\+Time} () const
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtiming_a9495f6f63b2c27f1af4ac4dc736fff10}\label{classtiming_a9495f6f63b2c27f1af4ac4dc736fff10}} 
+static \mbox{\hyperlink{classtiming}{timing}} \& {\bfseries get\+Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtiming_a599549bbe9902602897b50118793a2f7}\label{classtiming_a599549bbe9902602897b50118793a2f7}} 
+static ptime {\bfseries current\+Time} =ptime(time\+\_\+from\+\_\+string(\char`\"{}2020-\/Mar-\/10 00\+:00\char`\"{}))
+\item 
+\mbox{\Hypertarget{classtiming_a0b97e2508018c7aced9978138c1a44ab}\label{classtiming_a0b97e2508018c7aced9978138c1a44ab}} 
+static ptime {\bfseries start\+Time} =ptime(time\+\_\+from\+\_\+string(\char`\"{}2020-\/Mar-\/10 00\+:00\char`\"{}))
+\item 
+\mbox{\Hypertarget{classtiming_aa31635ef349e78a1689461213d316ed4}\label{classtiming_aa31635ef349e78a1689461213d316ed4}} 
+static date {\bfseries start\+Date} =ptime(time\+\_\+from\+\_\+string(\char`\"{}2020-\/Mar-\/10 00\+:00\char`\"{})).date()
+\item 
+\mbox{\Hypertarget{classtiming_abbabc1091ef472ea1210d319889f1793}\label{classtiming_abbabc1091ef472ea1210d319889f1793}} 
+static double {\bfseries time\+Step} =0
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtiming_ae7c2f1ad143d9dc5f56d30ab447bcdd6}\label{classtiming_ae7c2f1ad143d9dc5f56d30ab447bcdd6}} 
+{\bfseries timing} (const \mbox{\hyperlink{classtiming}{timing}} \&)=delete
+\item 
+\mbox{\Hypertarget{classtiming_a30b82d8d0d6ca5350e23cd34a9e1ba7e}\label{classtiming_a30b82d8d0d6ca5350e23cd34a9e1ba7e}} 
+\mbox{\hyperlink{classtiming}{timing}} \& {\bfseries operator=} (const \mbox{\hyperlink{classtiming}{timing}} \&)=delete
+\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtiming_a692446f24b88e08f46243324a5f85ff7}\label{classtiming_a692446f24b88e08f46243324a5f85ff7}} 
+static void {\bfseries init\+Singleton} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtiming_aa3ac445dda7e069d4df60be71fdabafe}\label{classtiming_aa3ac445dda7e069d4df60be71fdabafe}} 
+static \mbox{\hyperlink{classtiming}{timing}} $\ast$ {\bfseries instance} = nullptr
+\item 
+\mbox{\Hypertarget{classtiming_a227481b54d97006b91aa6bd1cb2eec65}\label{classtiming_a227481b54d97006b91aa6bd1cb2eec65}} 
+static std\+::once\+\_\+flag {\bfseries init\+Instance\+Flag}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 21 of file timing.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{timing_8h}{timing.\+h}}\item 
+timing.\+cpp\end{DoxyCompactItemize}

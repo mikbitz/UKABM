@@ -1,0 +1,106 @@
+\hypertarget{classasciiGrid}{}\section{ascii\+Grid Class Reference}
+\label{classasciiGrid}\index{ascii\+Grid@{ascii\+Grid}}
+
+
+Collaboration diagram for ascii\+Grid\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classasciiGrid__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classasciiGrid_af8550fe183b2826823cab513878dcc8d}\label{classasciiGrid_af8550fe183b2826823cab513878dcc8d}} 
+{\bfseries ascii\+Grid} (std\+::string)
+\item 
+\mbox{\Hypertarget{classasciiGrid_af009652a3b09761f42af9b6a9510aca7}\label{classasciiGrid_af009652a3b09761f42af9b6a9510aca7}} 
+void {\bfseries read\+File} (const std\+::string \&)
+\item 
+\mbox{\Hypertarget{classasciiGrid_a3f76f212cbd1eafd58da22623d49f44c}\label{classasciiGrid_a3f76f212cbd1eafd58da22623d49f44c}} 
+void {\bfseries read\+Data} (std\+::ifstream \&)
+\item 
+\mbox{\Hypertarget{classasciiGrid_aa8f140d48bc75fd0cb54c2e092ae81a6}\label{classasciiGrid_aa8f140d48bc75fd0cb54c2e092ae81a6}} 
+void {\bfseries read\+Header} (std\+::ifstream \&)
+\item 
+\mbox{\Hypertarget{classasciiGrid_a9d4130b7ef3a98f9ece49cdf03f63849}\label{classasciiGrid_a9d4130b7ef3a98f9ece49cdf03f63849}} 
+const std\+::vector$<$ std\+::string $>$ {\bfseries String\+To\+Words} (const std\+::string \&, const char) const
+\item 
+\mbox{\Hypertarget{classasciiGrid_ace6a959d265f1f6da26f1aaf5721efe5}\label{classasciiGrid_ace6a959d265f1f6da26f1aaf5721efe5}} 
+const std\+::vector$<$ double $>$ {\bfseries Line\+To\+Double} (const std\+::string \&, const char) const
+\item 
+\mbox{\Hypertarget{classasciiGrid_a0ec01a9678211fe765761a9c144a99f7}\label{classasciiGrid_a0ec01a9678211fe765761a9c144a99f7}} 
+double {\bfseries String\+To\+Double} (const std\+::string \&string) const
+\item 
+\mbox{\Hypertarget{classasciiGrid_aea0714b6499575ddadc02f5ab0a918c5}\label{classasciiGrid_aea0714b6499575ddadc02f5ab0a918c5}} 
+int {\bfseries String\+To\+Int} (const std\+::string \&string) const
+\item 
+\mbox{\Hypertarget{classasciiGrid_ac9d2e6796db7a7e0498965b4052e35db}\label{classasciiGrid_ac9d2e6796db7a7e0498965b4052e35db}} 
+\mbox{\hyperlink{classpoint2D}{point2D}} {\bfseries get\+Valid\+Point} (unsigned)
+\item 
+\mbox{\Hypertarget{classasciiGrid_a340a0d2b319b7d3870d600a11394dfb8}\label{classasciiGrid_a340a0d2b319b7d3870d600a11394dfb8}} 
+\mbox{\hyperlink{classpoint2D}{point2D}} {\bfseries get\+Valid\+Randomised\+Point} (unsigned)
+\item 
+\mbox{\Hypertarget{classasciiGrid_add163ffae683376f280c2213ff934bbb}\label{classasciiGrid_add163ffae683376f280c2213ff934bbb}} 
+double {\bfseries get\+Data\+At} (unsigned)
+\item 
+\mbox{\Hypertarget{classasciiGrid_a105a28e8ffea13d3028056d96fff635f}\label{classasciiGrid_a105a28e8ffea13d3028056d96fff635f}} 
+bool {\bfseries is\+Valid} (unsigned)
+\item 
+\mbox{\Hypertarget{classasciiGrid_ab8ed7fabf5543d2a67a91625d27fc09b}\label{classasciiGrid_ab8ed7fabf5543d2a67a91625d27fc09b}} 
+double {\bfseries x\+Origin} ()
+\item 
+\mbox{\Hypertarget{classasciiGrid_a11da6bbac5ded2d9ada9f135268bc6d2}\label{classasciiGrid_a11da6bbac5ded2d9ada9f135268bc6d2}} 
+double {\bfseries y\+Origin} ()
+\item 
+\mbox{\Hypertarget{classasciiGrid_a50fc35c27a953963fb5ce7e648b2362e}\label{classasciiGrid_a50fc35c27a953963fb5ce7e648b2362e}} 
+double {\bfseries x\+Size} ()
+\item 
+\mbox{\Hypertarget{classasciiGrid_a9959f994fa19b93fc7d2185ea162e979}\label{classasciiGrid_a9959f994fa19b93fc7d2185ea162e979}} 
+double {\bfseries y\+Size} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classasciiGrid_a061a3c19021ec5df0132375100106918}\label{classasciiGrid_a061a3c19021ec5df0132375100106918}} 
+std\+::vector$<$ unsigned $>$ {\bfseries \+\_\+index}
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classasciiGrid_a954aec05c9ed74b69460f98365d71d04}\label{classasciiGrid_a954aec05c9ed74b69460f98365d71d04}} 
+int {\bfseries \+\_\+ncols}
+\item 
+\mbox{\Hypertarget{classasciiGrid_ab97218c7133b2aafb78f87f3daa7b1bb}\label{classasciiGrid_ab97218c7133b2aafb78f87f3daa7b1bb}} 
+int {\bfseries \+\_\+nrows}
+\item 
+\mbox{\Hypertarget{classasciiGrid_a5aba0243eeede7d3f475ca4673a19091}\label{classasciiGrid_a5aba0243eeede7d3f475ca4673a19091}} 
+double {\bfseries \+\_\+xllcorner}
+\item 
+\mbox{\Hypertarget{classasciiGrid_a2915f11c96cd5a1fe8c76db4ffd8248e}\label{classasciiGrid_a2915f11c96cd5a1fe8c76db4ffd8248e}} 
+double {\bfseries \+\_\+yllcorner}
+\item 
+\mbox{\Hypertarget{classasciiGrid_a687ba652659479667ef3fc1d271d20d8}\label{classasciiGrid_a687ba652659479667ef3fc1d271d20d8}} 
+double {\bfseries \+\_\+cell\+Size}
+\item 
+\mbox{\Hypertarget{classasciiGrid_a49c1ae436ffa8cf9f2f8417fb3111b6d}\label{classasciiGrid_a49c1ae436ffa8cf9f2f8417fb3111b6d}} 
+double {\bfseries \+\_\+\+N\+O\+D\+A\+T\+A\+\_\+value}
+\item 
+\mbox{\Hypertarget{classasciiGrid_a1f782a61625fc19e25c469469f8e886e}\label{classasciiGrid_a1f782a61625fc19e25c469469f8e886e}} 
+std\+::vector$<$ std\+::vector$<$ double $>$ $>$ {\bfseries \+\_\+data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 10 of file ascii\+Grid.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+ascii\+Grid.\+h\item 
+ascii\+Grid.\+cpp\end{DoxyCompactItemize}

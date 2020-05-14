@@ -1,0 +1,66 @@
+\hypertarget{structtimeTable}{}\section{time\+Table Struct Reference}
+\label{structtimeTable}\index{time\+Table@{time\+Table}}
+
+
+Collaboration diagram for time\+Table\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=187pt]{structtimeTable__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structtimeTable_adfcfec62e9a80e6e4c1c3bea61f56b46}\label{structtimeTable_adfcfec62e9a80e6e4c1c3bea61f56b46}} 
+void {\bfseries add} (string s, unsigned e)
+\item 
+\mbox{\Hypertarget{structtimeTable_a56ad08bdfbfa3e9ed26150ad340cbcbd}\label{structtimeTable_a56ad08bdfbfa3e9ed26150ad340cbcbd}} 
+void {\bfseries change\+Event\+Time} (int i, int tick)
+\item 
+\mbox{\Hypertarget{structtimeTable_a10463383ade0b811376d5cfe3e3a52e1}\label{structtimeTable_a10463383ade0b811376d5cfe3e3a52e1}} 
+void {\bfseries change\+Event\+Time} (int i, string s)
+\item 
+\mbox{\Hypertarget{structtimeTable_ac2424fec4a3b8ed8d3d53a47cc75794c}\label{structtimeTable_ac2424fec4a3b8ed8d3d53a47cc75794c}} 
+void {\bfseries add\+Minutes\+To\+Event\+Time} (int i, int m)
+\item 
+\mbox{\Hypertarget{structtimeTable_ad440c828f6bd84b5de35a47d8b1fcc90}\label{structtimeTable_ad440c828f6bd84b5de35a47d8b1fcc90}} 
+void {\bfseries add\+Seconds\+To\+Event\+Time} (int i, int s)
+\item 
+\mbox{\Hypertarget{structtimeTable_a051a72dbd35fc2fe344ec45d32c8d143}\label{structtimeTable_a051a72dbd35fc2fe344ec45d32c8d143}} 
+\mbox{\hyperlink{structevent}{event}} \& {\bfseries get\+Current} ()
+\item 
+\mbox{\Hypertarget{structtimeTable_a952cb5000c669cfc61241f7abfade276}\label{structtimeTable_a952cb5000c669cfc61241f7abfade276}} 
+\mbox{\hyperlink{structevent}{event}} \& {\bfseries get\+Previous} ()
+\item 
+\mbox{\Hypertarget{structtimeTable_a5d435684eb3fd7ca8be8bc4becfbb3a5}\label{structtimeTable_a5d435684eb3fd7ca8be8bc4becfbb3a5}} 
+bool {\bfseries after} (ptime p, \mbox{\hyperlink{structevent}{event}} e)
+\item 
+\mbox{\Hypertarget{structtimeTable_aa82f1bfce0bf3d1cbc828a1c0776a35d}\label{structtimeTable_aa82f1bfce0bf3d1cbc828a1c0776a35d}} 
+bool {\bfseries update} ()
+\item 
+\mbox{\Hypertarget{structtimeTable_af6ff36f262be339c23c027d90f202ec1}\label{structtimeTable_af6ff36f262be339c23c027d90f202ec1}} 
+void {\bfseries bell} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structtimeTable_acf9d92d0c3b773312ee18e4df1c4ef24}\label{structtimeTable_acf9d92d0c3b773312ee18e4df1c4ef24}} 
+vector$<$ \mbox{\hyperlink{structevent}{event}} $>$ {\bfseries events}
+\item 
+\mbox{\Hypertarget{structtimeTable_a23a883cdef1355fe2b074ac738f432cf}\label{structtimeTable_a23a883cdef1355fe2b074ac738f432cf}} 
+int {\bfseries current}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 30 of file timetable.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+timetable.\+h\end{DoxyCompactItemize}

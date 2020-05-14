@@ -1,0 +1,39 @@
+\hypertarget{timing_8h}{}\section{timing.\+h File Reference}
+\label{timing_8h}\index{timing.\+h@{timing.\+h}}
+
+
+The time class header file.  
+
+
+{\ttfamily \#include \char`\"{}boost/date\+\_\+time/posix\+\_\+time/posix\+\_\+time.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}boost/date\+\_\+time/gregorian/gregorian.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$future$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+Include dependency graph for timing.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{timing_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{timing_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classtiming}{timing}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The time class header file. 
+
+This class abstracts the handling of time so that timesteps can be mapped to real time values such as hours and days. This is a singleton so the constructor cannot be called directly. The class uses the boost Date Time library to make calculation of times easy. The initial time\+Step provided by the input file is expected to be in seconds. 

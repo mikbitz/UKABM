@@ -26,7 +26,7 @@ class fancyWorldpopFactory:public agentFactory{
         while (newAgentExists> -1){
             if (newAgentExists==1){
                 agent* a=new agent();
-                //simple default work==home - these places are needed to initially put agents into the search Grid
+                //simple default work location==home location- these places are needed to initially put agents into the search Grid
                 a->knownLocations[places::getInstance()["home"]]=p.getNextLocation();
                 a->knownLocations[places::getInstance()["work"]]=a->knownLocations[places::getInstance()["home"]];
                 a->init();

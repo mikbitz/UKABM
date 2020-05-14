@@ -1,0 +1,76 @@
+\hypertarget{classreadcsv}{}\section{readcsv Class Reference}
+\label{classreadcsv}\index{readcsv@{readcsv}}
+
+
+Collaboration diagram for readcsv\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{classreadcsv__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classreadcsv_aa54ddf1101a8f8ab341fefd53bcfa800}\label{classreadcsv_aa54ddf1101a8f8ab341fefd53bcfa800}} 
+{\bfseries readcsv} (std\+::string, bool header=true, bool commented=true)
+\item 
+\mbox{\Hypertarget{classreadcsv_a1334e39bd41afbdd8a1d494d23c65a43}\label{classreadcsv_a1334e39bd41afbdd8a1d494d23c65a43}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (unsigned i)
+\item 
+\mbox{\Hypertarget{classreadcsv_a6ed1061ac00e32b2db88df7ffc8ce3ed}\label{classreadcsv_a6ed1061ac00e32b2db88df7ffc8ce3ed}} 
+void {\bfseries read\+File} (const std\+::string \&, bool)
+\item 
+\mbox{\Hypertarget{classreadcsv_a9296a02467fd317c09b72280cb34aff5}\label{classreadcsv_a9296a02467fd317c09b72280cb34aff5}} 
+void {\bfseries read\+Data} (std\+::ifstream \&)
+\item 
+\mbox{\Hypertarget{classreadcsv_a790283b0e5a8c927c6fc21c99bfc7db3}\label{classreadcsv_a790283b0e5a8c927c6fc21c99bfc7db3}} 
+void {\bfseries read\+Header} (std\+::ifstream \&)
+\item 
+\mbox{\Hypertarget{classreadcsv_a738276a30d4f0f01e70a62765ebab3c2}\label{classreadcsv_a738276a30d4f0f01e70a62765ebab3c2}} 
+std\+::vector$<$ std\+::string $>$ \& {\bfseries get\+Header} ()
+\item 
+\mbox{\Hypertarget{classreadcsv_af5a63a92698cf6a511d90e8fe66c1d85}\label{classreadcsv_af5a63a92698cf6a511d90e8fe66c1d85}} 
+unsigned {\bfseries nrows} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classreadcsv_a9d68415134bb866f2162a6f993d5aae2}\label{classreadcsv_a9d68415134bb866f2162a6f993d5aae2}} 
+const std\+::vector$<$ std\+::string $>$ {\bfseries String\+To\+Words} (const std\+::string \&, const char) const
+\item 
+\mbox{\Hypertarget{classreadcsv_af74454e2364f534458e58767bd2074e3}\label{classreadcsv_af74454e2364f534458e58767bd2074e3}} 
+const std\+::vector$<$ double $>$ {\bfseries Line\+To\+Double} (const std\+::string \&, const char) const
+\item 
+\mbox{\Hypertarget{classreadcsv_a7e904a604d14230497bd13c479ebffd8}\label{classreadcsv_a7e904a604d14230497bd13c479ebffd8}} 
+double {\bfseries String\+To\+Double} (const std\+::string \&string) const
+\item 
+\mbox{\Hypertarget{classreadcsv_a2332d4c46f12bfb30cf4302019eccf24}\label{classreadcsv_a2332d4c46f12bfb30cf4302019eccf24}} 
+int {\bfseries String\+To\+Int} (const std\+::string \&string) const
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classreadcsv_a17c06fc645f0057e92fa3c0d55a58756}\label{classreadcsv_a17c06fc645f0057e92fa3c0d55a58756}} 
+std\+::vector$<$ std\+::vector$<$ std\+::string $>$ $>$ {\bfseries \+\_\+data}
+\item 
+\mbox{\Hypertarget{classreadcsv_ab1eb6eeb66768505281335774feca2c1}\label{classreadcsv_ab1eb6eeb66768505281335774feca2c1}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries \+\_\+header}
+\item 
+\mbox{\Hypertarget{classreadcsv_ac2d3cd159870efc5c92ef977d32399f9}\label{classreadcsv_ac2d3cd159870efc5c92ef977d32399f9}} 
+char {\bfseries \+\_\+comment\+Character}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 12 of file readcsv.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+readcsv.\+h\item 
+readcsv.\+cpp\end{DoxyCompactItemize}

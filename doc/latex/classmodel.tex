@@ -1,0 +1,146 @@
+\hypertarget{classmodel}{}\section{model Class Reference}
+\label{classmodel}\index{model@{model}}
+
+
+The model holds the agents in a vector and drives their updates.  
+
+
+
+
+{\ttfamily \#include $<$model.\+h$>$}
+
+
+
+Collaboration diagram for model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmodel__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmodel_abd493c0d266874a1913cccc99918ac62}\label{classmodel_abd493c0d266874a1913cccc99918ac62}} 
+void {\bfseries init} ()
+\item 
+\mbox{\Hypertarget{classmodel_a7fc3b1ce57ed26472e3bfbe10a655659}\label{classmodel_a7fc3b1ce57ed26472e3bfbe10a655659}} 
+bool {\bfseries update} ()
+\item 
+\mbox{\Hypertarget{classmodel_a477cd70af36d7f510e98d26fb9f25c07}\label{classmodel_a477cd70af36d7f510e98d26fb9f25c07}} 
+void {\bfseries run\+One\+Step} ()
+\item 
+\mbox{\Hypertarget{classmodel_a01ccb636491164b70ec3c015e12de80d}\label{classmodel_a01ccb636491164b70ec3c015e12de80d}} 
+void {\bfseries run} ()
+\item 
+\mbox{\Hypertarget{classmodel_abae5132b97a5b93af153ae0756813200}\label{classmodel_abae5132b97a5b93af153ae0756813200}} 
+void {\bfseries run\+Up\+To} (long n)
+\item 
+\mbox{\Hypertarget{classmodel_a8f54f46930b3b3af375c0cdd1abfcbba}\label{classmodel_a8f54f46930b3b3af375c0cdd1abfcbba}} 
+std\+::string {\bfseries filepath} ()
+\item 
+\mbox{\Hypertarget{classmodel_a674f58eb59ee2fd722291879557b5343}\label{classmodel_a674f58eb59ee2fd722291879557b5343}} 
+void {\bfseries add} (\mbox{\hyperlink{classlayer}{layer}} $\ast$l)
+\item 
+\mbox{\Hypertarget{classmodel_a1cf467caa1e2e1cd36ce6b609d74a703}\label{classmodel_a1cf467caa1e2e1cd36ce6b609d74a703}} 
+\mbox{\hyperlink{classlayer}{layer}} $\ast$ {\bfseries get\+Layer} (unsigned)
+\item 
+\mbox{\Hypertarget{classmodel_aa778b767859473ccb2b2d3268bc23d23}\label{classmodel_aa778b767859473ccb2b2d3268bc23d23}} 
+void {\bfseries finish} ()
+\item 
+\mbox{\Hypertarget{classmodel_a24fd9c8535250831cd798d9594e1a072}\label{classmodel_a24fd9c8535250831cd798d9594e1a072}} 
+double {\bfseries get\+Size} ()
+\item 
+\mbox{\Hypertarget{classmodel_a6895d06ffc6a5447836b0ca84f544a33}\label{classmodel_a6895d06ffc6a5447836b0ca84f544a33}} 
+string {\bfseries get\+Text} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmodel_a89a557ca7e1fe3ad432092b29a87b459}\label{classmodel_a89a557ca7e1fe3ad432092b29a87b459}} 
+static \mbox{\hyperlink{classmodel}{model}} \& {\bfseries get\+Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmodel_a98fc532cc6ca8ec05f9ca7885f8310a6}\label{classmodel_a98fc532cc6ca8ec05f9ca7885f8310a6}} 
+unsigned {\bfseries tick}
+\item 
+\mbox{\Hypertarget{classmodel_acea5467698b2a0bf754cb2680e292959}\label{classmodel_acea5467698b2a0bf754cb2680e292959}} 
+float {\bfseries dt}
+\item 
+\mbox{\Hypertarget{classmodel_ae2282007872b337492343762def0693c}\label{classmodel_ae2282007872b337492343762def0693c}} 
+\mbox{\hyperlink{classsearchGrid}{search\+Grid}} {\bfseries g}
+\item 
+\mbox{\Hypertarget{classmodel_a72a2d5ccc0f9248e52e5baada92f3c65}\label{classmodel_a72a2d5ccc0f9248e52e5baada92f3c65}} 
+vector$<$ \mbox{\hyperlink{classagent}{agent}} $\ast$ $>$ $\ast$ {\bfseries agent\+List}
+\item 
+\mbox{\Hypertarget{classmodel_a83b015b77324bc70fb2a74ef90885291}\label{classmodel_a83b015b77324bc70fb2a74ef90885291}} 
+\mbox{\hyperlink{classrandomizer}{randomizer}} {\bfseries random}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmodel_aa82375be2bd53080d3a5e3fcfa0df30c}\label{classmodel_aa82375be2bd53080d3a5e3fcfa0df30c}} 
+void {\bfseries clean} ()
+\item 
+\mbox{\Hypertarget{classmodel_af6e1bf4eb735c76eb9f77a10b0a64ff8}\label{classmodel_af6e1bf4eb735c76eb9f77a10b0a64ff8}} 
+void {\bfseries set\+Output\+File\+Paths} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmodel_ac3dcc51c9ff2eecdd10793629206b65d}\label{classmodel_ac3dcc51c9ff2eecdd10793629206b65d}} 
+vector$<$ \mbox{\hyperlink{classlayer}{layer}} $\ast$ $>$ {\bfseries layers}
+\item 
+\mbox{\Hypertarget{classmodel_a742b5b77848d0dbdc032e1a51274ba08}\label{classmodel_a742b5b77848d0dbdc032e1a51274ba08}} 
+\mbox{\hyperlink{classconfiguration}{configuration}} $\ast$ {\bfseries c}
+\item 
+\mbox{\Hypertarget{classmodel_a3791961971c5e979086eadc7127e7c78}\label{classmodel_a3791961971c5e979086eadc7127e7c78}} 
+string {\bfseries text}
+\item 
+\mbox{\Hypertarget{classmodel_a8eae0977871b806881319ff8091f5389}\label{classmodel_a8eae0977871b806881319ff8091f5389}} 
+\mbox{\hyperlink{classoutputs}{outputs}} $\ast$ {\bfseries files}
+\item 
+\mbox{\Hypertarget{classmodel_a361a901c3aa70774e254457065ebeb0e}\label{classmodel_a361a901c3aa70774e254457065ebeb0e}} 
+std\+::string {\bfseries \+\_\+file\+Prefix}
+\item 
+\mbox{\Hypertarget{classmodel_ae5e7e93a6aeb1584eda754f91b1cdd4e}\label{classmodel_ae5e7e93a6aeb1584eda754f91b1cdd4e}} 
+std\+::string {\bfseries \+\_\+file\+Postfix}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmodel_a486d4ee9311769407729f640fe3f42b4}\label{classmodel_a486d4ee9311769407729f640fe3f42b4}} 
+static \mbox{\hyperlink{classmodel}{model}} $\ast$ {\bfseries instance} =N\+U\+LL
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The model holds the agents in a vector and drives their updates. 
+
+This class is a singleton (see e.\+g Shalloway and Trott \char`\"{}\+Design Patterns Explained\char`\"{}) -\/ only one instance of the class can be created on any thread. The class has a protected constructor so that no instance can be created directly -\/ instead the static function get\+Instance() must be used. The first time get\+Instance() is called, the class constructor is used to generate the required data -\/ thereafter the constructor is not called again, and get\+Instance returns a pointer to the pre-\/existing instance. This means get\+Instance() can be called anywhere within the code and it will return the same environmental information~\newline
+The init funtion should be called after first creation of the singleton for those items that depend on a fully completed singleton for their existence e.\+g. the configuration class, which calls model\+::add(layer$\ast$) usage example\+:-\/~\newline
+
+\begin{DoxyCode}
+\mbox{\hyperlink{classmodel}{model}}* m=model::getInstance();
+m->init();
+\textcolor{comment}{//advance to the next state}
+m->update();
+\end{DoxyCode}
+
+
+\begin{DoxyAuthor}{Author}
+Mike Bithell \href{mailto:mb425@cam.ac.uk}{\tt mb425@cam.\+ac.\+uk} 
+\end{DoxyAuthor}
+
+
+Definition at line 59 of file model.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{model_8h}{model.\+h}}\item 
+\mbox{\hyperlink{model_8cpp}{model.\+cpp}}\end{DoxyCompactItemize}

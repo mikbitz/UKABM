@@ -16,12 +16,12 @@ private:
     enum educationTypes{preschool,primary,secondary,uppersecondary,higher,postgrad};//coudl also include "further"
     educationTypes _educationStatus;
 public:
-    map<places::placeE,point2D> knownLocations;
-    places::placeE oldPlace,newPlace;
+    map<unsigned,point2D> knownLocations;
+    unsigned oldPlace,newPlace;
     path currentPath;
     unsigned pathState;
     pathSet _pathSet;
-    point2D dest,loc,vel;
+    point2D loc,dest,vel;
     float size;
     double _age;
     char _sex;
@@ -33,6 +33,7 @@ public:
 
     timeTable tTable;
     bool _inHospital,_critical,_died;
+    /**/
     unsigned numberInfected;
     map<string,disease>_diseases;
     void updateInfections();
@@ -56,10 +57,10 @@ public:
     void preUpdate();
     void update();
     void applyUpdate();
-    void setDest(places::placeE e);
+    void setDest(unsigned);
     void addProcess(process* p);
     void setJobType(const unsigned&);
-    void setWork(place*);
+    void setWorkPlace(place*);
     void setWorkStatus(const std::string&);
     void setEducationStatus(const std::string&);
     void setAge(double);

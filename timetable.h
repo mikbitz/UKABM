@@ -7,12 +7,12 @@ struct event{
   unsigned tick;
   ptime endTime;
   string initialDate;
-  places::placeE place;
-  event(string s,places::placeE p){
+  unsigned place;
+  event(string s,unsigned p){
         parameters& pu=parameters::getInstance();
         place=p;initialDate=pu.initialDate;setEndTime(s);
   }
-  event(ptime t,places::placeE p){
+  event(ptime t,unsigned p){
         endTime=t;place=p;
   }
   event(const event& e){
@@ -34,12 +34,12 @@ struct timeTable{
     //home ->work->home
 //-----------------------------------------------------------------------------------------------------------------
   timeTable(){
-      add("08:49:50", places::home);  //time at which being at home ends
-      add("18:49:50", places::work);  //end of time at work                 
+      add("08:49:50", places::getInstance()["home"]);  //time at which being at home ends
+      add("18:49:50", places::getInstance()["work"]);  //end of time at work                 
       current=0;
   }
 //-----------------------------------------------------------------------------------------------------------------
-  void add(string s,places::placeE e)   {events.push_back(event(s,e));}
+  void add(string s,unsigned e)   {events.push_back(event(s,e));}
   //void add(string s,places::place e){events.push_back(event(s,e));}
 //-----------------------------------------------------------------------------------------------------------------
   void changeEventTime(int i, int tick){events[i].tick=tick;}

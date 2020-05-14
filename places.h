@@ -40,8 +40,7 @@ protected:
 public:
     static places& getInstance();
     unsigned operator[](std::string);
-    enum placeE{home,work};
-    void getLocations(std::map<places::placeE, point2D>& locations);
+    //enum placeE{home,work};
     void init();
     bool update();
     static places* instance;

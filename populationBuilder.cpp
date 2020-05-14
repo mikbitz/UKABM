@@ -171,7 +171,7 @@
                                     if (possibleWorkPlaces.size()>0){
                                         number--;
                                         unsigned k=possibleWorkPlaces.size()-1;//choose k to start from largest distance (should be closest to attempted commute distance)
-                                        a->setWork(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken -currently places take any number!
+                                        a->setWorkPlace(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken -currently places take any number!
                                         possibleWorkPlaces[k]->incrementWorkForce();
                                         a->setJobType(jt);
                                     }

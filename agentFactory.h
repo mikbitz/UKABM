@@ -27,8 +27,8 @@ class fancyWorldpopFactory:public agentFactory{
             if (newAgentExists==1){
                 agent* a=new agent();
                 //simple default work==home - these places are needed to initially put agents into the search Grid
-                a->knownLocations[places::home]=p.getNextLocation();
-                a->knownLocations[places::work]=a->knownLocations[places::home];
+                a->knownLocations[places::getInstance()["home"]]=p.getNextLocation();
+                a->knownLocations[places::getInstance()["work"]]=a->knownLocations[places::getInstance()["home"]];
                 a->init();
                 model::getInstance().g.add(a);
                 agents.push_back(a);
@@ -60,7 +60,7 @@ class simpleWorldpopFactory:public agentFactory{
                 agent* a=new agent();
                 //simple uniform age distrubtion
                 if (model::getInstance().random.number()<0.5)a->setSex('m');//defaults to f
-                a->knownLocations[places::home]=p.getNextLocation();
+                a->knownLocations[places::getInstance()["home"]]=p.getNextLocation();
                 a->setAge(model::getInstance().random.number()*80);
                 //distance travelled distributed approximately like 1./x^2 for x>=1;
                 //distances between 1km and 100km
@@ -69,7 +69,7 @@ class simpleWorldpopFactory:public agentFactory{
                 //random direction from home to work
                 double dcc=d*cos(2*pi*model::getInstance().random.number());
                 double dcs=d*sin(2*pi*model::getInstance().random.number());
-                a->knownLocations[places::work]=a->knownLocations[places::home]+point2D(dcc,dcs);
+                a->knownLocations[places::getInstance()["work"]]=a->knownLocations[places::getInstance()["home"]]+point2D(dcc,dcs);
                 a->init();
 
                 model::getInstance().g.add(a);
@@ -93,8 +93,8 @@ class simpleRandomFactory:public agentFactory{
         for (int i=0;i<parameters::getInstance().numberOfAgents;i++){
             agent* a=new agent();
             a->setAge(model::getInstance().random.number()*80);
-            a->knownLocations[places::home]=model::getInstance().g.getRandomPoint();
-            a->knownLocations[places::work]=model::getInstance().g.getRandomPoint();
+            a->knownLocations[places::getInstance()["home"]]=model::getInstance().g.getRandomPoint();
+            a->knownLocations[places::getInstance()["work"]]=model::getInstance().g.getRandomPoint();
             a->init();
             if (model::getInstance().random.number()<0.5)a->setSex('m');//defaults to f
             model::getInstance().g.add(a);

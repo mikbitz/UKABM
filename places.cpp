@@ -45,11 +45,4 @@ unsigned places::unknownType=std::numeric_limits<unsigned>::max();
 //------------------------------------------------------------------------------------------------------------------------
     bool places::update(){return false;}
 //------------------------------------------------------------------------------------------------------------------------
-
-    void places::getLocations(std::map<placeE, point2D>& locations){
-        locations[home]=model::getInstance().g.getRandomPoint();
-        locations[work]=model::getInstance().g.getRandomPoint();
-    }
-//------------------------------------------------------------------------------------------------------------------------
-
     void places::printWorkForceSizes(){for (auto p:_allPlaces)std::cout<<p->workForceSize()<<std::endl;}

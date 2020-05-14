@@ -2,17 +2,18 @@
 #define PATHS_H
 #include "places.h"
 struct path{
-    vector<places::placeE> steps;
+    vector<unsigned> steps;
     unsigned state;
     path(){state=0;}
-    void addStep(places::placeE p){steps.push_back(p);}
-    places::placeE getStep(unsigned i){return steps[i];}
     bool moreSteps(unsigned i){return i<steps.size();}
+    void addStep(unsigned p){steps.push_back(p);}
+    unsigned getStep(unsigned i){return steps[i];}
+
     
 };
 
 struct pathSet{
-    map<places::placeE, map<places::placeE, path> > paths;
+    map<unsigned,map<unsigned,path>>paths;//indexed with the placeType that this map leads from and to 
     pathSet(){
         
     }
@@ -21,16 +22,16 @@ struct pathSet{
         workToHome();
     }
     void homeToWork(){
-        path p1;
-        p1.addStep(places::home);
-        p1.addStep(places::work);
-        paths[places::home][places::work]=p1;
+        path phw;
+        phw.addStep(places::getInstance()["home"]);
+        phw.addStep(places::getInstance()["work"]);
+        paths[places::getInstance()["home"]][places::getInstance()["work"]]=phw;
     }
     void workToHome(){
-        path p1;
-        p1.addStep(places::work);
-        p1.addStep(places::home);
-        paths[places::work][places::home]=p1;
+        path pwh;
+        pwh.addStep(places::getInstance()["work"]);
+        pwh.addStep(places::getInstance()["home"]);
+        paths[places::getInstance()["work"]][places::getInstance()["home"]]=pwh;
     }
 
 };

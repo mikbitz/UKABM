@@ -17,9 +17,8 @@ void agent::init(){
     size=1.;
     //places::getInstance()->getLocations(knownLocations);
     
-    loc =knownLocations[places::home];oldPlace=places::home;
-    dest=knownLocations[places::home];newPlace=places::home;
-    
+    loc =knownLocations[places::getInstance()["home"]];oldPlace=places::getInstance()["home"];
+    dest=knownLocations[places::getInstance()["home"]];newPlace=places::getInstance()["home"];
     _pathSet.setKnownPaths();
     
 }
@@ -32,7 +31,7 @@ void agent::setSex(const char& s){
     _sex=s;
 }
 //-----------------------------------------------------------------------------------------------------------------
-void agent::setWork(place* p){
+void agent::setWorkPlace(place* p){
     _workPlace=p;
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -155,14 +154,14 @@ void agent::infectWith(std::string name){
     _diseases[name]=disease(name);_diseases[name].infect();
 }
 //-----------------------------------------------------------------------------------------------------------------
-void agent::setDest(places::placeE e){
+void agent::setDest(unsigned e){
     //cout<<"set Dest "<<newPlace<<" "<< oldPlace<<" "<<e<<endl;
     oldPlace=newPlace;
     newPlace=e;
     assert(oldPlace != newPlace);
     currentPath=_pathSet.paths[oldPlace][newPlace];
     pathState=1;
-    dest=knownLocations[currentPath.getStep(pathState)]; 
+    dest=knownLocations[currentPath.getStep(pathState)];
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::addProcess(process* p){

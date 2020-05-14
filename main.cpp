@@ -7,7 +7,7 @@
 
  int main(int argc, char *argv[])
  {
-     cout<<"Model vesion -1.0"<<endl;
+     cout<<"Model version -0.9"<<endl;
      cout<<"Run started at: "<<boost::posix_time::second_clock::local_time()<<endl;
 
     if (argc ==1){
@@ -27,3 +27,14 @@
      m.finish();
     cout<<"Run finished at: "<<boost::posix_time::second_clock::local_time()<<endl;
  }
+/**
+ * @mainpage
+ * 
+ * This model is aimed at representing the patterns of movement and interaction of agents that represent individual people as they go about their daily activities.
+ * 
+ * The current objective is to be able to model the COVID-19 outbreak of 2020, and to tie this to agent behaviour at the scale of an entire country.
+ * 
+ * @section intro_sec Introduction
+ * @subsection Main Main ideas
+ * @subsection Run Running the model
+ **/

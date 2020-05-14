@@ -15,6 +15,7 @@ public:
     void setType(unsigned t){_type=t;}
     void setLocation(point2D p){loc=p;}
     void setLocation(double x, double y){loc=point2D(x,y);}
+    point2D getLocation(){return loc;}
     void incrementWorkForce(){_workForceSize++;}
     unsigned placeType(){
         return _type;

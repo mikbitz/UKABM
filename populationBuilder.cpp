@@ -110,7 +110,7 @@
     void populationBuilder::retired(agent* a){
         if ((a->age()>60 && a->sex()=='f') || (a->age()>65)){
             _workingPop--;
-            a->setWorkStatus("retired");//workstatus defaults to unemployed
+            a->setWorkStatus("retired");//workstatus defaults to unemployed - unemployed and retired currently have work set to same as home.
         }
         //set agent to retired, workplace=home
         if (a->age()>80);//in care (random?) home and work to carehome
@@ -124,7 +124,7 @@
     void populationBuilder::university(agent* a){
         if (a->age()>=18 && model::getInstance().random.number() < 0.3){
             _workingPop--;
-            a->setWorkStatus("ineducation");
+            a->setWorkStatus("ineducation");//schools and universities currently are all "at home"! need a way to set these.
             a->setEducationStatus("higher");
         }//in unversity
     }
@@ -162,18 +162,27 @@
                         double fraction=std::stod(jobTypes[jt][p]);
                         if (fraction>0){
                             unsigned number=_workingPop*fraction;
-                            //cout<<jobTypes[jt][0]<<endl;
+                            cout<<jobTypes[jt][0]<<endl;
                             for (auto a:agents){
                                 if (number>0 && a->worker() && !a->hasWork()){//number counts for this jobtype and placetype
                                     double d=commuteDistance();
-                                    auto possibleWorkPlaces=model::getInstance().g.inRadius(a,placeType,d);//gridded places give locations
-                                    //returned places are ordered by distance, closest first - what if none found?
-                                    if (possibleWorkPlaces.size()>0){
-                                        number--;
-                                        unsigned k=possibleWorkPlaces.size()-1;//choose k to start from largest distance (should be closest to attempted commute distance)
-                                        a->setWorkPlace(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken -currently places take any number!
-                                        possibleWorkPlaces[k]->incrementWorkForce();
+                                    if (jobTypes[jt][0] !="generic"){
+                                        auto possibleWorkPlaces=model::getInstance().g.inRadius(a,placeType,d);//gridded places give locations
+                                        //returned places are ordered by distance, closest first - what if none found?
+                                        if (possibleWorkPlaces.size()>0){
+                                            number--;
+                                            unsigned k=possibleWorkPlaces.size()-1;//choose k to start from largest distance (should be closest to attempted commute distance)
+                                            a->setWorkPlace(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken -currently places take any number!
+                                            possibleWorkPlaces[k]->incrementWorkForce();
+                                            a->setJobType(jt);
+                                        }
+                                    }else{
                                         a->setJobType(jt);
+                                        double pi=acos(-1.);
+                                        //random direction from home to work
+                                        double dcc=d*cos(2*pi*model::getInstance().random.number());
+                                        double dcs=d*sin(2*pi*model::getInstance().random.number());
+                                        a->knownLocations[places::getInstance()["work"]]=a->knownLocations[places::getInstance()["home"]]+point2D(dcc,dcs);
                                     }
                                 }
                             }
@@ -183,8 +192,7 @@
                 }
             }
         }
-        places::getInstance().printWorkForceSizes();
-        exit(0);
+        //places::getInstance().printWorkForceSizes();
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::findFriends(agent* a){

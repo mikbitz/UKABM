@@ -14,8 +14,7 @@
         if (owner->pathState==1)vdesired=vwalk;
         float sz=sqrt(xdel*xdel+ydel*ydel);
         if (sz>1.e-7){xdel=xdel/sz;ydel=ydel/sz;}else{xdel=0;ydel=0;}
-        //are we close enough to the current target? this can cause a problem if crowding near the target
-        //means agents can't reach it. Also we need to take account of the distance moved in a timestep.
+        //are we close enough to the current target?  Also we need to take account of the distance moved in a timestep.
 //         if (sz<owner->size/2+dt*sqrt(owner->vel.x*owner->vel.x + owner->vel.y*owner->vel.y)){
 //             owner->pathState++;
 //             if (owner->currentPath.moreSteps(owner->pathState)){

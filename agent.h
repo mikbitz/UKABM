@@ -31,20 +31,34 @@ public:
     float _size;
     double _age;
     char _sex;
-    map<agent*,agent*> children;
-    map<agent*,agent*> friends;
+    vector<agent*> children;
+    vector<agent*> friends;
     agent* mother,*father;
     agent* partner;
 
 
     timeTable tTable;
-    bool _inHospital,_critical,_died;
+    /**
+     * @brief Set to true if the agent is currently in hospital
+     * 
+     */
+    bool _inHospital;
+    /**
+     * @brief Set to true if the agent is in hospital and in critical care
+     * 
+     */
+    bool _critical;
+    /**
+     * @brief Set to true if the agent has died (for any reason...)
+     * 
+     */
+    bool _died;
 
     /**
      * @brief Accumulates the number of other agents infected by this agent
      * 
      * Currently this is not distinguished by disease so really only works if there is just a single disease 
-     * 
+     * @todo change to a version that can accumlate infections by named disease (NB this value is used in model.cpp to find R0)
      */
     unsigned numberInfected;
     /**

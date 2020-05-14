@@ -14,7 +14,7 @@ agent::agent(){
 //-----------------------------------------------------------------------------------------------------------------
 void agent::init(){
     
-    size=1.;
+    _size=1.;
     //places::getInstance()->getLocations(knownLocations);
     
     loc =knownLocations[places::getInstance()["home"]];oldPlace=places::getInstance()["home"];
@@ -33,6 +33,7 @@ void agent::setSex(const char& s){
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setWorkPlace(place* p){
     _workPlace=p;
+    knownLocations[places::getInstance()["work"]]=p->getLocation();
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setJobType(const unsigned& j ){

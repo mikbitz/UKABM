@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['numberinfected',['numberInfected',['../classagent.html#a4145c90d534f84deb22a93560809134c',1,'agent']]]
+  ['instance',['instance',['../classplaces.html#acac17c038967becf0ccaffbcc88e35fa',1,'places']]]
 ];

@@ -2,8 +2,16 @@
 \label{classplaces}\index{places@{places}}
 
 
-Collaboration diagram for places\+:
-\nopagebreak
+Places stores the place type index and a list of instantiated places.  
+
+
+
+
+{\ttfamily \#include $<$places.\+h$>$}
+
+
+
+Collaboration diagram for places\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,51 +21,185 @@ Collaboration diagram for places\+:
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classplaces_a18b24350e2ad05ef273df442b6d22593}\label{classplaces_a18b24350e2ad05ef273df442b6d22593}} 
-unsigned {\bfseries operator\mbox{[}$\,$\mbox{]}} (std\+::string)
-\item 
-\mbox{\Hypertarget{classplaces_ad126c2796c4fecad43f8e237ffde786d}\label{classplaces_ad126c2796c4fecad43f8e237ffde786d}} 
-void {\bfseries init} ()
-\item 
-\mbox{\Hypertarget{classplaces_a5ff3d2cd02c18f353ab15dd86f52e7be}\label{classplaces_a5ff3d2cd02c18f353ab15dd86f52e7be}} 
-bool {\bfseries update} ()
-\item 
+unsigned \mbox{\hyperlink{classplaces_a18b24350e2ad05ef273df442b6d22593}{operator\mbox{[}$\,$\mbox{]}}} (std\+::string)
+\begin{DoxyCompactList}\small\item\em Return the type index index for a named place. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classplaces_ad126c2796c4fecad43f8e237ffde786d}{init}} ()
+\begin{DoxyCompactList}\small\item\em Set up the index of place types and read in actual places. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classplaces_a5ff3d2cd02c18f353ab15dd86f52e7be}{update}} ()
+\begin{DoxyCompactList}\small\item\em Stub provided in case at some point the data in places becomes dynamic and needs its own updates. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classplaces_acd22734e55333fc53f937251f7f2ba4f}\label{classplaces_acd22734e55333fc53f937251f7f2ba4f}} 
-void {\bfseries print\+Work\+Force\+Sizes} ()
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{classplaces_acd22734e55333fc53f937251f7f2ba4f}{print\+Work\+Force\+Sizes}} ()
+\begin{DoxyCompactList}\small\item\em Function to report how many people are currently working in the list of all places. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classplaces_acb5dbcd8606a8a1ffbebc9fb5a3c8a5e}\label{classplaces_acb5dbcd8606a8a1ffbebc9fb5a3c8a5e}} 
-static \mbox{\hyperlink{classplaces}{places}} \& {\bfseries get\+Instance} ()
-\end{DoxyCompactItemize}
-\subsection*{Public Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{classplaces_a7d5529185ae4635d2e2048b4ae475c12}\label{classplaces_a7d5529185ae4635d2e2048b4ae475c12}} 
-std\+::map$<$ std\+::string, unsigned $>$ {\bfseries \+\_\+place\+Types}
-\end{DoxyCompactItemize}
+static \mbox{\hyperlink{classplaces}{places}} \& \mbox{\hyperlink{classplaces_acb5dbcd8606a8a1ffbebc9fb5a3c8a5e}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Get a reference to the place class. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classplaces_acac17c038967becf0ccaffbcc88e35fa}\label{classplaces_acac17c038967becf0ccaffbcc88e35fa}} 
-static \mbox{\hyperlink{classplaces}{places}} $\ast$ {\bfseries instance}
+static \mbox{\hyperlink{classplaces}{places}} $\ast$ \mbox{\hyperlink{classplaces_acac17c038967becf0ccaffbcc88e35fa}{instance}}
+\begin{DoxyCompactList}\small\item\em The pointer that stores the instance of places. \end{DoxyCompactList}\item 
+static unsigned \mbox{\hyperlink{classplaces_ab03feda32ddd4784c17de8b2185b3563}{unknown\+Type}} =std\+::numeric\+\_\+limits$<$unsigned$>$\+::max()
+\begin{DoxyCompactList}\small\item\em Returned if there is no know place of this type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classplaces_ab03feda32ddd4784c17de8b2185b3563}\label{classplaces_ab03feda32ddd4784c17de8b2185b3563}} 
-static unsigned {\bfseries unknown\+Type} =std\+::numeric\+\_\+limits$<$unsigned$>$\+::max()
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classplaces_a1c4116c838392a6d35169126334f3f61}{places}} ()
+\begin{DoxyCompactList}\small\item\em Private constructor can only be called by the class itself. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classplaces_a2cb6b12513a2245fd06b567490229d89}\label{classplaces_a2cb6b12513a2245fd06b567490229d89}} 
-std\+::vector$<$ \mbox{\hyperlink{classplace}{place}} $\ast$ $>$ {\bfseries \+\_\+all\+Places}
-\end{DoxyCompactItemize}
+std\+::vector$<$ \mbox{\hyperlink{classplace}{place}} $\ast$ $>$ \mbox{\hyperlink{classplaces_a2cb6b12513a2245fd06b567490229d89}{\+\_\+all\+Places}}
+\begin{DoxyCompactList}\small\item\em A vector of pointers to all the places currently defined in the model. \end{DoxyCompactList}\item 
+std\+::map$<$ std\+::string, unsigned $>$ \mbox{\hyperlink{classplaces_a7d5529185ae4635d2e2048b4ae475c12}{\+\_\+place\+Types}}
+\begin{DoxyCompactList}\small\item\em The index of place types. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+Places stores the place type index and a list of instantiated places. 
+
+There are two main data stuctures here\+: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position. Secondly there is an index that maps from strings to unsigned integers, so that places can be given an integer type. E.\+g. the string \char`\"{}hospital\char`\"{} might map to integer 0. These indices are set up in \mbox{\hyperlink{classplaces_ad126c2796c4fecad43f8e237ffde786d}{init()}} according to the order place types are listed in the csv file pointed at by parameters place\+Type\+File, This avoids having to store strings in other parts of the model\+: for example, the \mbox{\hyperlink{classsearchGrid}{search\+Grid}} stores places in each cell indexed by type. 
+
+Definition at line 53 of file places.\+h.
 
 
-Definition at line 36 of file places.\+h.
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classplaces_a1c4116c838392a6d35169126334f3f61}\label{classplaces_a1c4116c838392a6d35169126334f3f61}} 
+\index{places@{places}!places@{places}}
+\index{places@{places}!places@{places}}
+\subsubsection{\texorpdfstring{places()}{places()}}
+{\footnotesize\ttfamily places\+::places (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Private constructor can only be called by the class itself. 
+
+Since this is singleton the contructor should only ever be called once. 
+
+Definition at line 10 of file places.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classplaces_acb5dbcd8606a8a1ffbebc9fb5a3c8a5e}\label{classplaces_acb5dbcd8606a8a1ffbebc9fb5a3c8a5e}} 
+\index{places@{places}!get\+Instance@{get\+Instance}}
+\index{get\+Instance@{get\+Instance}!places@{places}}
+\subsubsection{\texorpdfstring{get\+Instance()}{getInstance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classplaces}{places}} \& places\+::get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get a reference to the place class. 
+
+\begin{DoxyReturn}{Returns}
+places\& 
+\end{DoxyReturn}
+
+
+Definition at line 14 of file places.\+cpp.
+
+\mbox{\Hypertarget{classplaces_ad126c2796c4fecad43f8e237ffde786d}\label{classplaces_ad126c2796c4fecad43f8e237ffde786d}} 
+\index{places@{places}!init@{init}}
+\index{init@{init}!places@{places}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void places\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Set up the index of place types and read in actual places. 
+
+Caution with this function! Places are inserted into the \mbox{\hyperlink{classsearchGrid}{search\+Grid}} model\+::g so that they can be found by spatial searches. If at any point the grid is re-\/sized, then this data may become invalid. Important therefore to make sure this function is called {\itshape after} any grid re-\/sizing (which should in any case only happen during model initialisation) 
+
+Definition at line 26 of file places.\+cpp.
+
+\mbox{\Hypertarget{classplaces_a18b24350e2ad05ef273df442b6d22593}\label{classplaces_a18b24350e2ad05ef273df442b6d22593}} 
+\index{places@{places}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!places@{places}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily unsigned places\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{std\+::string}]{s }\end{DoxyParamCaption})}
+
+
+
+Return the type index index for a named place. 
+
+If a string is given as an argument, and there is no corresponding key then \mbox{\hyperlink{classplaces_ab03feda32ddd4784c17de8b2185b3563}{places\+::unknown\+Type}} is returned
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & A string giving the name of the type of place \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+unsigned int 
+\end{DoxyReturn}
+
+
+Definition at line 21 of file places.\+cpp.
+
+\mbox{\Hypertarget{classplaces_a5ff3d2cd02c18f353ab15dd86f52e7be}\label{classplaces_a5ff3d2cd02c18f353ab15dd86f52e7be}} 
+\index{places@{places}!update@{update}}
+\index{update@{update}!places@{places}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily bool places\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stub provided in case at some point the data in places becomes dynamic and needs its own updates. 
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+
+
+Definition at line 47 of file places.\+cpp.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classplaces_a2cb6b12513a2245fd06b567490229d89}\label{classplaces_a2cb6b12513a2245fd06b567490229d89}} 
+\index{places@{places}!\+\_\+all\+Places@{\+\_\+all\+Places}}
+\index{\+\_\+all\+Places@{\+\_\+all\+Places}!places@{places}}
+\subsubsection{\texorpdfstring{\+\_\+all\+Places}{\_allPlaces}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classplace}{place}}$\ast$$>$ places\+::\+\_\+all\+Places\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+A vector of pointers to all the places currently defined in the model. 
+
+Places is a singleton (there can only be one instance of this class in the model) 
+
+Definition at line 68 of file places.\+h.
+
+\mbox{\Hypertarget{classplaces_a7d5529185ae4635d2e2048b4ae475c12}\label{classplaces_a7d5529185ae4635d2e2048b4ae475c12}} 
+\index{places@{places}!\+\_\+place\+Types@{\+\_\+place\+Types}}
+\index{\+\_\+place\+Types@{\+\_\+place\+Types}!places@{places}}
+\subsubsection{\texorpdfstring{\+\_\+place\+Types}{\_placeTypes}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string,unsigned$>$ places\+::\+\_\+place\+Types\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The index of place types. 
+
+Given a string as a key, this variable stores an index that can be used to refer to this type of place 
+
+Definition at line 75 of file places.\+h.
+
+\mbox{\Hypertarget{classplaces_ab03feda32ddd4784c17de8b2185b3563}\label{classplaces_ab03feda32ddd4784c17de8b2185b3563}} 
+\index{places@{places}!unknown\+Type@{unknown\+Type}}
+\index{unknown\+Type@{unknown\+Type}!places@{places}}
+\subsubsection{\texorpdfstring{unknown\+Type}{unknownType}}
+{\footnotesize\ttfamily unsigned places\+::unknown\+Type =std\+::numeric\+\_\+limits$<$unsigned$>$\+::max()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Returned if there is no know place of this type. 
+
+Currently set to the maxium value for an unsigned integer (unlikely ever to be this manby place types!) 
+
+Definition at line 118 of file places.\+h.
 
 
 

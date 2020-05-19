@@ -66,21 +66,26 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classplaces-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">places Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Places stores the place type index and a list of instantiated places.  
+ <a href="classplaces.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="places_8h_source.html">places.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for places:</div>
 <div class="dyncontent">
 <div class="center"><img src="classplaces__coll__graph.png" border="0" usemap="#places_coll__map" alt="Collaboration graph"/></div>
 <map name="places_coll__map" id="places_coll__map">
-<area shape="rect" id="node3" href="classplace.html" title="place" alt="" coords="51,109,106,136"/>
-<area shape="rect" id="node4" href="classpoint2D.html" title="point2D" alt="" coords="45,13,113,39"/>
+<area shape="rect" id="node3" href="classplace.html" title="A place has x,y co&#45;ordinates, and possibly a workforce and capacity. " alt="" coords="51,109,106,136"/>
+<area shape="rect" id="node4" href="classpoint2D.html" title="A class to hold pairs of x,y co&#45;ordinates. " alt="" coords="45,13,113,39"/>
 <area shape="rect" id="node6" title="STL class. " alt="" coords="211,109,291,136"/>
 <area shape="rect" id="node7" title="STL class. " alt="" coords="187,5,314,47"/>
 </map>
@@ -88,50 +93,275 @@ Collaboration diagram for places:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a18b24350e2ad05ef273df442b6d22593"><td class="memItemLeft" align="right" valign="top"><a id="a18b24350e2ad05ef273df442b6d22593"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (std::string)</td></tr>
+<tr class="memitem:a18b24350e2ad05ef273df442b6d22593"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#a18b24350e2ad05ef273df442b6d22593">operator[]</a> (std::string)</td></tr>
+<tr class="memdesc:a18b24350e2ad05ef273df442b6d22593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the type index index for a named place.  <a href="#a18b24350e2ad05ef273df442b6d22593">More...</a><br /></td></tr>
 <tr class="separator:a18b24350e2ad05ef273df442b6d22593"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad126c2796c4fecad43f8e237ffde786d"><td class="memItemLeft" align="right" valign="top"><a id="ad126c2796c4fecad43f8e237ffde786d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
+<tr class="memitem:ad126c2796c4fecad43f8e237ffde786d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#ad126c2796c4fecad43f8e237ffde786d">init</a> ()</td></tr>
+<tr class="memdesc:ad126c2796c4fecad43f8e237ffde786d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the index of place types and read in actual places.  <a href="#ad126c2796c4fecad43f8e237ffde786d">More...</a><br /></td></tr>
 <tr class="separator:ad126c2796c4fecad43f8e237ffde786d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ff3d2cd02c18f353ab15dd86f52e7be"><td class="memItemLeft" align="right" valign="top"><a id="a5ff3d2cd02c18f353ab15dd86f52e7be"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
+<tr class="memitem:a5ff3d2cd02c18f353ab15dd86f52e7be"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#a5ff3d2cd02c18f353ab15dd86f52e7be">update</a> ()</td></tr>
+<tr class="memdesc:a5ff3d2cd02c18f353ab15dd86f52e7be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stub provided in case at some point the data in places becomes dynamic and needs its own updates.  <a href="#a5ff3d2cd02c18f353ab15dd86f52e7be">More...</a><br /></td></tr>
 <tr class="separator:a5ff3d2cd02c18f353ab15dd86f52e7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd22734e55333fc53f937251f7f2ba4f"><td class="memItemLeft" align="right" valign="top"><a id="acd22734e55333fc53f937251f7f2ba4f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printWorkForceSizes</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#acd22734e55333fc53f937251f7f2ba4f">printWorkForceSizes</a> ()</td></tr>
+<tr class="memdesc:acd22734e55333fc53f937251f7f2ba4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to report how many people are currently working in the list of all places. <br /></td></tr>
 <tr class="separator:acd22734e55333fc53f937251f7f2ba4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:acb5dbcd8606a8a1ffbebc9fb5a3c8a5e"><td class="memItemLeft" align="right" valign="top"><a id="acb5dbcd8606a8a1ffbebc9fb5a3c8a5e"></a>
-static <a class="el" href="classplaces.html">places</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getInstance</b> ()</td></tr>
+<tr class="memitem:acb5dbcd8606a8a1ffbebc9fb5a3c8a5e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classplaces.html">places</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#acb5dbcd8606a8a1ffbebc9fb5a3c8a5e">getInstance</a> ()</td></tr>
+<tr class="memdesc:acb5dbcd8606a8a1ffbebc9fb5a3c8a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the place class.  <a href="#acb5dbcd8606a8a1ffbebc9fb5a3c8a5e">More...</a><br /></td></tr>
 <tr class="separator:acb5dbcd8606a8a1ffbebc9fb5a3c8a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a7d5529185ae4635d2e2048b4ae475c12"><td class="memItemLeft" align="right" valign="top"><a id="a7d5529185ae4635d2e2048b4ae475c12"></a>
-std::map&lt; std::string, unsigned &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_placeTypes</b></td></tr>
-<tr class="separator:a7d5529185ae4635d2e2048b4ae475c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:acac17c038967becf0ccaffbcc88e35fa"><td class="memItemLeft" align="right" valign="top"><a id="acac17c038967becf0ccaffbcc88e35fa"></a>
-static <a class="el" href="classplaces.html">places</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>instance</b></td></tr>
+static <a class="el" href="classplaces.html">places</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#acac17c038967becf0ccaffbcc88e35fa">instance</a></td></tr>
+<tr class="memdesc:acac17c038967becf0ccaffbcc88e35fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer that stores the instance of places. <br /></td></tr>
 <tr class="separator:acac17c038967becf0ccaffbcc88e35fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab03feda32ddd4784c17de8b2185b3563"><td class="memItemLeft" align="right" valign="top"><a id="ab03feda32ddd4784c17de8b2185b3563"></a>
-static unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>unknownType</b> =std::numeric_limits&lt;unsigned&gt;::max()</td></tr>
+<tr class="memitem:ab03feda32ddd4784c17de8b2185b3563"><td class="memItemLeft" align="right" valign="top">static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#ab03feda32ddd4784c17de8b2185b3563">unknownType</a> =std::numeric_limits&lt;unsigned&gt;::max()</td></tr>
+<tr class="memdesc:ab03feda32ddd4784c17de8b2185b3563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returned if there is no know place of this type.  <a href="#ab03feda32ddd4784c17de8b2185b3563">More...</a><br /></td></tr>
 <tr class="separator:ab03feda32ddd4784c17de8b2185b3563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a1c4116c838392a6d35169126334f3f61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#a1c4116c838392a6d35169126334f3f61">places</a> ()</td></tr>
+<tr class="memdesc:a1c4116c838392a6d35169126334f3f61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private constructor can only be called by the class itself.  <a href="#a1c4116c838392a6d35169126334f3f61">More...</a><br /></td></tr>
+<tr class="separator:a1c4116c838392a6d35169126334f3f61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a2cb6b12513a2245fd06b567490229d89"><td class="memItemLeft" align="right" valign="top"><a id="a2cb6b12513a2245fd06b567490229d89"></a>
-std::vector&lt; <a class="el" href="classplace.html">place</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_allPlaces</b></td></tr>
+<tr class="memitem:a2cb6b12513a2245fd06b567490229d89"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classplace.html">place</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#a2cb6b12513a2245fd06b567490229d89">_allPlaces</a></td></tr>
+<tr class="memdesc:a2cb6b12513a2245fd06b567490229d89"><td class="mdescLeft">&#160;</td><td class="mdescRight">A vector of pointers to all the places currently defined in the model.  <a href="#a2cb6b12513a2245fd06b567490229d89">More...</a><br /></td></tr>
 <tr class="separator:a2cb6b12513a2245fd06b567490229d89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d5529185ae4635d2e2048b4ae475c12"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, unsigned &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplaces.html#a7d5529185ae4635d2e2048b4ae475c12">_placeTypes</a></td></tr>
+<tr class="memdesc:a7d5529185ae4635d2e2048b4ae475c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">The index of place types.  <a href="#a7d5529185ae4635d2e2048b4ae475c12">More...</a><br /></td></tr>
+<tr class="separator:a7d5529185ae4635d2e2048b4ae475c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00037">37</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>Places stores the place type index and a list of instantiated places. </p>
+<p>There are two main data stuctures here: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position. Secondly there is an index that maps from strings to unsigned integers, so that places can be given an integer type. E.g. the string "hospital" might map to integer 0. These indices are set up in <a class="el" href="classplaces.html#ad126c2796c4fecad43f8e237ffde786d" title="Set up the index of place types and read in actual places. ">init()</a> according to the order place types are listed in the csv file pointed at by parameters placeTypeFile, This avoids having to store strings in other parts of the model: for example, the <a class="el" href="classsearchGrid.html">searchGrid</a> stores places in each cell indexed by type. </p>
+
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00053">53</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1c4116c838392a6d35169126334f3f61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c4116c838392a6d35169126334f3f61">&#9670;&nbsp;</a></span>places()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">places::places </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Private constructor can only be called by the class itself. </p>
+<p>Since this is singleton the contructor should only ever be called once. </p>
+
+<p class="definition">Definition at line <a class="el" href="places_8cpp_source.html#l00010">10</a> of file <a class="el" href="places_8cpp_source.html">places.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="acb5dbcd8606a8a1ffbebc9fb5a3c8a5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb5dbcd8606a8a1ffbebc9fb5a3c8a5e">&#9670;&nbsp;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classplaces.html">places</a> &amp; places::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a reference to the place class. </p>
+<dl class="section return"><dt>Returns</dt><dd>places&amp; </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="places_8cpp_source.html#l00014">14</a> of file <a class="el" href="places_8cpp_source.html">places.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad126c2796c4fecad43f8e237ffde786d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad126c2796c4fecad43f8e237ffde786d">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void places::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set up the index of place types and read in actual places. </p>
+<p>Caution with this function! Places are inserted into the <a class="el" href="classsearchGrid.html">searchGrid</a> model::g so that they can be found by spatial searches. If at any point the grid is re-sized, then this data may become invalid. Important therefore to make sure this function is called <em>after</em> any grid re-sizing (which should in any case only happen during model initialisation) </p>
+
+<p class="definition">Definition at line <a class="el" href="places_8cpp_source.html#l00026">26</a> of file <a class="el" href="places_8cpp_source.html">places.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a18b24350e2ad05ef273df442b6d22593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18b24350e2ad05ef273df442b6d22593">&#9670;&nbsp;</a></span>operator[]()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned places::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the type index index for a named place. </p>
+<p>If a string is given as an argument, and there is no corresponding key then <a class="el" href="classplaces.html#ab03feda32ddd4784c17de8b2185b3563" title="Returned if there is no know place of this type. ">places::unknownType</a> is returned</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>A string giving the name of the type of place </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned int </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="places_8cpp_source.html#l00021">21</a> of file <a class="el" href="places_8cpp_source.html">places.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5ff3d2cd02c18f353ab15dd86f52e7be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ff3d2cd02c18f353ab15dd86f52e7be">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool places::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stub provided in case at some point the data in places becomes dynamic and needs its own updates. </p>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="places_8cpp_source.html#l00047">47</a> of file <a class="el" href="places_8cpp_source.html">places.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2cb6b12513a2245fd06b567490229d89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cb6b12513a2245fd06b567490229d89">&#9670;&nbsp;</a></span>_allPlaces</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classplace.html">place</a>*&gt; places::_allPlaces</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A vector of pointers to all the places currently defined in the model. </p>
+<p>Places is a singleton (there can only be one instance of this class in the model) </p>
+
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00068">68</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+
+</div>
+</div>
+<a id="a7d5529185ae4635d2e2048b4ae475c12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d5529185ae4635d2e2048b4ae475c12">&#9670;&nbsp;</a></span>_placeTypes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::string,unsigned&gt; places::_placeTypes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The index of place types. </p>
+<p>Given a string as a key, this variable stores an index that can be used to refer to this type of place </p>
+
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00075">75</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+
+</div>
+</div>
+<a id="ab03feda32ddd4784c17de8b2185b3563"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab03feda32ddd4784c17de8b2185b3563">&#9670;&nbsp;</a></span>unknownType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned places::unknownType =std::numeric_limits&lt;unsigned&gt;::max()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returned if there is no know place of this type. </p>
+<p>Currently set to the maxium value for an unsigned integer (unlikely ever to be this manby place types!) </p>
+
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00118">118</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="places_8h_source.html">places.h</a></li>
 <li><a class="el" href="places_8cpp_source.html">places.cpp</a></li>
 </ul>

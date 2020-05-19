@@ -74,15 +74,20 @@ $(function() {
 <div class="title">agent Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Agents represent individual people.  
+ <a href="classagent.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="agent_8h_source.html">agent.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for agent:</div>
 <div class="dyncontent">
 <div class="center"><img src="classagent__coll__graph.png" border="0" usemap="#agent_coll__map" alt="Collaboration graph"/></div>
 <map name="agent_coll__map" id="agent_coll__map">
 <area shape="rect" id="node3" href="classprocess.html" title="process" alt="" coords="1424,156,1495,183"/>
-<area shape="rect" id="node4" href="classplace.html" title="place" alt="" coords="972,103,1027,129"/>
-<area shape="rect" id="node5" href="classpoint2D.html" title="point2D" alt="" coords="705,103,773,129"/>
-<area shape="rect" id="node7" href="structpath.html" title="path" alt="" coords="976,220,1023,247"/>
+<area shape="rect" id="node4" href="classplace.html" title="A place has x,y co&#45;ordinates, and possibly a workforce and capacity. " alt="" coords="972,103,1027,129"/>
+<area shape="rect" id="node5" href="classpoint2D.html" title="A class to hold pairs of x,y co&#45;ordinates. " alt="" coords="705,103,773,129"/>
+<area shape="rect" id="node6" href="structpath.html" title="path" alt="" coords="976,220,1023,247"/>
 <area shape="rect" id="node8" href="structtimeTable.html" title="timeTable" alt="" coords="958,321,1041,348"/>
 <area shape="rect" id="node10" href="structevent.html" title="event" alt="" coords="439,321,494,348"/>
 <area shape="rect" id="node11" title="STL class. " alt="" coords="181,301,261,328"/>
@@ -94,6 +99,15 @@ Collaboration diagram for agent:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a3d63607b5117bb51096388abb3b56c2d"><td class="memItemLeft" align="right" valign="top"><a id="a3d63607b5117bb51096388abb3b56c2d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>makePartner</b> (<a class="el" href="classagent.html">agent</a> *)</td></tr>
+<tr class="separator:a3d63607b5117bb51096388abb3b56c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7185d1236cdaf47e178a73c19a4c5fdd"><td class="memItemLeft" align="right" valign="top"><a id="a7185d1236cdaf47e178a73c19a4c5fdd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>makeParents</b> (<a class="el" href="classagent.html">agent</a> *)</td></tr>
+<tr class="separator:a7185d1236cdaf47e178a73c19a4c5fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2457ce46575ff9c204ee3e5cae5e5363"><td class="memItemLeft" align="right" valign="top"><a id="a2457ce46575ff9c204ee3e5cae5e5363"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addChild</b> (<a class="el" href="classagent.html">agent</a> *)</td></tr>
+<tr class="separator:a2457ce46575ff9c204ee3e5cae5e5363"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fef7c5b65fb384d74d7606168058212"><td class="memItemLeft" align="right" valign="top"><a id="a7fef7c5b65fb384d74d7606168058212"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>updateInfections</b> ()</td></tr>
 <tr class="separator:a7fef7c5b65fb384d74d7606168058212"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,6 +180,15 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>sex</b> ()</td></tr>
 <tr class="memitem:a1f8475f933cfae0199d73c108faff1ad"><td class="memItemLeft" align="right" valign="top"><a id="a1f8475f933cfae0199d73c108faff1ad"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>age</b> ()</td></tr>
 <tr class="separator:a1f8475f933cfae0199d73c108faff1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e9532f2be4b2b08ee7cdd2a7761237b"><td class="memItemLeft" align="right" valign="top"><a id="a1e9532f2be4b2b08ee7cdd2a7761237b"></a>
+<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>partner</b> ()</td></tr>
+<tr class="separator:a1e9532f2be4b2b08ee7cdd2a7761237b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6853ae2b9f4b349bd748105699dd43e4"><td class="memItemLeft" align="right" valign="top"><a id="a6853ae2b9f4b349bd748105699dd43e4"></a>
+<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>mother</b> ()</td></tr>
+<tr class="separator:a6853ae2b9f4b349bd748105699dd43e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c29803a7627d786ff50d6f39b81a285"><td class="memItemLeft" align="right" valign="top"><a id="a1c29803a7627d786ff50d6f39b81a285"></a>
+<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>father</b> ()</td></tr>
+<tr class="separator:a1c29803a7627d786ff50d6f39b81a285"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a312bd1aeb3c660f43bb3bf5a8f0764e7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classagent.html#a312bd1aeb3c660f43bb3bf5a8f0764e7">X</a> ()</td></tr>
 <tr class="memdesc:a312bd1aeb3c660f43bb3bf5a8f0764e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current X location of the agent.  <a href="#a312bd1aeb3c660f43bb3bf5a8f0764e7">More...</a><br /></td></tr>
 <tr class="separator:a312bd1aeb3c660f43bb3bf5a8f0764e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +201,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasWork</b> ()</td></
 <tr class="memitem:abcfbb2865a7cb599df7a6c5cbff2ce05"><td class="memItemLeft" align="right" valign="top"><a id="abcfbb2865a7cb599df7a6c5cbff2ce05"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>worker</b> ()</td></tr>
 <tr class="separator:abcfbb2865a7cb599df7a6c5cbff2ce05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a310065019aaf11c07c094c9cc5660471"><td class="memItemLeft" align="right" valign="top"><a id="a310065019aaf11c07c094c9cc5660471"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>inEducation</b> ()</td></tr>
+<tr class="separator:a310065019aaf11c07c094c9cc5660471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77eba7e6139ff396a166deee1f508f61"><td class="memItemLeft" align="right" valign="top"><a id="a77eba7e6139ff396a166deee1f508f61"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>retired</b> ()</td></tr>
+<tr class="separator:a77eba7e6139ff396a166deee1f508f61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -214,24 +243,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>_size</b></td></tr>
 <tr class="memitem:a9c76eb9369864fb60a2d5a4f44c56843"><td class="memItemLeft" align="right" valign="top"><a id="a9c76eb9369864fb60a2d5a4f44c56843"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>_age</b></td></tr>
 <tr class="separator:a9c76eb9369864fb60a2d5a4f44c56843"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2e0f7c2a20dcfa12f07a07520ee7e4a"><td class="memItemLeft" align="right" valign="top"><a id="ad2e0f7c2a20dcfa12f07a07520ee7e4a"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>_sex</b></td></tr>
-<tr class="separator:ad2e0f7c2a20dcfa12f07a07520ee7e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fd9888ffffdec9b43385e001edcabd2"><td class="memItemLeft" align="right" valign="top"><a id="a2fd9888ffffdec9b43385e001edcabd2"></a>
-vector&lt; <a class="el" href="classagent.html">agent</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>children</b></td></tr>
-<tr class="separator:a2fd9888ffffdec9b43385e001edcabd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6235c5897c39008af08d75fa7dca13b2"><td class="memItemLeft" align="right" valign="top"><a id="a6235c5897c39008af08d75fa7dca13b2"></a>
 vector&lt; <a class="el" href="classagent.html">agent</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>friends</b></td></tr>
 <tr class="separator:a6235c5897c39008af08d75fa7dca13b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34b299f3d80898282060620413ca4c39"><td class="memItemLeft" align="right" valign="top"><a id="a34b299f3d80898282060620413ca4c39"></a>
-<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>mother</b></td></tr>
-<tr class="separator:a34b299f3d80898282060620413ca4c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40954e3f65115355c91f935a01341a56"><td class="memItemLeft" align="right" valign="top"><a id="a40954e3f65115355c91f935a01341a56"></a>
-<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>father</b></td></tr>
-<tr class="separator:a40954e3f65115355c91f935a01341a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae684b71a09da86798ffb134c0ff1e0ba"><td class="memItemLeft" align="right" valign="top"><a id="ae684b71a09da86798ffb134c0ff1e0ba"></a>
-<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>partner</b></td></tr>
-<tr class="separator:ae684b71a09da86798ffb134c0ff1e0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a669d47bb2f6781ea5ec1f2cdfdd4e2"><td class="memItemLeft" align="right" valign="top"><a id="a0a669d47bb2f6781ea5ec1f2cdfdd4e2"></a>
 <a class="el" href="structtimeTable.html">timeTable</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tTable</b></td></tr>
 <tr class="separator:a0a669d47bb2f6781ea5ec1f2cdfdd4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -274,7 +288,7 @@ Private Types</h2></td></tr>
 <tr class="memitem:a56ecbbe6f1ec07d60ed3c30988810e22"><td class="memItemLeft" align="right" valign="top"><a id="a56ecbbe6f1ec07d60ed3c30988810e22"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>workTypes</b> { <b>ineducation</b>, 
 <b>unemployed</b>, 
 <b>working</b>, 
-<b>retired</b>
+<b>retiree</b>
  }</td></tr>
 <tr class="separator:a56ecbbe6f1ec07d60ed3c30988810e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a499a1e074636f81ed46fe569107e6cde"><td class="memItemLeft" align="right" valign="top"><a id="a499a1e074636f81ed46fe569107e6cde"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>educationTypes</b> { <br />
@@ -306,10 +320,26 @@ workTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_workStatus</b><
 <tr class="memitem:abbfd4798d2b47e4b418a9aefa75fd75b"><td class="memItemLeft" align="right" valign="top"><a id="abbfd4798d2b47e4b418a9aefa75fd75b"></a>
 educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationStatus</b></td></tr>
 <tr class="separator:abbfd4798d2b47e4b418a9aefa75fd75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2e0f7c2a20dcfa12f07a07520ee7e4a"><td class="memItemLeft" align="right" valign="top"><a id="ad2e0f7c2a20dcfa12f07a07520ee7e4a"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>_sex</b></td></tr>
+<tr class="separator:ad2e0f7c2a20dcfa12f07a07520ee7e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54b776c2ea81520b05c683632bed82fd"><td class="memItemLeft" align="right" valign="top"><a id="a54b776c2ea81520b05c683632bed82fd"></a>
+<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_partner</b></td></tr>
+<tr class="separator:a54b776c2ea81520b05c683632bed82fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abff69cc5e2c8b7dcbd4c6eeeb9323a08"><td class="memItemLeft" align="right" valign="top"><a id="abff69cc5e2c8b7dcbd4c6eeeb9323a08"></a>
+<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_mother</b></td></tr>
+<tr class="separator:abff69cc5e2c8b7dcbd4c6eeeb9323a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae55ddedf072040f0cb8930217660e697"><td class="memItemLeft" align="right" valign="top"><a id="ae55ddedf072040f0cb8930217660e697"></a>
+<a class="el" href="classagent.html">agent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_father</b></td></tr>
+<tr class="separator:ae55ddedf072040f0cb8930217660e697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af42fc69cd57f652287501750499c6024"><td class="memItemLeft" align="right" valign="top"><a id="af42fc69cd57f652287501750499c6024"></a>
+vector&lt; <a class="el" href="classagent.html">agent</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_children</b></td></tr>
+<tr class="separator:af42fc69cd57f652287501750499c6024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="agent_8h_source.html#l00015">15</a> of file <a class="el" href="agent_8h_source.html">agent.h</a>.</p>
+<div class="textblock"><p>Agents represent individual people. </p>
+
+<p class="definition">Definition at line <a class="el" href="agent_8h_source.html#l00022">22</a> of file <a class="el" href="agent_8h_source.html">agent.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aab67fe9df4777af3690138fa97d0a3a1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab67fe9df4777af3690138fa97d0a3a1">&#9670;&nbsp;</a></span>hasDisease()</h2>
@@ -337,7 +367,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00145">145</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00167">167</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
 
 </div>
 </div>
@@ -360,7 +390,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
 <p>Currently only applies for Covid19! This function is used in creating maps in output.cpp via the <a class="el" href="classsearchGrid.html">searchGrid</a>, so be careful about modifying </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Should take a disease name as the argument</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00059">59</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00080">80</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
 
 </div>
 </div>
@@ -389,7 +419,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00155">155</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00177">177</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
 
 </div>
 </div>
@@ -418,7 +448,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00149">149</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00171">171</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
 
 </div>
 </div>
@@ -440,7 +470,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
 <p>Return the current X location of the agent. </p>
 <dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00174">174</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00197">197</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
 
 </div>
 </div>
@@ -462,7 +492,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
 <p>Return the current Y location of the agent. </p>
 <dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00178">178</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8cpp_source.html#l00201">201</a> of file <a class="el" href="agent_8cpp_source.html">agent.cpp</a>.</p>
 
 </div>
 </div>
@@ -482,7 +512,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
 <p>A dictionary of named diseases currently carried by this agent. </p>
 <p>If the agent has never had a given disease, then there will be no entry in the dictionary. Such agents are assumed to be susceptible. </p>
 
-<p class="definition">Definition at line <a class="el" href="agent_8h_source.html#l00070">70</a> of file <a class="el" href="agent_8h_source.html">agent.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8h_source.html#l00082">82</a> of file <a class="el" href="agent_8h_source.html">agent.h</a>.</p>
 
 </div>
 </div>
@@ -501,7 +531,7 @@ educationTypes&#160;</td><td class="memItemRight" valign="bottom"><b>_educationS
 <p>Accumulates the number of other agents infected by this agent. </p>
 <p>Currently this is not distinguished by disease so really only works if there is just a single disease </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>change to a version that can accumlate infections by named disease (NB this value is used in <a class="el" href="model_8cpp.html" title="This is the model implementation. ">model.cpp</a> to find R0) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="agent_8h_source.html#l00063">63</a> of file <a class="el" href="agent_8h_source.html">agent.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="agent_8h_source.html#l00075">75</a> of file <a class="el" href="agent_8h_source.html">agent.h</a>.</p>
 
 </div>
 </div>

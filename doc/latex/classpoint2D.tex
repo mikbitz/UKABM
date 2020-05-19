@@ -1,5 +1,14 @@
 \hypertarget{classpoint2D}{}\section{point2D Class Reference}
 \label{classpoint2D}\index{point2D@{point2D}}
+
+
+A class to hold pairs of x,y co-\/ordinates.  
+
+
+
+
+{\ttfamily \#include $<$point2\+D.\+h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -9,9 +18,8 @@
 \mbox{\Hypertarget{classpoint2D_ab5af14144bffe77818139d21003b58bb}\label{classpoint2D_ab5af14144bffe77818139d21003b58bb}} 
 {\bfseries point2D} (const \mbox{\hyperlink{classpoint2D}{point2D}} \&p)
 \item 
-\mbox{\Hypertarget{classpoint2D_a34b676d196277da05f03e87dc2f88288}\label{classpoint2D_a34b676d196277da05f03e87dc2f88288}} 
-bool {\bfseries operator==} (const \mbox{\hyperlink{classpoint2D}{point2D}} \&p)
-\item 
+bool \mbox{\hyperlink{classpoint2D_a34b676d196277da05f03e87dc2f88288}{operator==}} (const \mbox{\hyperlink{classpoint2D}{point2D}} \&p)
+\begin{DoxyCompactList}\small\item\em Check points for equality. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classpoint2D_a76074a1176a4618c53d3f043bfdf6c63}\label{classpoint2D_a76074a1176a4618c53d3f043bfdf6c63}} 
 \mbox{\hyperlink{classpoint2D}{point2D}} {\bfseries operator+} (const \mbox{\hyperlink{classpoint2D}{point2D}} \&p)
 \item 
@@ -45,9 +53,36 @@ int {\bfseries cell\+Index}
 
 
 \subsection{Detailed Description}
+A class to hold pairs of x,y co-\/ordinates. 
+
+Definition at line 10 of file point2\+D.\+h.
 
 
-Definition at line 4 of file point2\+D.\+h.
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classpoint2D_a34b676d196277da05f03e87dc2f88288}\label{classpoint2D_a34b676d196277da05f03e87dc2f88288}} 
+\index{point2D@{point2D}!operator==@{operator==}}
+\index{operator==@{operator==}!point2D@{point2D}}
+\subsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool point2\+D\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpoint2D}{point2D}} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check points for equality. 
+
+Points are only regarded as equal if both x any co-\/ordintes are strictly equal
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & Reference to another point to check against this one \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+
+
+Definition at line 25 of file point2\+D.\+h.
 
 
 

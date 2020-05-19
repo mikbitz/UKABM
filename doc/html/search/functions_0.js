@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hasdisease',['hasDisease',['../classagent.html#aab67fe9df4777af3690138fa97d0a3a1',1,'agent']]]
+  ['getinstance',['getInstance',['../classplaces.html#acb5dbcd8606a8a1ffbebc9fb5a3c8a5e',1,'places']]]
 ];

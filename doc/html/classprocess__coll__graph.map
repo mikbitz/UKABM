@@ -1,8 +1,8 @@
 <map id="process" name="process">
-<area shape="rect" id="node2" href="$classagent.html" title="agent" alt="" coords="1239,276,1295,303"/>
-<area shape="rect" id="node4" href="$classplace.html" title="place" alt="" coords="981,217,1035,244"/>
-<area shape="rect" id="node5" href="$classpoint2D.html" title="point2D" alt="" coords="705,217,773,244"/>
-<area shape="rect" id="node7" href="$structpath.html" title="path" alt="" coords="985,335,1031,361"/>
+<area shape="rect" id="node2" href="$classagent.html" title="Agents represent individual people. " alt="" coords="1239,276,1295,303"/>
+<area shape="rect" id="node4" href="$classplace.html" title="A place has x,y co&#45;ordinates, and possibly a workforce and capacity. " alt="" coords="981,217,1035,244"/>
+<area shape="rect" id="node5" href="$classpoint2D.html" title="A class to hold pairs of x,y co&#45;ordinates. " alt="" coords="705,217,773,244"/>
+<area shape="rect" id="node6" href="$structpath.html" title="path" alt="" coords="985,335,1031,361"/>
 <area shape="rect" id="node8" href="$structtimeTable.html" title="timeTable" alt="" coords="967,436,1049,463"/>
 <area shape="rect" id="node10" href="$structevent.html" title="event" alt="" coords="439,436,494,463"/>
 <area shape="rect" id="node11" title="STL class. " alt="" coords="181,416,261,443"/>

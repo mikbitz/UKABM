@@ -2,8 +2,16 @@
 \label{classagent}\index{agent@{agent}}
 
 
-Collaboration diagram for agent\+:
-\nopagebreak
+Agents represent individual people.  
+
+
+
+
+{\ttfamily \#include $<$agent.\+h$>$}
+
+
+
+Collaboration diagram for agent\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -12,6 +20,15 @@ Collaboration diagram for agent\+:
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classagent_a3d63607b5117bb51096388abb3b56c2d}\label{classagent_a3d63607b5117bb51096388abb3b56c2d}} 
+void {\bfseries make\+Partner} (\mbox{\hyperlink{classagent}{agent}} $\ast$)
+\item 
+\mbox{\Hypertarget{classagent_a7185d1236cdaf47e178a73c19a4c5fdd}\label{classagent_a7185d1236cdaf47e178a73c19a4c5fdd}} 
+void {\bfseries make\+Parents} (\mbox{\hyperlink{classagent}{agent}} $\ast$)
+\item 
+\mbox{\Hypertarget{classagent_a2457ce46575ff9c204ee3e5cae5e5363}\label{classagent_a2457ce46575ff9c204ee3e5cae5e5363}} 
+void {\bfseries add\+Child} (\mbox{\hyperlink{classagent}{agent}} $\ast$)
 \item 
 \mbox{\Hypertarget{classagent_a7fef7c5b65fb384d74d7606168058212}\label{classagent_a7fef7c5b65fb384d74d7606168058212}} 
 void {\bfseries update\+Infections} ()
@@ -81,6 +98,15 @@ char {\bfseries sex} ()
 \mbox{\Hypertarget{classagent_a1f8475f933cfae0199d73c108faff1ad}\label{classagent_a1f8475f933cfae0199d73c108faff1ad}} 
 double {\bfseries age} ()
 \item 
+\mbox{\Hypertarget{classagent_a1e9532f2be4b2b08ee7cdd2a7761237b}\label{classagent_a1e9532f2be4b2b08ee7cdd2a7761237b}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries partner} ()
+\item 
+\mbox{\Hypertarget{classagent_a6853ae2b9f4b349bd748105699dd43e4}\label{classagent_a6853ae2b9f4b349bd748105699dd43e4}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries mother} ()
+\item 
+\mbox{\Hypertarget{classagent_a1c29803a7627d786ff50d6f39b81a285}\label{classagent_a1c29803a7627d786ff50d6f39b81a285}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries father} ()
+\item 
 double \mbox{\hyperlink{classagent_a312bd1aeb3c660f43bb3bf5a8f0764e7}{X}} ()
 \begin{DoxyCompactList}\small\item\em Return the current X location of the agent. \end{DoxyCompactList}\item 
 double \mbox{\hyperlink{classagent_a56b8ea7b9138c5e4b92530d454e247ad}{Y}} ()
@@ -90,6 +116,12 @@ bool {\bfseries has\+Work} ()
 \item 
 \mbox{\Hypertarget{classagent_abcfbb2865a7cb599df7a6c5cbff2ce05}\label{classagent_abcfbb2865a7cb599df7a6c5cbff2ce05}} 
 bool {\bfseries worker} ()
+\item 
+\mbox{\Hypertarget{classagent_a310065019aaf11c07c094c9cc5660471}\label{classagent_a310065019aaf11c07c094c9cc5660471}} 
+bool {\bfseries in\+Education} ()
+\item 
+\mbox{\Hypertarget{classagent_a77eba7e6139ff396a166deee1f508f61}\label{classagent_a77eba7e6139ff396a166deee1f508f61}} 
+bool {\bfseries retired} ()
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -127,36 +159,21 @@ float {\bfseries \+\_\+size}
 \mbox{\Hypertarget{classagent_a9c76eb9369864fb60a2d5a4f44c56843}\label{classagent_a9c76eb9369864fb60a2d5a4f44c56843}} 
 double {\bfseries \+\_\+age}
 \item 
-\mbox{\Hypertarget{classagent_ad2e0f7c2a20dcfa12f07a07520ee7e4a}\label{classagent_ad2e0f7c2a20dcfa12f07a07520ee7e4a}} 
-char {\bfseries \+\_\+sex}
-\item 
-\mbox{\Hypertarget{classagent_a2f484df3bd597a8974b892415f7a81da}\label{classagent_a2f484df3bd597a8974b892415f7a81da}} 
-map$<$ \mbox{\hyperlink{classagent}{agent}} $\ast$, \mbox{\hyperlink{classagent}{agent}} $\ast$ $>$ {\bfseries children}
-\item 
-\mbox{\Hypertarget{classagent_a591d6d0b76938f2d8ce45b81ddc9198e}\label{classagent_a591d6d0b76938f2d8ce45b81ddc9198e}} 
-map$<$ \mbox{\hyperlink{classagent}{agent}} $\ast$, \mbox{\hyperlink{classagent}{agent}} $\ast$ $>$ {\bfseries friends}
-\item 
-\mbox{\Hypertarget{classagent_a34b299f3d80898282060620413ca4c39}\label{classagent_a34b299f3d80898282060620413ca4c39}} 
-\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries mother}
-\item 
-\mbox{\Hypertarget{classagent_a40954e3f65115355c91f935a01341a56}\label{classagent_a40954e3f65115355c91f935a01341a56}} 
-\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries father}
-\item 
-\mbox{\Hypertarget{classagent_ae684b71a09da86798ffb134c0ff1e0ba}\label{classagent_ae684b71a09da86798ffb134c0ff1e0ba}} 
-\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries partner}
+\mbox{\Hypertarget{classagent_a6235c5897c39008af08d75fa7dca13b2}\label{classagent_a6235c5897c39008af08d75fa7dca13b2}} 
+vector$<$ \mbox{\hyperlink{classagent}{agent}} $\ast$ $>$ {\bfseries friends}
 \item 
 \mbox{\Hypertarget{classagent_a0a669d47bb2f6781ea5ec1f2cdfdd4e2}\label{classagent_a0a669d47bb2f6781ea5ec1f2cdfdd4e2}} 
 \mbox{\hyperlink{structtimeTable}{time\+Table}} {\bfseries t\+Table}
 \item 
 \mbox{\Hypertarget{classagent_a4a2f231b103bbe13452570921e296ea1}\label{classagent_a4a2f231b103bbe13452570921e296ea1}} 
-bool {\bfseries \+\_\+in\+Hospital}
-\item 
+bool \mbox{\hyperlink{classagent_a4a2f231b103bbe13452570921e296ea1}{\+\_\+in\+Hospital}}
+\begin{DoxyCompactList}\small\item\em Set to true if the agent is currently in hospital. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classagent_a9803ed96415b37e5ad091848a53e1944}\label{classagent_a9803ed96415b37e5ad091848a53e1944}} 
-bool {\bfseries \+\_\+critical}
-\item 
+bool \mbox{\hyperlink{classagent_a9803ed96415b37e5ad091848a53e1944}{\+\_\+critical}}
+\begin{DoxyCompactList}\small\item\em Set to true if the agent is in hospital and in critical care. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classagent_a0d09f2c676410b866a348291900ee520}\label{classagent_a0d09f2c676410b866a348291900ee520}} 
-bool {\bfseries \+\_\+died}
-\item 
+bool \mbox{\hyperlink{classagent_a0d09f2c676410b866a348291900ee520}{\+\_\+died}}
+\begin{DoxyCompactList}\small\item\em Set to true if the agent has died (for any reason...) \end{DoxyCompactList}\item 
 unsigned \mbox{\hyperlink{classagent_a4145c90d534f84deb22a93560809134c}{number\+Infected}}
 \begin{DoxyCompactList}\small\item\em Accumulates the number of other agents infected by this agent. \end{DoxyCompactList}\item 
 map$<$ string, \mbox{\hyperlink{classdisease}{disease}} $>$ \mbox{\hyperlink{classagent_a2352342e95bc77041c07c0dafdfb7cd2}{\+\_\+diseases}}
@@ -183,7 +200,7 @@ static unsigned {\bfseries idnum} =0
 enum {\bfseries work\+Types} \{ {\bfseries ineducation}, 
 {\bfseries unemployed}, 
 {\bfseries working}, 
-{\bfseries retired}
+{\bfseries retiree}
  \}
 \item 
 \mbox{\Hypertarget{classagent_a499a1e074636f81ed46fe569107e6cde}\label{classagent_a499a1e074636f81ed46fe569107e6cde}} 
@@ -214,13 +231,28 @@ work\+Types {\bfseries \+\_\+work\+Status}
 \item 
 \mbox{\Hypertarget{classagent_abbfd4798d2b47e4b418a9aefa75fd75b}\label{classagent_abbfd4798d2b47e4b418a9aefa75fd75b}} 
 education\+Types {\bfseries \+\_\+education\+Status}
+\item 
+\mbox{\Hypertarget{classagent_ad2e0f7c2a20dcfa12f07a07520ee7e4a}\label{classagent_ad2e0f7c2a20dcfa12f07a07520ee7e4a}} 
+char {\bfseries \+\_\+sex}
+\item 
+\mbox{\Hypertarget{classagent_a54b776c2ea81520b05c683632bed82fd}\label{classagent_a54b776c2ea81520b05c683632bed82fd}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries \+\_\+partner}
+\item 
+\mbox{\Hypertarget{classagent_abff69cc5e2c8b7dcbd4c6eeeb9323a08}\label{classagent_abff69cc5e2c8b7dcbd4c6eeeb9323a08}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries \+\_\+mother}
+\item 
+\mbox{\Hypertarget{classagent_ae55ddedf072040f0cb8930217660e697}\label{classagent_ae55ddedf072040f0cb8930217660e697}} 
+\mbox{\hyperlink{classagent}{agent}} $\ast$ {\bfseries \+\_\+father}
+\item 
+\mbox{\Hypertarget{classagent_af42fc69cd57f652287501750499c6024}\label{classagent_af42fc69cd57f652287501750499c6024}} 
+vector$<$ \mbox{\hyperlink{classagent}{agent}} $\ast$ $>$ {\bfseries \+\_\+children}
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+Agents represent individual people. 
 
-
-Definition at line 15 of file agent.\+h.
+Definition at line 22 of file agent.\+h.
 
 
 
@@ -247,7 +279,7 @@ bool
 \end{DoxyReturn}
 
 
-Definition at line 144 of file agent.\+cpp.
+Definition at line 167 of file agent.\+cpp.
 
 \mbox{\Hypertarget{classagent_ae186a297218e835ac064bf7a329d5b42}\label{classagent_ae186a297218e835ac064bf7a329d5b42}} 
 \index{agent@{agent}!infectious@{infectious}}
@@ -260,7 +292,7 @@ Definition at line 144 of file agent.\+cpp.
 True if the agent can infect other agents. 
 
 Currently only applies for Covid19! This function is used in creating maps in output.\+cpp via the \mbox{\hyperlink{classsearchGrid}{search\+Grid}}, so be careful about modifying \begin{DoxyRefDesc}{Todo}
-\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]Should take a disease name as the argument\end{DoxyRefDesc}
+\item[\mbox{\hyperlink{todo__todo000002}{Todo}}]Should take a disease name as the argument\end{DoxyRefDesc}
 
 
 \begin{DoxyReturn}{Returns}
@@ -268,7 +300,7 @@ bool
 \end{DoxyReturn}
 
 
-Definition at line 58 of file agent.\+cpp.
+Definition at line 80 of file agent.\+cpp.
 
 \mbox{\Hypertarget{classagent_ac55fabf889e49a48c055c9c495062d5e}\label{classagent_ac55fabf889e49a48c055c9c495062d5e}} 
 \index{agent@{agent}!infect\+With@{infect\+With}}
@@ -289,7 +321,7 @@ This both adds the disease name to the dictionary and creates a new disease obje
 \end{DoxyParams}
 
 
-Definition at line 154 of file agent.\+cpp.
+Definition at line 177 of file agent.\+cpp.
 
 \mbox{\Hypertarget{classagent_a0eee49d52e6c47d7b425bc72cf5caf67}\label{classagent_a0eee49d52e6c47d7b425bc72cf5caf67}} 
 \index{agent@{agent}!recovered\+From@{recovered\+From}}
@@ -311,7 +343,7 @@ bool
 \end{DoxyReturn}
 
 
-Definition at line 148 of file agent.\+cpp.
+Definition at line 171 of file agent.\+cpp.
 
 \mbox{\Hypertarget{classagent_a312bd1aeb3c660f43bb3bf5a8f0764e7}\label{classagent_a312bd1aeb3c660f43bb3bf5a8f0764e7}} 
 \index{agent@{agent}!X@{X}}
@@ -328,7 +360,7 @@ double
 \end{DoxyReturn}
 
 
-Definition at line 173 of file agent.\+cpp.
+Definition at line 197 of file agent.\+cpp.
 
 \mbox{\Hypertarget{classagent_a56b8ea7b9138c5e4b92530d454e247ad}\label{classagent_a56b8ea7b9138c5e4b92530d454e247ad}} 
 \index{agent@{agent}!Y@{Y}}
@@ -345,7 +377,7 @@ double
 \end{DoxyReturn}
 
 
-Definition at line 177 of file agent.\+cpp.
+Definition at line 201 of file agent.\+cpp.
 
 
 
@@ -362,7 +394,7 @@ A dictionary of named diseases currently carried by this agent.
 
 If the agent has never had a given disease, then there will be no entry in the dictionary. Such agents are assumed to be susceptible. 
 
-Definition at line 56 of file agent.\+h.
+Definition at line 82 of file agent.\+h.
 
 \mbox{\Hypertarget{classagent_a4145c90d534f84deb22a93560809134c}\label{classagent_a4145c90d534f84deb22a93560809134c}} 
 \index{agent@{agent}!number\+Infected@{number\+Infected}}
@@ -374,9 +406,11 @@ Definition at line 56 of file agent.\+h.
 
 Accumulates the number of other agents infected by this agent. 
 
-Currently this is not distinguished by disease so really only works if there is just a single disease 
+Currently this is not distinguished by disease so really only works if there is just a single disease \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]change to a version that can accumlate infections by named disease (NB this value is used in \mbox{\hyperlink{model_8cpp}{model.\+cpp}} to find R0) \end{DoxyRefDesc}
 
-Definition at line 49 of file agent.\+h.
+
+Definition at line 75 of file agent.\+h.
 
 
 

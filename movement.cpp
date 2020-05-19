@@ -6,14 +6,19 @@
     }
 //-----------------------------------------------------------------------------------------------------------------
     void movement::preUpdate(){
+        //random displacement by a small amount - with 0.125 day timsteps this is about 100m at 1cm/s!
         double dt=parameters::getInstance().timeStep;
-        randomWobble=.05;trelax=0.6;
-        xdel=owner->dest.x-owner->loc.x;
-        ydel=owner->dest.y-owner->loc.y;
+        randomWobble=.01;trelax=0.6;
+        dvx=randomWobble*(0.5-model::getInstance().random.number());
+        dvy=randomWobble*(0.5-model::getInstance().random.number());
+        owner->loc.x+=dvx*dt;
+        owner->loc.y+=dvy*dt; 
+ //       xdel=owner->dest.x-owner->loc.x;
+ //       ydel=owner->dest.y-owner->loc.y;
 
-        if (owner->pathState==1)vdesired=vwalk;
-        float sz=sqrt(xdel*xdel+ydel*ydel);
-        if (sz>1.e-7){xdel=xdel/sz;ydel=ydel/sz;}else{xdel=0;ydel=0;}
+ //       if (owner->pathState==1)vdesired=vwalk;
+ //       float sz=sqrt(xdel*xdel+ydel*ydel);
+ //       if (sz>1.e-7){xdel=xdel/sz;ydel=ydel/sz;}else{xdel=0;ydel=0;}
         //are we close enough to the current target?  Also we need to take account of the distance moved in a timestep.
 //         if (sz<owner->size/2+dt*sqrt(owner->vel.x*owner->vel.x + owner->vel.y*owner->vel.y)){
 //             owner->pathState++;
@@ -26,17 +31,17 @@
     }
     //-----------------------------------------------------------------------------------------------------------------
     void movement::update(){
-        double dt=parameters::getInstance().timeStep;
-        dvx=(vdesired*xdel-owner->vel.x)/trelax+randomWobble*(0.5-model::getInstance().random.number());
-        dvy=(vdesired*ydel-owner->vel.y)/trelax+randomWobble*(0.5-model::getInstance().random.number());
+       // double dt=parameters::getInstance().timeStep;
+       // dvx=(vdesired*xdel-owner->vel.x)/trelax+randomWobble*(0.5-model::getInstance().random.number());
+       // dvy=(vdesired*ydel-owner->vel.y)/trelax+randomWobble*(0.5-model::getInstance().random.number());
     }
     //-----------------------------------------------------------------------------------------------------------------
     void movement::applyUpdate(){
-        double dt=parameters::getInstance().timeStep;
-        owner->vel.x+=dvx*dt;
-        owner->vel.y+=dvy*dt;
-        float sz=sqrt(owner->vel.x*owner->vel.x+owner->vel.y*owner->vel.y);
-        if (sz>vmax){owner->vel.x*=vmax/sz;owner->vel.y*=vmax/sz;}
-        owner->loc.x+=owner->vel.x*dt;
-        owner->loc.y+=owner->vel.y*dt; 
+       // double dt=parameters::getInstance().timeStep;
+       // owner->vel.x+=dvx*dt;
+       // owner->vel.y+=dvy*dt;
+       // float sz=sqrt(owner->vel.x*owner->vel.x+owner->vel.y*owner->vel.y);
+       // if (sz>vmax){owner->vel.x*=vmax/sz;owner->vel.y*=vmax/sz;}
+       // owner->loc.x+=owner->vel.x*dt;
+       // owner->loc.y+=owner->vel.y*dt; 
     }

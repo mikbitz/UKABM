@@ -75,6 +75,11 @@
             setUpEducation(a);
             findFriends(a);
         }
+        unsigned single=0;
+        for (auto& a:agents){
+            if (a->partner()==nullptr && a->age()>18)single++;
+        }
+        cout<<"Number single:"<<single<<endl;
         setUpWork(agents);
     }
     //----------------------------------------------------------------------------------------------
@@ -91,11 +96,29 @@
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::findPartner(agent* a){
-        ;//if (age>16)findPartner()//allow for singles, partners move in together (homeless?), allow for boy/girlfriends? 
+        double d=10000;//use 10km to try to preserve some spatial structure
+        if (a->age()>18 && a->partner()==nullptr){
+            auto possiblePartners=model::getInstance().g.inRadius(a,d);
+            for (auto p:possiblePartners){
+                if (p->sex()!=a->sex() && p->age()>18 && fabs(p->age()-a->age())<=10 && p->partner()==nullptr){
+                    a->makePartner(p);
+                }                
+            }
+        }
+        //allow for singles,non-heterosexual partners , allow for boy/girlfriends? 
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::findParents(agent* a){
-        ;//if (age<16)moveToHome()//percent in care?percent single families?- also homeless?
+        double d=10000;
+        if (a->mother()==nullptr){
+            auto possibleMothers=model::getInstance().g.inRadius(a,d);
+            for (auto p:possibleMothers){
+                if (p->sex()=='f' && a->age()<(p->age() - 16) ){
+                    a->makeParents(p);//use partners to make fathers, if available. Agents under 18 live with mother
+                }                
+            }
+        }
+        //step parents yet to be allowed for
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::setUpEducation(agent* a){
@@ -105,6 +128,7 @@
         if (a->age()<18)sixthform(a);
         if (a->age()<16)schoolchild(a);
         if (a->age()< 5)preschool(a);
+
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::retired(agent* a){
@@ -136,8 +160,21 @@
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::schoolchild(agent* a){
-        if (a->age()>=12)a->setEducationStatus("secondary");//lower secondary
-        else             a->setEducationStatus("primary");//primary
+        unsigned placeType;
+        if (a->age()>=12){a->setEducationStatus("secondary");placeType=places::getInstance()["school"];}//lower secondary
+        else             {a->setEducationStatus("primary");  placeType=places::getInstance()["school"];}//primary
+        //closest school within 10km
+        double d=10000;
+        auto possibleSchools=model::getInstance().g.inRadius(a,placeType,d);
+        while (possibleSchools.size()==0 && d<1000000){
+            //a few children may need to go a long way...
+            d+=10000;
+            possibleSchools=model::getInstance().g.inRadius(a,placeType,d);
+        }
+        a->setWorkPlace(possibleSchools[0]);
+        //actual distance to school
+        double dact=sqrt(pow((possibleSchools[0]->X()-a->X()),2)+pow((possibleSchools[0]->Y()-a->Y()),2));
+        assert(d<1000000);
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::preschool(agent* a){
@@ -151,6 +188,8 @@
         auto placeTypes=jobTypes.getHeader();//header gives placetype string for each job
         
         //loop over types of job
+        double totald=0;
+        unsigned nwork=0,nretired=0,neduc=0;
         for (unsigned jt=0;jt<jobTypes.nrows();jt++){
             for (unsigned p=1;p<placeTypes.size();p++){
                 //retrieve placeType index - this allows one to find the places in the grid
@@ -162,11 +201,11 @@
                         double fraction=std::stod(jobTypes[jt][p]);
                         if (fraction>0){
                             unsigned number=_workingPop*fraction;
-                            cout<<jobTypes[jt][0]<<endl;
+                            cout<<jobTypes[jt][0]<<" has number "<<number<<endl;
                             for (auto a:agents){
                                 if (number>0 && a->worker() && !a->hasWork()){//number counts for this jobtype and placetype
                                     double d=commuteDistance();
-                                    if (jobTypes[jt][0] !="generic"){
+                                    if (jobTypes[jt][0] !="random"){
                                         auto possibleWorkPlaces=model::getInstance().g.inRadius(a,placeType,d);//gridded places give locations
                                         //returned places are ordered by distance, closest first - what if none found?
                                         if (possibleWorkPlaces.size()>0){
@@ -175,6 +214,8 @@
                                             a->setWorkPlace(possibleWorkPlaces[k]);// one of closest to commute distance with not all places taken -currently places take any number!
                                             possibleWorkPlaces[k]->incrementWorkForce();
                                             a->setJobType(jt);
+                                            double dact=sqrt(pow((possibleWorkPlaces[k]->X()-a->X()),2)+pow((possibleWorkPlaces[k]->Y()-a->Y()),2));
+                                            totald+=dact;nwork++;
                                         }
                                     }else{
                                         a->setJobType(jt);
@@ -183,8 +224,9 @@
                                         double dcc=d*cos(2*pi*model::getInstance().random.number());
                                         double dcs=d*sin(2*pi*model::getInstance().random.number());
                                         a->knownLocations[places::getInstance()["work"]]=a->knownLocations[places::getInstance()["home"]]+point2D(dcc,dcs);
+                                        totald+=d;nwork++;
                                     }
-                                }
+                                } 
                             }
                             //cout<<number<<endl;
                         }
@@ -192,7 +234,13 @@
                 }
             }
         }
+        for (auto a:agents){
+            if (a->inEducation())neduc++;
+            if (a->retired())nretired++;
+        }
         //places::getInstance().printWorkForceSizes();
+        cout<<"Total travel distance "<<totald<<" av. commute "<<totald/nwork/1000<<" km"<<endl;
+        cout<<"Number in work:"<<nwork<<" in education:"<<neduc<<" retired:"<<nretired<<endl;
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::findFriends(agent* a){
@@ -201,6 +249,6 @@
     }
     //----------------------------------------------------------------------------------------------
     double populationBuilder::commuteDistance(){
-        //1/x^2 distrubtion for the moment, up to 100km (=>inverse linear cumulative distrib.)
+        //1/x^2 distribution for the moment, up to 200km (=>inverse linear cumulative distrib.)
         return 1010 / (1.01 - model::getInstance().random.number());
     }

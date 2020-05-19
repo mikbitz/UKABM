@@ -10,6 +10,9 @@ agent::agent(){
     _jobType=std::numeric_limits<unsigned>::max();//default for no job
     _workStatus=unemployed;
     _educationStatus=secondary;//UK adults should all have at least this?
+    _partner=nullptr;
+    _mother=nullptr;
+    _father=nullptr;
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::init(){
@@ -42,7 +45,7 @@ void agent::setJobType(const unsigned& j ){
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setWorkStatus(const std::string& s){
-    if (s=="retired")    _workStatus=retired;
+    if (s=="retired")    _workStatus=retiree;
     if (s=="ineducation")_workStatus=ineducation;
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -54,7 +57,25 @@ void agent::setEducationStatus(const std::string& s){
     if (s=="higher")        _educationStatus=higher;
     if (s=="postgrad")      _educationStatus=postgrad;
 }
-
+//-----------------------------------------------------------------------------------------------------------------
+void agent::makePartner(agent* a){
+    _partner=a;
+    a->_partner=this;
+    //move in with partner
+    a->knownLocations[places::getInstance()["home"]]=knownLocations[places::getInstance()["home"]];
+}
+//-----------------------------------------------------------------------------------------------------------------
+void agent::makeParents(agent* a){
+    _mother=a;//input assumed female at present
+    a->addChild(this);
+    if (a->partner()!=nullptr){_father=a->partner();a->partner()->addChild(this);}
+    //child moves in with mother
+    if (a->age()<18)knownLocations[places::getInstance()["home"]]=a->knownLocations[places::getInstance()["home"]];
+}
+//-----------------------------------------------------------------------------------------------------------------
+void agent::addChild(agent* a){
+    _children.push_back(a);
+}
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::infectious(){
     bool result=false;
@@ -70,19 +91,21 @@ bool agent::exposed(){
 //-----------------------------------------------------------------------------------------------------------------
 void agent::preUpdate(){
     if (_died)return;
-    _age+=parameters::getInstance().timeStep/3600./24./365.;//in years...ignoring leaps! timeStep is in seconds
     for (unsigned i=0;i<processes.size();i++)processes[i]->preUpdate();
+    _age+=parameters::getInstance().timeStep/3600./24./365.;//in years...ignoring leaps! timeStep is in seconds
+
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::update(){
     if (_died)return;
-    updateInfections();
     for (unsigned i=0;i<processes.size();i++)processes[i]->update();
+    updateInfections();
     
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::applyUpdate(){
     if (_died)return;
+    for (unsigned i=0;i<processes.size();i++)processes[i]->applyUpdate();
     //allow all infections to complete before updating diseases (so that newly infected agents don't spread within timestep)
     for (auto& ds:_diseases){ds.second.update();}
     //check for hospitalisation
@@ -105,7 +128,6 @@ void agent::applyUpdate(){
     }
     //check in the agent's schedule to see whether it is time for the next activity.
     if (tTable.update()){setDest(tTable.getCurrent().place);}
-    for (unsigned i=0;i<processes.size();i++)processes[i]->applyUpdate();
     
 }
 //------------------------------------------------------------------------------------------------------------
@@ -165,6 +187,7 @@ void agent::setDest(unsigned e){
     currentPath=_pathSet.paths[oldPlace][newPlace];
     pathState=1;
     dest=knownLocations[currentPath.getStep(pathState)];
+    loc=dest;
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::addProcess(process* p){
@@ -185,4 +208,32 @@ bool agent::hasWork(){
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::worker(){
     return (_workStatus==unemployed || _workStatus==working); 
+}
+//-----------------------------------------------------------------------------------------------------------------
+bool agent::retired(){
+    return (_workStatus==retiree); 
+}//-----------------------------------------------------------------------------------------------------------------
+bool agent::inEducation(){
+    return (_workStatus==ineducation); 
+}
+//-----------------------------------------------------------------------------------------------------------------
+char agent::sex(){
+    return _sex;
+}
+//-----------------------------------------------------------------------------------------------------------------
+
+double agent::age(){
+    return _age;
+}
+//-----------------------------------------------------------------------------------------------------------------
+agent* agent::partner(){
+    return _partner;
+}
+//-----------------------------------------------------------------------------------------------------------------
+agent* agent::mother(){
+    return _mother;
+}
+//-----------------------------------------------------------------------------------------------------------------
+agent* agent::father(){
+    return _father;
 }

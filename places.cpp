@@ -34,6 +34,7 @@ unsigned places::unknownType=std::numeric_limits<unsigned>::max();
      auto locations=readcsv(parameters::getInstance().placeFile);
 
      //add places to the model grid
+     
      for (unsigned row=0;row<locations.nrows();row++){
 
          place* p=new place(_placeTypes[locations[row][0]]);

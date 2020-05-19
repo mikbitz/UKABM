@@ -32,7 +32,7 @@ agents(){
     //infect 10 agentsin random spatial locations
     shuffle (ags.begin(), ags.end(), std::default_random_engine(parameters::getInstance().randomSeed));
     for (unsigned i=0;i<10;i++)ags[10000+i]->infectWith("covid");
-
+    //agent movement process
     for (auto a:ags)a->addProcess(new movement(a));
 }
 //-----------------------------------------------------------------------------------------------------------------

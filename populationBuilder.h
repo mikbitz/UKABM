@@ -27,6 +27,7 @@ class populationBuilder{
     void setUpWork(std::vector<agent*>&);
     void findFriends(agent* a);
     double commuteDistance();
+
 public:
     
     populationBuilder();

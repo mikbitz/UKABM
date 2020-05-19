@@ -12,15 +12,26 @@
 #include "places.h"
 #include "model.h"
 #include "disease.h"
+/**
+ * @class agent
+ * 
+ * @brief Agents represent individual people
+ * 
+ * 
+ **/ 
 class agent{
 private:
     place* _workPlace;
     place* _home;
     unsigned _jobType;
-    enum workTypes{ineducation,unemployed,working,retired};//could also include casual,zero hours...
+    enum workTypes{ineducation,unemployed,working,retiree};//could also include casual,zero hours...
     workTypes _workStatus ;
     enum educationTypes{preschool,primary,secondary,uppersecondary,higher,postgrad};//coudl also include "further"
     educationTypes _educationStatus;
+    char _sex;
+    agent* _partner;
+    agent* _mother,*_father;
+    vector<agent*> _children;
 public:
     map<unsigned,point2D> knownLocations;
     unsigned oldPlace,newPlace;
@@ -30,13 +41,14 @@ public:
     point2D loc,dest,vel;
     float _size;
     double _age;
-    char _sex;
-    vector<agent*> children;
+
     vector<agent*> friends;
-    agent* mother,*father;
-    agent* partner;
 
-
+    void makePartner(agent*);
+    void makeParents(agent*);
+    void addChild(agent*);
+    
+    
     timeTable tTable;
     /**
      * @brief Set to true if the agent is currently in hospital
@@ -129,8 +141,11 @@ public:
     void setEducationStatus(const std::string&);
     void setAge(double);
     void setSex(const char&);
-    char sex(){return _sex;}
-    double age(){return _age;}
+    char sex();
+    double age();
+    agent* partner();
+    agent* mother();
+    agent* father();
     /**
      * @brief Return the current X location of the agent
      * 
@@ -145,6 +160,8 @@ public:
     double Y();
     bool hasWork();
     bool worker();
+    bool inEducation();
+    bool retired();
 
 };
 #endif

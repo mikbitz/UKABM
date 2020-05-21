@@ -111,19 +111,21 @@ void searchGrid::setHardY()    {cylY=false;hY=true;toroidal=false;spheroidal=fal
 void searchGrid::setSphere()   {wrapDefaults();setWrapX();spheroidal=true;}
 //------------------------------------------------------------------
 void searchGrid::wrapCoordinates(agent* a){
-    
-    if (spheroidal){sphere   (a->loc.x,a->loc.y);}
-    if (toroidal)  {torus    (a->loc.x,a->loc.y);}
+    double x=a->X(),y=a->Y();
+    if (spheroidal){sphere   (x,y);}
+    if (toroidal)  {torus    (x,y);}
     else{
-        if (cylX)      {cylinderX(a->loc.x)      ;}
-        if (cylY)      {cylinderY(a->loc.y)      ;}
+        if (cylX)      {cylinderX(x)      ;}
+        if (cylY)      {cylinderY(y)      ;}
     }  
     
-    if (hardE)     {hardEdges(a->loc.x,a->loc.y);}
+    if (hardE)     {hardEdges(x,y);}
     else{
-        if (hX)        {hardX    (a->loc.x)      ;}
-        if (hY)        {hardY    (a->loc.y)      ;}
+        if (hX)        {hardX    (x)      ;}
+        if (hY)        {hardY    (y)      ;}
     }
+    a->setX(x);
+    a->setY(y);
 }
 
 //------------------------------------------------------------------
@@ -172,7 +174,7 @@ int searchGrid::findCellIndex(double x,double y){
     if (ix==NxCells)ix--;
     //similarly make sure we don't overflow in y
     if (iy==NyCells)iy--;
-    //make sure we are n't below zero
+    //make sure we aren't below zero
     if (ix<0)ix=0;
     if (iy<0)iy=0;
     // return the bucket's linear index
@@ -181,18 +183,20 @@ int searchGrid::findCellIndex(double x,double y){
 //------------------------------------------------------------------
 void searchGrid::wrapCoordinates(place* a){
     
-    if (spheroidal){sphere   (a->loc.x,a->loc.y);}
-    if (toroidal)  {torus    (a->loc.x,a->loc.y);}
+    double x=a->X(),y=a->Y();
+    if (spheroidal){sphere   (x,y);}
+    if (toroidal)  {torus    (x,y);}
     else{
-        if (cylX)      {cylinderX(a->loc.x)      ;}
-        if (cylY)      {cylinderY(a->loc.y)      ;}
+        if (cylX)      {cylinderX(x)      ;}
+        if (cylY)      {cylinderY(y)      ;}
     }  
     
-    if (hardE)     {hardEdges(a->loc.x,a->loc.y);}
+    if (hardE)     {hardEdges(x,y);}
     else{
-        if (hX)        {hardX    (a->loc.x)      ;}
-        if (hY)        {hardY    (a->loc.y)      ;}
+        if (hX)        {hardX    (x)      ;}
+        if (hY)        {hardY    (y)      ;}
     }
+    a->setLocation(x,y);
 }
 //------------------------------------------------------------------
 void searchGrid::add(agent* a){
@@ -205,7 +209,7 @@ void searchGrid::add(agent* a){
     //as a matter of policy force the agent into the grid
     //this might not be appropriate for other kinds of grid, but this one is assumed to define the model domain.
     wrapCoordinates(a);
-    a->cellIndex=findCellIndex(a->loc.x,a->loc.y);
+    a->cellIndex=findCellIndex(a->X(),a->Y());
     cells[a->cellIndex].insert(a);
 }
 //------------------------------------------------------------------
@@ -240,7 +244,7 @@ void searchGrid::check(){
             auto c=cells[i];
             for (auto& a:c){
                 wrapCoordinates(a);
-                auto index=findCellIndex(a->loc.x,a->loc.y);
+                auto index=findCellIndex(a->X(),a->Y());
                 if (index != a->cellIndex) {
                     temp[i].push_back(a);remove(a);a->cellIndex=index;
                 }
@@ -282,7 +286,7 @@ void searchGrid::check(vector<agent*>& ags){
 
         for (auto& a:ags){
             wrapCoordinates(a);
-            int index=findCellIndex(a->loc.x,a->loc.y);
+            int index=findCellIndex(a->X(),a->Y());
             if (index != a->cellIndex) {
                 add(a);
             }
@@ -297,7 +301,7 @@ void searchGrid::check(vector<agent*>& ags){
 void searchGrid::check(agent* a){
 
    wrapCoordinates(a);
-   if (findCellIndex(a->loc.x,a->loc.y) != a->cellIndex){
+   if (findCellIndex(a->X(),a->Y()) != a->cellIndex){
         add(a);
    }
 }
@@ -367,6 +371,48 @@ void   searchGrid::inCell(int q,vector<agent*>& L){
     }
 }
 //------------------------------------------------------------------
+vector <agent*> searchGrid::inRadius(point2D& p, double d){
+    //find all agents within a given distance of a point2D
+    //may need to search multiple cells
+    vector<agent*> temp;
+
+    int q=findCellIndex(p.X(),p.Y());
+    int lx=q%NxCells; int ly=q/NxCells;
+    int nx=int(d/_xSize*NxCells+0.5);
+    int ny=int(d/_ySize*NyCells+0.5);
+    int il=-nx,iu=nx,jl=-nx,ju=nx;
+    //The domain is spanned! avoid duplications
+    if (nx>=NxCells/2) {il=-lx;iu=NxCells-1-lx;}
+    if (ny>=NyCells/2) {jl=-ly;ju=NyCells-1-ly;}
+    //hard edges
+    if (!cylX) {if (lx<nx) il=-lx;if (lx>=NxCells-1-nx) iu=NxCells-1-lx;}
+    if (!cylY) {if (ly<ny) jl=-ly;if (ly>=NyCells-1-ny) ju=NyCells-1-ly;}
+    
+    for (int i=il;i<iu+1;i++)  {
+      for (int j=jl;j<ju+1;j++) {
+        //wrapping
+        int inx=lx+i; if (cylX) {while (inx<0)inx+=NxCells; while (inx>=NxCells)inx-=NxCells;}
+        int iny=ly+j; if (cylY) {while (iny<0)iny+=NyCells; while (iny>=NyCells)iny-=NyCells;}
+        int ind=inx+iny*NxCells;
+        if(ind>=0 && ind< (int)cells.size()) inDist(ind,d,p,temp);
+      }
+    }
+  return temp;
+}
+//------------------------------------------------------------------
+//return all agents in a cell within a given distance of point P
+void   searchGrid::inDist(int q,float d,point2D& p,vector<agent*>& L){
+
+    for (auto& t:cells[q]){
+        double dx=(t->X() - p.X());
+        double dy=(t->Y() - p.Y());
+        //wrapping of distance measures
+        if (cylX && abs(dx)>_xSize/2)dx=_xSize-abs(dx);
+        if (cylY && abs(dy)>_ySize/2)dy=_ySize-abs(dy);
+        if (dx*dx+dy*dy <= d*d)L.push_back(t);
+      }
+}
+//------------------------------------------------------------------
 vector <agent*> searchGrid::inRadius(agent* a, double d){
     //find all agents within a given distance of agent a
     //may need to search multiple cells
@@ -400,8 +446,8 @@ vector <agent*> searchGrid::inRadius(agent* a, double d){
 void   searchGrid::inDist(int q,float d,agent* a,vector<agent*>& L){
 
     for (auto& t:cells[q]){
-        double dx=(t->loc.x - a->loc.x);
-        double dy=(t->loc.y - a->loc.y);
+        double dx=(t->X() - a->X());
+        double dy=(t->Y() - a->Y());
         //wrapping of distance measures
         if (cylX && abs(dx)>_xSize/2)dx=_xSize-abs(dx);
         if (cylY && abs(dy)>_ySize/2)dy=_ySize-abs(dy);
@@ -449,16 +495,19 @@ vector <agent*> searchGrid::inSquareRegion(double x, double y, double d){
 //return all agents in a cell within a given area bounded by x,xd,y,yd
 void   searchGrid::inSquare(unsigned q,double x,double y,double xd, double yd,vector<agent*>& L){
     for (auto& t:cells[q]){
-        double ax=t->loc.x;
-        double ay=t->loc.y;
+        double ax=t->X();
+        double ay=t->Y();
         //check whether in range allowing for exact upper and right boundary
         if (ax>=x && ay>=y && ((ax<xd) || (ax==(x0+_xSize) && (ax==xd)) ) && ((ay<yd) || (ay==(y0+_ySize)  && (ay==yd)) ) )L.push_back(t);
       }
 }
 //------------------------------------------------------------------
 double searchGrid::xOrigin(){return x0;}
+//------------------------------------------------------------------
 double searchGrid::yOrigin(){return y0;}
+//------------------------------------------------------------------
 double searchGrid::xSize(){return _xSize;}
+//------------------------------------------------------------------
 double searchGrid::ySize(){return _ySize;}
 //------------------------------------------------------------------
 point2D   searchGrid::getRandomPoint(){
@@ -572,12 +621,12 @@ vector<vector<double>> searchGrid::count(std::function<bool(agent&)> func,double
 void searchGrid::add(place* p){
     //many places with the same type can exist in a given grid cell
     wrapCoordinates(p);
-    unsigned cellIndex=findCellIndex(p->loc.x,p->loc.y);
+    unsigned cellIndex=findCellIndex(p->X(),p->Y());
     locations[cellIndex].insert(std::pair<unsigned,place*>(p->placeType(),p));
 }
 //------------------------------------------------------------------
 void searchGrid::remove(place* p){
-    unsigned cellIndex=findCellIndex(p->loc.x,p->loc.y);
+    unsigned cellIndex=findCellIndex(p->X(),p->Y());
     auto range=locations[cellIndex].equal_range(p->placeType());
     for (auto& it=range.first;it!=range.second;it++){
      if (it->second==p)locations[cellIndex].erase(it);
@@ -625,8 +674,8 @@ void   searchGrid::inDist(int cellIndex,float d,agent* a,unsigned placeType, vec
     auto range=locations[cellIndex].equal_range(placeType);
     for (auto& it=range.first;it!=range.second;it++){
         place* p=it->second;
-        double dx=(p->loc.x - a->loc.x);
-        double dy=(p->loc.y - a->loc.y);
+        double dx=(p->X() - a->X());
+        double dy=(p->Y() - a->Y());
         //wrapping of distance measures
         if (cylX && abs(dx)>_xSize/2)dx=_xSize-abs(dx);
         if (cylY && abs(dy)>_ySize/2)dy=_ySize-abs(dy);
@@ -655,9 +704,9 @@ void searchGrid::test(){
     success= (testGrid->cells.size()== 1000000);
     testGrid->testMessage("Test 2",success);
     //the agent should have the right cellIndex, with the default parameters
-    success=(a->cellIndex==testGrid->findCellIndex(a->loc.x,a->loc.y));
+    success=(a->cellIndex==testGrid->findCellIndex(a->X(),a->Y()));
     testGrid->testMessage("Test 3",success);
-    success=(a->cellIndex==(int((a->loc.y+500)/1000*1000)*1000 + int((a->loc.x+500)/1000*1000)));
+    success=(a->cellIndex==(int((a->Y()+500)/1000*1000)*1000 + int((a->X()+500)/1000*1000)));
     testGrid->testMessage("Test 4",success); 
     //remove the agent - there should be no occupied cells
     testGrid->remove(a);
@@ -683,12 +732,12 @@ void searchGrid::test(){
     for (auto& c:testGrid->cells){success=success && (c.size()==0); if (c.size()!=0)cout<<"huh? "<<c.size()<<endl;}
     testGrid->testMessage("Test 7",success);
     //the cells are of size 1, the origin is at -500,-500 - put an agent in cell 0
-    v[0]->loc.x=-500;v[0]->loc.y=-500;testGrid->add(v[0]);
+    v[0]->setX(-500);v[0]->setY(-500);testGrid->add(v[0]);
     success=(v[0]->cellIndex==0);
     testGrid->testMessage("Test 8",success);
     //the cells are of size 1, the origin is at -500,-500 - put an agent in cell 1,1 (i.e. index 1001)
     //NB there is a check on whether this agent is already in the grid - if so it gets removed first
-    v[0]->loc.x=-499;v[0]->loc.y=-499;testGrid->add(v[0]);
+    v[0]->setX(-499);v[0]->setY(-499);testGrid->add(v[0]);
     success=(v[0]->cellIndex==1001);
     testGrid->testMessage("Test 9",success);
     //make sure agent is only present in one cell
@@ -697,17 +746,17 @@ void searchGrid::test(){
     success=success && (testGrid->cells[1001].size()== 1);
     testGrid->testMessage("Test 10",success);
     //add 11 agents in some cells - test the neighbour and inRadius functions
-     v[1]->loc.x= -500;  v[1]->loc.y= -500   ;testGrid->add(v[1]);
-     v[2]->loc.x= -500;  v[2]->loc.y= -500   ;testGrid->add(v[2]);
-     v[3]->loc.x= -499;  v[3]->loc.y= -500   ;testGrid->add(v[3]);
-     v[4]->loc.x= -498;  v[4]->loc.y= -500   ;testGrid->add(v[4]);
-     v[5]->loc.x= -500;  v[5]->loc.y= -499   ;testGrid->add(v[5]);
-     v[6]->loc.x= -498;  v[6]->loc.y= -499   ;testGrid->add(v[6]);
-     v[7]->loc.x= -498;  v[7]->loc.y= -498   ;testGrid->add(v[7]);
-     v[8]->loc.x= -499;  v[8]->loc.y= -498   ;testGrid->add(v[8]);
-     v[9]->loc.x= -500;  v[9]->loc.y= -497.5 ;testGrid->add(v[9]);
-    v[10]->loc.x= -499; v[10]->loc.y= -496.5 ;testGrid->add(v[10]);
-    v[11]->loc.x=  499; v[11]->loc.y=  499   ;testGrid->add(v[11]);
+     v[1]->setX(-500);   v[1]->setY(-500)   ;testGrid->add(v[1]);
+     v[2]->setX(-500);   v[2]->setY(-500)  ;testGrid->add(v[2]);
+     v[3]->setX(-499);   v[3]->setY(-500) ;testGrid->add(v[3]);
+     v[4]->setX(-498);   v[4]->setY(-500)  ;testGrid->add(v[4]);
+     v[5]->setX(-500);   v[5]->setY(-499)  ;testGrid->add(v[5]);
+     v[6]->setX(-498);   v[6]->setY(-499)  ;testGrid->add(v[6]);
+     v[7]->setX(-498);   v[7]->setY(-498)  ;testGrid->add(v[7]);
+     v[8]->setX(-499);   v[8]->setY(-498)  ;testGrid->add(v[8]);
+     v[9]->setX(-500);   v[9]->setY(-497.5) ;testGrid->add(v[9]);
+    v[10]->setX(-499);  v[10]->setY(-496.5) ;testGrid->add(v[10]);
+    v[11]->setX( 499);  v[11]->setY( 499)   ;testGrid->add(v[11]);
     success=true;
     vector<agent*> h=testGrid->here(v[1]);
     success=success && (h[0]->ID==2) && (h[1]->ID==3);
@@ -727,7 +776,7 @@ void searchGrid::test(){
     testGrid->testMessage("Test 14",success);
     //test agent movement - this agent moves onto the exact far right boundary
     //make sure it doesn't get wrapped into the next row up.
-    v[0]->loc.x=500;
+    v[0]->setX(500);
     //place into new cell
     testGrid->check(v[0]);
     success=(v[0]->cellIndex==1999);
@@ -742,7 +791,7 @@ void searchGrid::test(){
     success=success && (rd[0]->ID==1 && rd.size()==1);
     testGrid->testMessage("Test 15",success);
     //move the agent closer - within 60sqrt(2.) units
-    v[0]->loc.x=-500+60;v[0]->loc.y=-500+60;
+    v[0]->setX(-500+60);v[0]->setY(-500+60);
     //place into new cell
     testGrid->check(v[0]);
     success=(v[0]->cellIndex==60060);
@@ -767,7 +816,7 @@ void searchGrid::test(){
     testGrid->testMessage("Test 16",success);
     //test wrapping
     //move the agent ID 3 to the top of the grid in  y
-    v[2]->loc.y=499.2;
+    v[2]->setY(499.2);
     //place into new cell
     testGrid->check(v[2]);
     success=(v[2]->cellIndex==999000);
@@ -800,7 +849,7 @@ void searchGrid::test(){
     ni=testGrid->neighbours(v[2]);
     success=success && (ni[0]->ID==12) && (ni[1]->ID==3) && (ni[2]->ID==2)&& (ni[3]->ID==4);
     //try the extreme right of the grid partway up a side
-    v[2]->loc.x=499;v[2]->loc.y=-498.2;
+    v[2]->setX(499);v[2]->setY(-498.2);
     testGrid->check(v[2]);
     ni=testGrid->neighbours(v[2]);
     success=success && (ni[0]->ID==3) && (ni[1]->ID==2) && (ni[2]->ID==6)&& (ni[3]->ID==10);
@@ -824,8 +873,8 @@ void searchGrid::test(){
     //remove the agents - there should be no occupied cells
     testGrid->eraseAll();
     //first test inSquare - picks agents out in a given cell
-     v[0]->loc.x= -500;    v[0]->loc.y= -500   ;testGrid->add(v[0]);
-     v[1]->loc.x= -499.5;  v[1]->loc.y= -499.1 ;testGrid->add(v[1]);
+     v[0]->setX(-500);     v[0]->setY( -500   );testGrid->add(v[0]);
+     v[1]->setX(-499.5);   v[1]->setY( -499.1 );testGrid->add(v[1]);
     success=true;
     vector<agent*>L;
     testGrid->inSquare(0,-1000,-1000,1000,1000,L);
@@ -834,7 +883,7 @@ void searchGrid::test(){
     success=success&&(L.size()==0);L.clear();
     testGrid->inSquare(0,-499.6,-499.2,-498,-498,L);
     success=success&&(L.size()==1);L.clear();
-    v[2]->loc.x= 500;  v[2]->loc.y= 500   ;testGrid->add(v[2]);
+    v[2]->setX(500);   v[2]->setY( 500   );testGrid->add(v[2]);
     testGrid->inSquare(1000*1000-1,499,499,1000,700,L);
     success=success&&(L.size()==1);L.clear();
     testGrid->testMessage("Test 18",success);
@@ -846,19 +895,19 @@ void searchGrid::test(){
     success=success&&(F.size()==2);F.clear();
     F=testGrid->inSquareRegion(0, 0, 50);
     success=success&&(F.size()==0);F.clear();
-    v[3]->loc.x= 0;     v[3]->loc.y= 0      ;testGrid->add(v[3]);
+    v[3]->setX(0);      v[3]->setY( 0      );testGrid->add(v[3]);
     F=testGrid->inSquareRegion(0, 0, 10);
     success=success&&(F.size()==1);F.clear();
-    v[4]->loc.x=   0.;  v[4]->loc.y=   0.1   ;testGrid->add(v[4]);
+    v[4]->setX(  0.);   v[4]->setY(   0.1   );testGrid->add(v[4]);
     F=testGrid->inSquareRegion(0, 0, 10);
     success=success&&(F.size()==2);F.clear();
-    v[5]->loc.x=   0.5;  v[5]->loc.y=   0.3   ;testGrid->add(v[5]);
+    v[5]->setX(  0.5);   v[5]->setY(   0.3   );testGrid->add(v[5]);
     F=testGrid->inSquareRegion(0, 0, 10);
     success=success&&(F.size()==3);F.clear();
-    v[6]->loc.x= 1.2;  v[6]->loc.y= 2.4   ;testGrid->add(v[6]);
+    v[6]->setX(1.2);   v[6]->setY( 2.4   );testGrid->add(v[6]);
     F=testGrid->inSquareRegion(0, 0, 5);
     success=success&&(F.size()==4);F.clear();
-    v[7]->loc.x= 10;  v[7]->loc.y= 10   ;testGrid->add(v[7]);
+    v[7]->setX(10);   v[7]->setY( 10   );testGrid->add(v[7]);
     F=testGrid->inSquareRegion(0, 0, 5);
     success=success&&(F.size()==4);F.clear();
     F=testGrid->inSquareRegion(0, 0, 10);
@@ -930,7 +979,7 @@ void searchGrid::test(){
     success=true;
     //test place creation
     place* p=new place(0);
-    success=success && (p->loc.x==0 && p->loc.y==0);
+    success=success && (p->X()==0 && p->Y()==0);
     //test add to grid
     testGrid->add(p);
     auto locs=testGrid->inRadius(v[3],0,1);
@@ -964,8 +1013,9 @@ void searchGrid::test(){
     locs=testGrid->inRadius(v[3],1,4);
     success=success && (locs.size()==1);
     //check co-ords of retrieved
-    success=success && (locs[0]->loc.x==0.32 && locs[0]->loc.y==2);
+    success=success && (locs[0]->X()==0.32 && locs[0]->Y()==2);
     testGrid->testMessage("Test 23",success);
+    success=true;
     //remove second place
     testGrid->remove(p2);
     //test ordering by distance v[3] is at (0,0)

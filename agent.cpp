@@ -5,6 +5,7 @@ agent::agent(){
     ID=idnum;idnum++;
     _inHospital=false,_critical=false,_died=false;
     numberInfected=0;
+    _age=0;
     _sex='f';
     cellIndex=-1;
     _jobType=std::numeric_limits<unsigned>::max();//default for no job
@@ -13,12 +14,10 @@ agent::agent(){
     _partner=nullptr;
     _mother=nullptr;
     _father=nullptr;
+    _size=1.;
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::init(){
-    
-    _size=1.;
-    //places::getInstance()->getLocations(knownLocations);
     
     loc =knownLocations[places::getInstance()["home"]];oldPlace=places::getInstance()["home"];
     dest=knownLocations[places::getInstance()["home"]];newPlace=places::getInstance()["home"];
@@ -31,6 +30,7 @@ void agent::setAge(double a){
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::setSex(const char& s){
+    assert(s=='m' || s=='f');
     _sex=s;
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -195,11 +195,11 @@ void agent::addProcess(process* p){
 }
 //-----------------------------------------------------------------------------------------------------------------
 double agent::X(){
-    return loc.x; 
+    return loc.X(); 
 }
 //-----------------------------------------------------------------------------------------------------------------
 double agent::Y(){
-    return loc.y; 
+    return loc.Y(); 
 }
 //-----------------------------------------------------------------------------------------------------------------
 bool agent::hasWork(){

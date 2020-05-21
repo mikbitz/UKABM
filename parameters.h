@@ -7,10 +7,11 @@
 using namespace std;
 
 /**
-\file parameters.h
-\brief The parameters class header file
-
-This class stores a set of model parameters. It is a singleton.
+* @file parameters.h
+* @brief The parameters class header file
+*
+* @class parameters
+* @brief This class stores a set of model parameters. It is a singleton.
 */ 
 class parameters{
 public:

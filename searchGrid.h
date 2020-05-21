@@ -47,12 +47,14 @@ public:
     point2D getRandomPoint();
     vector <agent*> here(agent*);
     vector <agent*> inRadius(agent* ,double);
+    vector <agent*> inRadius(point2D& ,double);
     vector <agent*> inSquareRegion(double , double , double );
     void   inSquare(unsigned ,double ,double ,double ,double ,vector<agent*>& );
     vector <agent*> neighbours4(agent*);
     vector <agent*> neighbours(agent*);
     void   inCell(int,vector<agent*>&);
     void   inDist(int,float,agent*,vector<agent*>&);
+    void   inDist(int,float,point2D&,vector<agent*>&);
     void wrapDefaults();
     void setToroidal();
     void setWrapX();

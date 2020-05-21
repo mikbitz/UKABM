@@ -8,10 +8,12 @@
  * 
  **/
 class point2D{
+  double _x;
+  double _y;
 public:
-  point2D(){x=0;y=0;};
-  point2D(double x_,double y_):x(x_),y(y_){};
-  point2D(const point2D& p){x=p.x;y=p.y;}
+  point2D(){_x=0;_y=0;};
+  point2D(double x_,double y_):_x(x_),_y(y_){};
+  point2D(const point2D& p){_x=p._x;_y=p._y;}
 
    /**
    * @brief Check points for equality 
@@ -22,16 +24,18 @@ public:
    * @return bool
    */
 
-  bool operator==(const point2D& p){return (x==p.x && y==p.y);}
-  point2D operator+(const point2D& p){return point2D(x+p.x,y+p.y);}
-  point2D operator-(const point2D& p){return point2D(x-p.x,y-p.y);}
-  point2D operator-(const double& p){return point2D(x-p,y-p);}
-  point2D operator/(const double& d){return point2D(x/d,y/d);}
-  point2D operator*(const double& d){return point2D(x*d,y*d);}
+  bool operator==(const point2D& p){return (_x==p._x && _y==p._y);}
+  point2D operator+(const point2D& p){return point2D(_x+p._x,_y+p._y);}
+  point2D operator-(const point2D& p){return point2D(_x-p._x,_y-p._y);}
+  point2D operator-(const double& p){return point2D(_x-p,_y-p);}
+  point2D operator/(const double& d){return point2D(_x/d,_y/d);}
+  point2D operator*(const double& d){return point2D(_x*d,_y*d);}
 
-  double size(){return sqrt(x*x+y*y);}
-  double x;
-  double y;
-  int cellIndex;
+  double size(){return sqrt(_x*_x+_y*_y);}
+  double  X(){return _x;}
+  double  Y(){return _y;}
+  void setX(double x){_x=x;}
+  void setY(double y){_y=y;}
+
 };
 #endif

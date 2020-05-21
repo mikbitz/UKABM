@@ -250,5 +250,5 @@
     //----------------------------------------------------------------------------------------------
     double populationBuilder::commuteDistance(){
         //1/x^2 distribution for the moment, up to 200km (=>inverse linear cumulative distrib.)
-        return 1010 / (1.01 - model::getInstance().random.number());
+        return 2020 / (1.01 - model::getInstance().random.number());
     }

@@ -42,6 +42,8 @@ unsigned places::unknownType=std::numeric_limits<unsigned>::max();
          p->setLocation(std::stod(locations[row][1]),std::stod(locations[row][2]));
          model::getInstance().g.add(p);
      }
+     auto gazetter=readcsv("simpleGazeteer.csv");
+     
  }
 //------------------------------------------------------------------------------------------------------------------------
     bool places::update(){return false;}

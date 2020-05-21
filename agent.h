@@ -28,6 +28,10 @@ private:
     workTypes _workStatus ;
     enum educationTypes{preschool,primary,secondary,uppersecondary,higher,postgrad};//coudl also include "further"
     educationTypes _educationStatus;
+    /**
+     * @brief A character representing the agent's sex - withe 'm' or 'f'
+     * 
+     */
     char _sex;
     agent* _partner;
     agent* _mother,*_father;
@@ -38,8 +42,18 @@ public:
     path currentPath;
     unsigned pathState;
     pathSet _pathSet;
-    point2D loc,dest,vel;
+    point2D loc;
+    point2D dest;
+    point2D vel;
     float _size;
+    /**
+     * @brief The age of the agent in years
+     * 
+     * The age is a double: sub-units of a year are thus decimal fractions. Updating the age thus depends on being sure the timestep is in seconds
+     * At present no allowance is made for dates (this no leap years etc.) - age is just updated using elapsed seconds in a timestep divided by seconds in 365 days.
+     * Defaults to zero in the constructor. Updated in agent::preUpdate
+     * 
+     */
     double _age;
 
     vector<agent*> friends;
@@ -84,7 +98,7 @@ public:
     /**
      * @brief Check to see whether the agent has ever carried a disease with the given name
      * 
-     * Returns false if there is no entry in the dictionary of diseases, true if it is present, even if teh agent has recovered or died
+     * Returns false if there is no entry in the dictionary of diseases, true if it is present, even if the agent has recovered or died
      * This allows for testing recovered agents (or for them to have limited time immunity), or for dead agents still to be infectious
      * 
      * @param name :A string specifying the name of the disease to test for
@@ -139,12 +153,57 @@ public:
     void setWorkPlace(place*);
     void setWorkStatus(const std::string&);
     void setEducationStatus(const std::string&);
+    /**
+     * @brief Set the age of the agent in years
+     * 
+     * @param  a: a double representing the age in years
+     */
     void setAge(double);
+    /**
+     * @brief Set the sex of the agent
+     * 
+     * By default the constructor sets this value to 'f'. The code will abort if input is anything other than 'm' or 'f'
+     * 
+     * @param  s: A character, either 'm' or 'f'
+     */
     void setSex(const char&);
+    /**
+     * @brief Return the character representing the sex of the agent
+     * 
+     * Returned value should be either 'm' or 'f'
+     * 
+     * @return char
+     */
     char sex();
+    /**
+     * @brief Return the age of the agent in years
+     * 
+     * @return double
+     */
     double age();
+    /**
+     * @brief Return a pointer to the agent's current partner
+     * 
+     * Returns nullptr is partner does not exist (set in constructor)
+     * 
+     * @return agent*
+     */
     agent* partner();
+    /**
+     * @brief Return a pointer to the agent's mother
+     * 
+     * Returns nullptr is partner does not exist (set in constructor)
+     * 
+     * @return agent*
+     */
     agent* mother();
+    /**
+     * @brief Return a pointer to the agent's father
+     * 
+     * Returns nullptr is partner does not exist (set in constructor)
+     * 
+     * @return agent*
+     */
     agent* father();
     /**
      * @brief Return the current X location of the agent
@@ -158,6 +217,8 @@ public:
      * @return double
      */
     double Y();
+    void setX(double x){loc.setX(x);}
+    void setY(double y){loc.setY(y);}
     bool hasWork();
     bool worker();
     bool inEducation();

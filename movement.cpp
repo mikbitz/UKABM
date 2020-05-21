@@ -11,8 +11,8 @@
         randomWobble=.01;trelax=0.6;
         dvx=randomWobble*(0.5-model::getInstance().random.number());
         dvy=randomWobble*(0.5-model::getInstance().random.number());
-        owner->loc.x+=dvx*dt;
-        owner->loc.y+=dvy*dt; 
+        owner->setX(owner->X()+dvx*dt);
+        owner->setY(owner->Y()+dvy*dt); 
  //       xdel=owner->dest.x-owner->loc.x;
  //       ydel=owner->dest.y-owner->loc.y;
 

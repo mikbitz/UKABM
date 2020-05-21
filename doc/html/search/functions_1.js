@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hasdisease',['hasDisease',['../classagent.html#aab67fe9df4777af3690138fa97d0a3a1',1,'agent']]]
+  ['father',['father',['../classagent.html#a1c29803a7627d786ff50d6f39b81a285',1,'agent']]]
 ];

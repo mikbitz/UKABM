@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['update',['update',['../classplaces.html#a5ff3d2cd02c18f353ab15dd86f52e7be',1,'places']]]
+  ['operator_3d_3d',['operator==',['../classpoint2D.html#a34b676d196277da05f03e87dc2f88288',1,'point2D']]],
+  ['operator_5b_5d',['operator[]',['../classplaces.html#a18b24350e2ad05ef273df442b6d22593',1,'places']]]
 ];

@@ -60,9 +60,9 @@ std\+::map$<$ std\+::string, unsigned $>$ \mbox{\hyperlink{classplaces_a7d552918
 \subsection{Detailed Description}
 Places stores the place type index and a list of instantiated places. 
 
-There are two main data stuctures here\+: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position. Secondly there is an index that maps from strings to unsigned integers, so that places can be given an integer type. E.\+g. the string \char`\"{}hospital\char`\"{} might map to integer 0. These indices are set up in \mbox{\hyperlink{classplaces_ad126c2796c4fecad43f8e237ffde786d}{init()}} according to the order place types are listed in the csv file pointed at by parameters place\+Type\+File, This avoids having to store strings in other parts of the model\+: for example, the \mbox{\hyperlink{classsearchGrid}{search\+Grid}} stores places in each cell indexed by type. 
+There are two main data stuctures here\+: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position. Secondly there is an index that maps from strings to unsigned integers, so that places can be given an integer type. E.\+g. the string \char`\"{}hospital\char`\"{} might map to integer 0. These indices are set up in \mbox{\hyperlink{classplaces_ad126c2796c4fecad43f8e237ffde786d}{init()}} according to the order place types are listed in the csv file pointed at by parameters place\+Type\+File. This avoids having to store strings in other parts of the model\+: for example, the \mbox{\hyperlink{classsearchGrid}{search\+Grid}} stores places in each cell indexed by type -\/ there may be many of teh same type in a given cell. 
 
-Definition at line 53 of file places.\+h.
+Definition at line 64 of file places.\+h.
 
 
 
@@ -154,7 +154,7 @@ bool
 \end{DoxyReturn}
 
 
-Definition at line 47 of file places.\+cpp.
+Definition at line 49 of file places.\+cpp.
 
 
 
@@ -171,7 +171,7 @@ A vector of pointers to all the places currently defined in the model.
 
 Places is a singleton (there can only be one instance of this class in the model) 
 
-Definition at line 68 of file places.\+h.
+Definition at line 79 of file places.\+h.
 
 \mbox{\Hypertarget{classplaces_a7d5529185ae4635d2e2048b4ae475c12}\label{classplaces_a7d5529185ae4635d2e2048b4ae475c12}} 
 \index{places@{places}!\+\_\+place\+Types@{\+\_\+place\+Types}}
@@ -185,7 +185,7 @@ The index of place types.
 
 Given a string as a key, this variable stores an index that can be used to refer to this type of place 
 
-Definition at line 75 of file places.\+h.
+Definition at line 86 of file places.\+h.
 
 \mbox{\Hypertarget{classplaces_ab03feda32ddd4784c17de8b2185b3563}\label{classplaces_ab03feda32ddd4784c17de8b2185b3563}} 
 \index{places@{places}!unknown\+Type@{unknown\+Type}}
@@ -199,7 +199,7 @@ Returned if there is no know place of this type.
 
 Currently set to the maxium value for an unsigned integer (unlikely ever to be this manby place types!) 
 
-Definition at line 118 of file places.\+h.
+Definition at line 129 of file places.\+h.
 
 
 

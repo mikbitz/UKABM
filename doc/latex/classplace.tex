@@ -67,8 +67,8 @@ unsigned {\bfseries work\+Force\+Size} ()
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classplace_a905b649d1f98547cc33d49226f4e56e1}\label{classplace_a905b649d1f98547cc33d49226f4e56e1}} 
-unsigned {\bfseries \+\_\+\+ID}
-\item 
+unsigned \mbox{\hyperlink{classplace_a905b649d1f98547cc33d49226f4e56e1}{\+\_\+\+ID}}
+\begin{DoxyCompactList}\small\item\em The unique ID number for this place. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classplace_a675f8c9a2bd0c57ac1aaf0364cd63411}\label{classplace_a675f8c9a2bd0c57ac1aaf0364cd63411}} 
 unsigned {\bfseries \+\_\+work\+Force\+Size}
 \item 
@@ -82,14 +82,16 @@ unsigned {\bfseries \+\_\+type}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classplace_af35d12619e41bd59aa91db9977fc8dc9}\label{classplace_af35d12619e41bd59aa91db9977fc8dc9}} 
-static unsigned {\bfseries idnum} =0
-\end{DoxyCompactItemize}
+static unsigned \mbox{\hyperlink{classplace_af35d12619e41bd59aa91db9977fc8dc9}{idnum}} =0
+\begin{DoxyCompactList}\small\item\em This class vaiable keeps track of place I\+Ds. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 A place has x,y co-\/ordinates, and possibly a workforce and capacity. 
 
-Definition at line 16 of file places.\+h.
+Each place has a unique ID number allocated in sequence as places are created, starting at 0. Thsi gets incremented in the constructor. A place also has a generic type number, which maps to a string (stored in teh palces singleton) 
+
+Definition at line 19 of file places.\+h.
 
 
 

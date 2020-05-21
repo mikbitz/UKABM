@@ -140,9 +140,9 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Places stores the place type index and a list of instantiated places. </p>
-<p>There are two main data stuctures here: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position. Secondly there is an index that maps from strings to unsigned integers, so that places can be given an integer type. E.g. the string "hospital" might map to integer 0. These indices are set up in <a class="el" href="classplaces.html#ad126c2796c4fecad43f8e237ffde786d" title="Set up the index of place types and read in actual places. ">init()</a> according to the order place types are listed in the csv file pointed at by parameters placeTypeFile, This avoids having to store strings in other parts of the model: for example, the <a class="el" href="classsearchGrid.html">searchGrid</a> stores places in each cell indexed by type. </p>
+<p>There are two main data stuctures here: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position. Secondly there is an index that maps from strings to unsigned integers, so that places can be given an integer type. E.g. the string "hospital" might map to integer 0. These indices are set up in <a class="el" href="classplaces.html#ad126c2796c4fecad43f8e237ffde786d" title="Set up the index of place types and read in actual places. ">init()</a> according to the order place types are listed in the csv file pointed at by parameters placeTypeFile. This avoids having to store strings in other parts of the model: for example, the <a class="el" href="classsearchGrid.html">searchGrid</a> stores places in each cell indexed by type - there may be many of teh same type in a given cell. </p>
 
-<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00053">53</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00064">64</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1c4116c838392a6d35169126334f3f61"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1c4116c838392a6d35169126334f3f61">&#9670;&nbsp;</a></span>places()</h2>
@@ -275,7 +275,7 @@ Protected Attributes</h2></td></tr>
 <p>Stub provided in case at some point the data in places becomes dynamic and needs its own updates. </p>
 <dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="places_8cpp_source.html#l00047">47</a> of file <a class="el" href="places_8cpp_source.html">places.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="places_8cpp_source.html#l00049">49</a> of file <a class="el" href="places_8cpp_source.html">places.cpp</a>.</p>
 
 </div>
 </div>
@@ -303,7 +303,7 @@ Protected Attributes</h2></td></tr>
 <p>A vector of pointers to all the places currently defined in the model. </p>
 <p>Places is a singleton (there can only be one instance of this class in the model) </p>
 
-<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00068">68</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00079">79</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
 
 </div>
 </div>
@@ -330,7 +330,7 @@ Protected Attributes</h2></td></tr>
 <p>The index of place types. </p>
 <p>Given a string as a key, this variable stores an index that can be used to refer to this type of place </p>
 
-<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00075">75</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00086">86</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
 
 </div>
 </div>
@@ -357,7 +357,7 @@ Protected Attributes</h2></td></tr>
 <p>Returned if there is no know place of this type. </p>
 <p>Currently set to the maxium value for an unsigned integer (unlikely ever to be this manby place types!) </p>
 
-<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00118">118</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00129">129</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
 
 </div>
 </div>

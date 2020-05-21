@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y',['Y',['../classagent.html#a56b8ea7b9138c5e4b92530d454e247ad',1,'agent']]]
+  ['recoveredfrom',['recoveredFrom',['../classagent.html#a0eee49d52e6c47d7b425bc72cf5caf67',1,'agent']]]
 ];

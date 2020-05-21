@@ -135,7 +135,8 @@ Public Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a905b649d1f98547cc33d49226f4e56e1"><td class="memItemLeft" align="right" valign="top"><a id="a905b649d1f98547cc33d49226f4e56e1"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>_ID</b></td></tr>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplace.html#a905b649d1f98547cc33d49226f4e56e1">_ID</a></td></tr>
+<tr class="memdesc:a905b649d1f98547cc33d49226f4e56e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unique ID number for this place. <br /></td></tr>
 <tr class="separator:a905b649d1f98547cc33d49226f4e56e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a675f8c9a2bd0c57ac1aaf0364cd63411"><td class="memItemLeft" align="right" valign="top"><a id="a675f8c9a2bd0c57ac1aaf0364cd63411"></a>
 unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>_workForceSize</b></td></tr>
@@ -150,13 +151,15 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>_type</b></td></t
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
 <tr class="memitem:af35d12619e41bd59aa91db9977fc8dc9"><td class="memItemLeft" align="right" valign="top"><a id="af35d12619e41bd59aa91db9977fc8dc9"></a>
-static unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>idnum</b> =0</td></tr>
+static unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplace.html#af35d12619e41bd59aa91db9977fc8dc9">idnum</a> =0</td></tr>
+<tr class="memdesc:af35d12619e41bd59aa91db9977fc8dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class vaiable keeps track of place IDs. <br /></td></tr>
 <tr class="separator:af35d12619e41bd59aa91db9977fc8dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A place has x,y co-ordinates, and possibly a workforce and capacity. </p>
+<p>Each place has a unique ID number allocated in sequence as places are created, starting at 0. Thsi gets incremented in the constructor. A place also has a generic type number, which maps to a string (stored in teh palces singleton) </p>
 
-<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00016">16</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="places_8h_source.html#l00019">19</a> of file <a class="el" href="places_8h_source.html">places.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="places_8h_source.html">places.h</a></li>
 <li><a class="el" href="places_8cpp_source.html">places.cpp</a></li>

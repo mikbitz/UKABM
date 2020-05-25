@@ -97,6 +97,7 @@ bool model::update(){
     //cout<<"------------------- step "<<tick<<" ---------------------"<<endl;        
     //auto start=chrono::steady_clock::now();
     if (tick % parameters::getInstance().outputInterval ==0) files->writeAll();
+    layers[0]->output();
     //auto end=chrono::steady_clock::now();
     //cout<<"timew "<<chrono::duration_cast<chrono::milliseconds>(end-start).count()<<endl;
 

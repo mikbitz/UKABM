@@ -55,10 +55,11 @@ private:
  * 
  * @brief Places stores the place type index and a list of instantiated places
  * 
- * There are two main data stuctures here: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position.
+ * There are three main data stuctures here: a vector of pointers to all the places, so that they can be iterated over or retrieved without reference to spatial position.
  * Secondly there is an index that maps from strings to unsigned integers, so that places can be given an integer type. E.g. the string "hospital" might map to integer 0.
  * These indices are set up in init() according to the order place types are listed in the csv file pointed at by parameters placeTypeFile. This avoids having to store strings in other
- * parts of the model: for example, the searchGrid stores places in each cell indexed by type - there may be many of teh same type in a given cell.
+ * parts of the model: for example, the searchGrid stores places in each cell indexed by type - there may be many of the same type in a given cell.
+ * Finally there are named significant places that are in some sense representative of populated settlements such as London
  **/ 
 //------------------------------------------------------------------
 class places{
@@ -84,6 +85,13 @@ protected:
      * 
      */
     std::map<std::string,unsigned>_placeTypes;
+    /**
+     * @brief A simple dictionary of a few named "locations" that allow one to find a representative point
+     * 
+     * Strings should be something like names of towns or cities, with the point being close to a centroid for the area represented by the name e.g. "London","Birmingham"
+     * 
+     */
+    std::map<std::string,point2D>_gazetteer;
 public:
     /**
      * @brief Get a reference to the place class
@@ -100,6 +108,13 @@ public:
      * @return unsigned int
      */
     unsigned operator[](std::string);
+    /**
+     * @brief Return the co-ordinates of a place stored in the gazetteer, which lists the centroids of a few significant populated settlements 
+     * 
+     * @param s p_s: A string giving the name of the place
+     * @return point2D
+     */
+    point2D  locationOf(std::string);
     /**
      * @brief Set up the index of place types and read in actual places
      * 

@@ -23,6 +23,11 @@ unsigned places::unknownType=std::numeric_limits<unsigned>::max();
             return _placeTypes[s];
         }
 //------------------------------------------------------------------------------------------------------------------------
+        point2D places::locationOf(std::string s){
+            if (_gazetteer.find(s)==_gazetteer.end()){cout<<"Warning: place "<<s<<"not found in gazetteer: returning (0,0)";return point2D(0,0);}
+            return _gazetteer[s];
+        }
+//------------------------------------------------------------------------------------------------------------------------
  void places::init(){   
      //read in placeTypes
      auto types=readcsv(parameters::getInstance().placeTypeFile);
@@ -42,7 +47,11 @@ unsigned places::unknownType=std::numeric_limits<unsigned>::max();
          p->setLocation(std::stod(locations[row][1]),std::stod(locations[row][2]));
          model::getInstance().g.add(p);
      }
-     auto gazetter=readcsv("simpleGazeteer.csv");
+     //a few named "locations" e.g. London that are useful for finding nearby agents?
+     auto gazzy=readcsv("simpleGazeteer.csv");
+     for (unsigned row=0;row<gazzy.nrows();row++){
+         _gazetteer[gazzy[row][0]]=point2D(std::stod(gazzy[row][1]),std::stod(gazzy[row][2]));
+     }
      
  }
 //------------------------------------------------------------------------------------------------------------------------

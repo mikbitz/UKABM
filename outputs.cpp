@@ -9,7 +9,7 @@ outputs::outputs(){
     _summaryFile.open(path+parameters::getInstance().summaryFileName);
     //header line
     _summaryFile<<"step,date,susceptible,exposed,infectious,inhospital,critical,recovered,died,totalPop."<<endl;
-    //Note cellsize here *must* match those in writeALL below
+    //Note cellsize here *must* match those in writeAll below
     _outputCellSize=10000;
 
     std::string nFrames="maxFrames "+std::to_string(p.nsteps/p.outputInterval);

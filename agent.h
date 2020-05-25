@@ -26,7 +26,7 @@ private:
     unsigned _jobType;
     enum workTypes{ineducation,unemployed,working,retiree};//could also include casual,zero hours...
     workTypes _workStatus ;
-    enum educationTypes{preschool,primary,secondary,uppersecondary,higher,postgrad};//coudl also include "further"
+    enum educationTypes{preschool,primary,secondary,uppersecondary,higher,postgrad};//could also include "further"
     educationTypes _educationStatus;
     /**
      * @brief A character representing the agent's sex - withe 'm' or 'f'
@@ -205,6 +205,12 @@ public:
      * @return agent*
      */
     agent* father();
+    /**
+     * @brief Return a reference to the agent's vector of children
+     * 
+     * @return std::vector< agent* >&
+     */
+    vector<agent*>& children();
     /**
      * @brief Return the current X location of the agent
      * 

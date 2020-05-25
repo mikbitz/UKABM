@@ -17,8 +17,10 @@ virtual bool update();
 virtual extent3D getExtent();
 virtual void     setExtent(double,double,double);
 virtual double   getSize(){return extent.getSize();}
+virtual void     output(){;}
 
 void setName(std::string );
+
 protected:
 std::string name;
 extent3D extent;

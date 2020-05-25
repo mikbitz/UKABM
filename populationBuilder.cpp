@@ -71,15 +71,20 @@
             setSex(a);
             setAge(a);
             findPartner(a);
+        }
+        for (auto& a:agents){
             findParents(a);
             setUpEducation(a);
             findFriends(a);
         }
-        unsigned single=0;
+        
+        unsigned single=0,nomother=0;
         for (auto& a:agents){
             if (a->partner()==nullptr && a->age()>18)single++;
+            if (a->mother()==nullptr && a->age()<18)nomother++;
         }
         cout<<"Number single:"<<single<<endl;
+        cout<<"Number orphans under 18: "<<nomother<<endl;
         setUpWork(agents);
     }
     //----------------------------------------------------------------------------------------------
@@ -100,21 +105,27 @@
         if (a->age()>18 && a->partner()==nullptr){
             auto possiblePartners=model::getInstance().g.inRadius(a,d);
             for (auto p:possiblePartners){
-                if (p->sex()!=a->sex() && p->age()>18 && fabs(p->age()-a->age())<=10 && p->partner()==nullptr){
+                if (p->sex()!=a->sex() && p->age()>18 && fabs(p->age()-a->age())<=10 && p->partner()==nullptr && a->partner()==nullptr){
                     a->makePartner(p);
                 }                
             }
         }
-        //allow for singles,non-heterosexual partners , allow for boy/girlfriends? 
+        //allow for singles,non-heterosexual partners , allow for boy/girlfriends? non-flat partner age distribution?
     }
     //----------------------------------------------------------------------------------------------
     void populationBuilder::findParents(agent* a){
-        double d=10000;
+        double d=10000;//look for parents within 10km
         if (a->mother()==nullptr){
             auto possibleMothers=model::getInstance().g.inRadius(a,d);
             for (auto p:possibleMothers){
-                if (p->sex()=='f' && a->age()<(p->age() - 16) ){
-                    a->makeParents(p);//use partners to make fathers, if available. Agents under 18 live with mother
+                if (p->sex()=='f' && a->age()<(p->age() - 16) && a->age()>(p->age() - 45)&& a->mother()==nullptr){
+                    auto sibs=p->children();
+                    bool avail=true;
+                    for (auto& s:sibs){
+                        double sep=fabs(s->age()-a->age());
+                        if (sep<2 || sep>6)avail=false;//siblings not closer in age than 2 years, or more separated than 6 - what about second families etc.?
+                    }
+                    if (avail)a->makeParents(p);//use partners to make fathers, if available. Agents under 18 live with mother
                 }                
             }
         }

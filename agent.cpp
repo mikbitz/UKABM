@@ -1,5 +1,6 @@
 #include "agent.h"
 #include "disease.h"
+unsigned agent::idnum=0;
 //-----------------------------------------------------------------------------------------------------------------
 agent::agent(){
     ID=idnum;idnum++;
@@ -19,9 +20,11 @@ agent::agent(){
 //-----------------------------------------------------------------------------------------------------------------
 void agent::init(){
     
-    loc =knownLocations[places::getInstance()["home"]];oldPlace=places::getInstance()["home"];
-    dest=knownLocations[places::getInstance()["home"]];newPlace=places::getInstance()["home"];
-    _pathSet.setKnownPaths();
+    loc =knownLocations[places::getInstance()["home"]];//the actual co-ordinates of this type of place
+    oldPlace=places::getInstance()["home"];//an integer that indicates the type of place - used in updating movement between locations
+    dest=knownLocations[places::getInstance()["home"]];
+    newPlace=places::getInstance()["home"];
+    _pathSet.setKnownPaths();//paths between types of places
     
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -61,8 +64,9 @@ void agent::setEducationStatus(const std::string& s){
 void agent::makePartner(agent* a){
     _partner=a;
     a->_partner=this;
-    //move in with partner
+    //a moves in with partner
     a->knownLocations[places::getInstance()["home"]]=knownLocations[places::getInstance()["home"]];
+    a->loc=loc;a->dest=a->loc;a->oldPlace=oldPlace;a->newPlace=oldPlace;
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::makeParents(agent* a){
@@ -70,7 +74,10 @@ void agent::makeParents(agent* a){
     a->addChild(this);
     if (a->partner()!=nullptr){_father=a->partner();a->partner()->addChild(this);}
     //child moves in with mother
-    if (a->age()<18)knownLocations[places::getInstance()["home"]]=a->knownLocations[places::getInstance()["home"]];
+    if (age()<18){
+        knownLocations[places::getInstance()["home"]]=a->knownLocations[places::getInstance()["home"]];
+        loc=a->loc;dest=loc;oldPlace=a->oldPlace;newPlace=oldPlace;
+    }
 }
 //-----------------------------------------------------------------------------------------------------------------
 void agent::addChild(agent* a){
@@ -236,4 +243,8 @@ agent* agent::mother(){
 //-----------------------------------------------------------------------------------------------------------------
 agent* agent::father(){
     return _father;
+}
+//-----------------------------------------------------------------------------------------------------------------
+vector<agent*>& agent::children(){
+    return _children;
 }
